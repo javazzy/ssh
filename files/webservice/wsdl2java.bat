@@ -1,0 +1,1 @@
+wsdl2java.exe -d src/test/java -client http://localhost:80/ws/test?wsdl
