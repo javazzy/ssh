@@ -13,7 +13,6 @@ public class Page<T> {
 
     private int start = -1;
     private int length = -1;//每页显示记录
-    private int pageNo = 1;//当前页
 
     private String order;
 
@@ -24,16 +23,7 @@ public class Page<T> {
     private String propertys; //配置查询列
     private String excludePropertys; //排除条件对比列，与结果列表无关。list查询才会有效。内容以英文逗号","隔开
 
-    private Boolean isAll = false;//如果为true，数据将从缓存里拿
-
-    @JsonIgnore
-    public int getPageNo() {
-        return pageNo;
-    }
-
-    public void setPageNo(int pageNo) {
-        this.pageNo = pageNo;
-    }
+    private Boolean cache = false;//如果为true，数据将从缓存里拿
 
     @JsonIgnore
     public String getOrder() {
@@ -46,14 +36,6 @@ public class Page<T> {
 
     @JsonIgnore
     public int getStart() {
-        if (start > -1) {
-            if (pageNo > 0) {
-                return (pageNo - 1) * length;
-            } else {
-                return 0;
-            }
-
-        }
         return start;
     }
 
@@ -121,11 +103,11 @@ public class Page<T> {
     }
 
     @JsonIgnore
-    public Boolean getIsAll() {
-        return isAll;
+    public Boolean getCache() {
+        return cache;
     }
 
-    public void setIsAll(Boolean isAll) {
-        this.isAll = isAll;
+    public void setCache(Boolean cache) {
+        this.cache = cache;
     }
 }

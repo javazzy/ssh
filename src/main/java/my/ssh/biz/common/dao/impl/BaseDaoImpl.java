@@ -77,22 +77,17 @@ public abstract class BaseDaoImpl<T> extends HibernateDaoSupport implements Base
 
     @Override
     public List<T> pageList(T entity, Page<T> page) {
-        if (null != page) {
-            DetachedCriteria dc = initDetachedCriteriaByPage(page);
+        DetachedCriteria dc = initDetachedCriteriaByPage(page);
 
-
-            Example example = Example.create(entity);
-            if (StringUtils.isNotBlank(page.getExcludePropertys())) {
-                for (String excludeProperty : page.getExcludePropertys().split(",")) {
-                    example.excludeProperty(excludeProperty);
-                }
+        Example example = Example.create(entity);
+        if (StringUtils.isNotBlank(page.getExcludePropertys())) {
+            for (String excludeProperty : page.getExcludePropertys().split(",")) {
+                example.excludeProperty(excludeProperty);
             }
-            dc.add(example);
-
-            return (List<T>) this.getHibernateTemplate().findByCriteria(dc);
-        } else {
-            return this.getHibernateTemplate().findByExample(entity, page.getStart(), page.getLength());
         }
+        dc.add(example);
+
+        return (List<T>) this.getHibernateTemplate().findByCriteria(dc);
     }
 
     @Override
@@ -120,12 +115,7 @@ public abstract class BaseDaoImpl<T> extends HibernateDaoSupport implements Base
 
     @Override
     public List<T> searchList(T entity, Page<T> page) {
-        DetachedCriteria dc = this.getDetachedCriteria(entity,page);
-        if (null != dc) {
-            return (List<T>) this.getHibernateTemplate().findByCriteria(dc);
-        } else {
-            return this.pageList(entity, page);
-        }
+        return (List<T>) this.getHibernateTemplate().findByCriteria(this.getDetachedCriteria(entity,page));
 
     }
 

@@ -68,7 +68,7 @@ public abstract class SimpleController<T> {
      */
     @RequestMapping(value = "/get/{key}")
     @ResponseBody
-    public Object getById(@PathVariable String key, T t) {
+    public T getById(@PathVariable String key, T t) {
         try {
             return getService().get(ConvertUtils.toPrimaryData(t.getClass(), key));
         } catch (Exception e) {
@@ -87,9 +87,26 @@ public abstract class SimpleController<T> {
      */
     @RequestMapping(value = "/get")
     @ResponseBody
-    public Object get(T entity) {
+    public T get(T entity) {
         try {
             return getService().getOne(entity);
+        } catch (Exception e) {
+            catchException(e);
+            return null;
+        }
+    }
+
+    /**
+     * 查询所有记录，例：
+     * url:'api/sysUser/all'
+     *
+     * @return
+     */
+    @RequestMapping(value = "/all")
+    @ResponseBody
+    public List<T> all() {
+        try {
+            return getService().listAll();
         } catch (Exception e) {
             catchException(e);
             return null;
@@ -106,13 +123,9 @@ public abstract class SimpleController<T> {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(T entity,Page<T> page) {
+    public List<T> list(T entity,Page<T> page) {
         try {
-            if(null != page && page.getIsAll()){
-                return getService().listAll();
-            }else {
-                return getService().pageList(entity, page);
-            }
+            return getService().pageList(entity, page);
         } catch (Exception e) {
             catchException(e);
             return null;
@@ -139,36 +152,36 @@ public abstract class SimpleController<T> {
         }
     }
 
-    /**
-     * 多条数据新增，例：
-     * url:'api/sysUser/addAll'（数据为form表单数据，或ajax请求的data参数）
-     * contentType : 'application/json;charset=utf-8', //设置请求头信息
-     * data:[{name:"张三"},{name:"李四"}],// 如果是form表单，可直接使用 $("#form1").serializeJson(),注意，这个方法依赖于我从网上扒的form2json.js
-     *
-     * @param mapList
-     * @param t
-     * @return
-     */
-    @RequestMapping("/addAll")
-    @ResponseBody
-    public Object addAll(@RequestBody List<Map<String,String>> mapList,T t) {
-        try {
-            List<T> entityList = new ArrayList<T>(mapList.size());
-            for(Map map : mapList){
-                T entity = ((Class<T>)t.getClass()).newInstance();
-                getService().evictChche(entity);
-                entityList.add((T)BeanUtils.toBean(entity,map));
-            }
-            getService().saveAll(entityList);
-            for (T newEntity : entityList){
-                getService().putChche(newEntity);
-            }
-            return success();
-        } catch (Exception e) {
-            catchException(e);
-            return error(e);
-        }
-    }
+//    /**
+//     * 多条数据新增，例：
+//     * url:'api/sysUser/addAll'（数据为form表单数据，或ajax请求的data参数）
+//     * contentType : 'application/json;charset=utf-8', //设置请求头信息
+//     * data:[{name:"张三"},{name:"李四"}],// 如果是form表单，可直接使用 $("#form1").serializeJson(),注意，这个方法依赖于我从网上扒的form2json.js
+//     *
+//     * @param mapList
+//     * @param t
+//     * @return
+//     */
+//    @RequestMapping("/addAll")
+//    @ResponseBody
+//    public Object addAll(@RequestBody List<Map<String,String>> mapList,T t) {
+//        try {
+//            List<T> entityList = new ArrayList<T>(mapList.size());
+//            for(Map map : mapList){
+//                T entity = ((Class<T>)t.getClass()).newInstance();
+//                getService().evictChche(entity);
+//                entityList.add((T)BeanUtils.toBean(entity,map));
+//            }
+//            getService().saveAll(entityList);
+//            for (T newEntity : entityList){
+//                getService().putChche(newEntity);
+//            }
+//            return success();
+//        } catch (Exception e) {
+//            catchException(e);
+//            return error(e);
+//        }
+//    }
 
     /**
      * 单条数据修改，例：
@@ -178,9 +191,9 @@ public abstract class SimpleController<T> {
      * @param entity
      * @return
      */
-    @RequestMapping("/update")
+    @RequestMapping("/overwrite")
     @ResponseBody
-    public Object update(T entity) {
+    public Result update(T entity) {
         try {
             getService().update(entity);
             getService().putChche(entity);
@@ -200,9 +213,9 @@ public abstract class SimpleController<T> {
      * @param entity
      * @return
      */
-    @RequestMapping("/updateDynamic")
+    @RequestMapping("/update")
     @ResponseBody
-    public Object updateDynamic(T entity) {
+    public Result updateDynamic(T entity) {
         try {
             getService().updateDynamic(entity);
             getService().putChche(entity);
@@ -223,7 +236,7 @@ public abstract class SimpleController<T> {
      */
     @RequestMapping("/delete")
     @ResponseBody
-    public Object delete(T entity) {
+    public Result delete(T entity) {
         try {
             getService().evictChche(entity);
             getService().delete(entity);
@@ -234,33 +247,33 @@ public abstract class SimpleController<T> {
         }
     }
 
-    /**
-     * 单条或多条数据删除，例：
-     * url: "/api/sysUsers/deleteAll",
-     * contentType : 'application/json;charset=utf-8', //设置请求头信息
-     * data: [{id:1},{id:2}],// 如果是form表单，可直接使用 $("#form1").serializeJson(),注意，这个方法依赖于我从网上扒的form2json.js
-     *
-     * @param mapList
-     * @param t
-     * @return
-     */
-    @RequestMapping("/deleteAll")
-    @ResponseBody
-    public Object deleteAll(@RequestBody List<Map<String,String>> mapList,T t) {
-        try {
-            List<T> entityList = new ArrayList<T>(mapList.size());
-            for(Map map : mapList){
-                T entity = ((Class<T>)t.getClass()).newInstance();
-                getService().evictChche(entity);
-                entityList.add((T)BeanUtils.toBean(entity,map));
-            }
-            getService().deleteAll(entityList);
-            return success();
-        } catch (Exception e) {
-            catchException(e);
-            return error(e);
-        }
-    }
+//    /**
+//     * 单条或多条数据删除，例：
+//     * url: "/api/sysUsers/deleteAll",
+//     * contentType : 'application/json;charset=utf-8', //设置请求头信息
+//     * data: [{id:1},{id:2}],// 如果是form表单，可直接使用 $("#form1").serializeJson(),注意，这个方法依赖于我从网上扒的form2json.js
+//     *
+//     * @param mapList
+//     * @param t
+//     * @return
+//     */
+//    @RequestMapping("/deleteAll")
+//    @ResponseBody
+//    public Object deleteAll(@RequestBody List<Map<String,String>> mapList,T t) {
+//        try {
+//            List<T> entityList = new ArrayList<T>(mapList.size());
+//            for(Map map : mapList){
+//                T entity = ((Class<T>)t.getClass()).newInstance();
+//                getService().evictChche(entity);
+//                entityList.add((T)BeanUtils.toBean(entity,map));
+//            }
+//            getService().deleteAll(entityList);
+//            return success();
+//        } catch (Exception e) {
+//            catchException(e);
+//            return error(e);
+//        }
+//    }
 
     /**
      * 搜索分页查询，例
@@ -358,7 +371,7 @@ public abstract class SimpleController<T> {
      */
     @RequestMapping(value = "/tree")
     @ResponseBody
-    public Object tree(T rootEntity) throws Exception {
+    public List<T> tree(T rootEntity) throws Exception {
         try {
             //获取实体参数中的ID
             Method idMethod = rootEntity.getClass().getMethod("getId");
