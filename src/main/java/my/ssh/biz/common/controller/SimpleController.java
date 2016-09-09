@@ -123,7 +123,7 @@ public abstract class SimpleController<T> {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public List<T> list(T entity,Page<T> page) {
+    public List<T> list(T entity, Page<T> page) {
         try {
             return getService().pageList(entity, page);
         } catch (Exception e) {
@@ -166,7 +166,7 @@ public abstract class SimpleController<T> {
     public Object addAll(@RequestBody List<T> list) {
         try {
             getService().saveAll(list);
-            for (T entity : list){
+            for (T entity : list) {
                 getService().putChche(entity);
             }
             return success();
@@ -253,7 +253,7 @@ public abstract class SimpleController<T> {
 //    @ResponseBody
     public Object deleteAll(@RequestBody List<T> list) {
         try {
-            for(T entity : list){
+            for (T entity : list) {
                 getService().evictChche(entity);
             }
             getService().deleteAll(list);
