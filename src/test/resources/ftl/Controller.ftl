@@ -33,7 +33,7 @@ public class ${pojo.getDeclarationName()}Controller extends SimpleController<${p
     @RequestMapping("/addAll")
     @ResponseBody
     @Override
-    public Result addAll(@RequestBody List<T> list) {
+    public Result addAll(@RequestBody List<${pojo.getDeclarationName()}> list) {
         return super.addAll(list);
     }
 
@@ -45,7 +45,7 @@ public class ${pojo.getDeclarationName()}Controller extends SimpleController<${p
     @RequestMapping("/deleteAll")
     @ResponseBody
     @Override
-    public Object deleteAll(@RequestBody List<T> list) {
+    public Object deleteAll(@RequestBody List<${pojo.getDeclarationName()}> list) {
         super.deleteAll(list);
     }
 
