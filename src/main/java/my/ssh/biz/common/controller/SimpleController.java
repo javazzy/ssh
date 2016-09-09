@@ -3,7 +3,6 @@ package my.ssh.biz.common.controller;
 import my.ssh.biz.common.entity.Page;
 import my.ssh.biz.common.entity.Result;
 import my.ssh.biz.common.service.BaseService;
-import my.ssh.util.BeanUtils;
 import my.ssh.util.ConvertUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -161,9 +160,7 @@ public abstract class SimpleController<T> {
      * @param list
      * @return
      */
-//    @RequestMapping("/addAll")
-//    @ResponseBody
-    public Object addAll(@RequestBody List<T> list) {
+    public Result addAll(@RequestBody List<T> list) {
         try {
             getService().saveAll(list);
             for (T entity : list) {
@@ -249,8 +246,6 @@ public abstract class SimpleController<T> {
      * @param list
      * @return
      */
-//    @RequestMapping("/deleteAll")
-//    @ResponseBody
     public Object deleteAll(@RequestBody List<T> list) {
         try {
             for (T entity : list) {

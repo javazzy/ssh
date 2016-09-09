@@ -2,8 +2,9 @@ ${pojo.getPackageDeclaration()}
 
 import my.ssh.biz.common.controller.*;
 import my.ssh.biz.common.service.BaseService;
+import my.ssh.biz.common.entity.Result;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 
 import ${pojo.getPackageDeclaration().substring(8,pojo.getPackageDeclaration().lastIndexOf("."))}.entity.${pojo.getDeclarationName()};
@@ -23,4 +24,29 @@ public class ${pojo.getDeclarationName()}Controller extends SimpleController<${p
     public BaseService getService() {
         return ${pojo.getDeclarationName()?uncap_first}Service;
     }
+
+    /**
+     * 批量新增
+     * @param list
+     * @return
+     */
+    @RequestMapping("/addAll")
+    @ResponseBody
+    @Override
+    public Result addAll(@RequestBody List<T> list) {
+        return super.addAll(list);
+    }
+
+    /**
+     * 批量删除
+     * @param list
+     * @return
+     */
+    @RequestMapping("/deleteAll")
+    @ResponseBody
+    @Override
+    public Object deleteAll(@RequestBody List<T> list) {
+        super.deleteAll(list);
+    }
+
 }
