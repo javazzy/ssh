@@ -41,10 +41,22 @@ var SysUser = function () {
                     "url": "api/sysUsers/searchPage", // ajax source
                 },
                 columns: [
-                    {data: "id", mRender: function (value, display, row) {
+                    {data:"id", mRender: function (value, display, row) {
                         return '<input type="checkbox" class="checkbox" name="id" value="' + value + '">';
                     }},
-                    {data: "username"},
+                    {data:"username"},
+                    {data: "enabled",mRender:function(value, display, row) {
+                        return value?'否':'是';
+                    }},
+                    {data:"accountNonExpired",mRender:function(value, display, row) {
+                        return value?'否':'是';
+                    }},
+                    {data:"accountNonLocked",mRender:function(value, display, row) {
+                        return value?'否':'是';
+                    }},
+                    {data:"credentialsNonExpired",mRender:function(value, display, row) {
+                        return value?'否':'是';
+                    }},
                     {mRender: function (value, display, row) {
                         return '';
                     }}
@@ -53,7 +65,7 @@ var SysUser = function () {
                     // [1, "asc"]
                 ],columnDefs: [{ // define columns sorting options(by default all columns are sortable extept the first checkbox column)
                     orderable: false,
-                    targets: [0,2]
+                    targets: [0]
                 }],
             }
         });

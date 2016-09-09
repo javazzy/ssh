@@ -1,6 +1,7 @@
 package my.ssh.biz.ssh.sys.controller;
 
 import com.lowagie.text.rtf.RtfWriter2;
+import my.ssh.biz.common.controller.ServletContextResource;
 import my.ssh.biz.common.controller.SimpleController;
 import my.ssh.biz.common.service.BaseService;
 import my.ssh.biz.ssh.sys.entity.Test;
@@ -45,7 +46,7 @@ public class TestController extends SimpleController<Test> {
     @RequestMapping("/download")
     public void download() throws Exception {
 
-        String baseUrl = getRequest().getRequestURL().substring(0,getRequest().getRequestURL().indexOf("/api"))+"/";
+        String baseUrl = ServletContextResource.getRequest().getRequestURL().substring(0,ServletContextResource.getRequest().getRequestURL().indexOf("/api"))+"/";
         String htmlUrl = baseUrl + "api/tests/data";
         String fileName = "导出文件"+ Calendar.getInstance().getTime().getTime()+".doc";
 
@@ -55,18 +56,18 @@ public class TestController extends SimpleController<Test> {
         HttpPost request = new HttpPost(htmlUrl);
 
         //转发请求头信息
-        Enumeration<String> headerNames = this.getRequest().getHeaderNames();
+        Enumeration<String> headerNames = ServletContextResource.getRequest().getHeaderNames();
         while (headerNames.hasMoreElements()){
             String headerName = headerNames.nextElement();
-            request.setHeader(headerName,getRequest().getHeader(headerName));
+            request.setHeader(headerName,ServletContextResource.getRequest().getHeader(headerName));
         }
 
         //转发请求参数
         List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-        Enumeration<String> parameterNames = getRequest().getParameterNames();
+        Enumeration<String> parameterNames = ServletContextResource.getRequest().getParameterNames();
         while (parameterNames.hasMoreElements()){
             String parameterName = parameterNames.nextElement();
-            nvps.add(new BasicNameValuePair(parameterName, getRequest().getParameter(parameterName)));
+            nvps.add(new BasicNameValuePair(parameterName, ServletContextResource.getRequest().getParameter(parameterName)));
         }
         request.setEntity(new UrlEncodedFormEntity(nvps));
 
@@ -74,11 +75,11 @@ public class TestController extends SimpleController<Test> {
         String htmlContent = EntityUtils.toString(client.execute(request).getEntity());
 
         //设置下载信息
-        getResponse().setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(),"iso-8859-1"));
-        getResponse().setContentType("application/msword");
+        ServletContextResource.getResponse().setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(),"iso-8859-1"));
+        ServletContextResource.getResponse().setContentType("application/msword");
 
         ITextWordBean ITextWordBean = new ITextWordBean();
-        RtfWriter2.getInstance(ITextWordBean.getDocument(),getResponse().getOutputStream());
+        RtfWriter2.getInstance(ITextWordBean.getDocument(),ServletContextResource.getResponse().getOutputStream());
         String filePath = System.getProperty("java.io.tmpdir") + "/" + Calendar.getInstance().getTime().getTime()+".doc";
         ITextWordBean.openDocument(filePath);
         ITextWordBean.insertHtmlContext(htmlContent);

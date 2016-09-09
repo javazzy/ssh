@@ -9,10 +9,8 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.lang.reflect.Method;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -26,10 +24,6 @@ import java.util.*;
 public abstract class SimpleController<T> {
 
     private final Logger logger = Logger.getLogger(this.getClass());
-    private ThreadLocal<HttpServletRequest> requestThreadLocal = new ThreadLocal<HttpServletRequest>();
-    private ThreadLocal<HttpServletResponse> responseThreadLocal = new ThreadLocal<HttpServletResponse>();
-    private ThreadLocal<HttpSession> sessionThreadLocal = new ThreadLocal<HttpSession>();
-    private ThreadLocal<ServletContext> contextThreadLocal = new ThreadLocal<ServletContext>();
 
     /**
      * 初始化controller
@@ -51,10 +45,8 @@ public abstract class SimpleController<T> {
      */
     @ModelAttribute
     public void setAttribute(HttpServletRequest request, HttpServletResponse response) {
-        requestThreadLocal.set(request);
-        responseThreadLocal.set(response);
-        sessionThreadLocal.set(request.getSession());
-        contextThreadLocal.set(request.getServletContext());
+        ServletContextResource.setRequest(request);
+        ServletContextResource.setResponse(response);
     }
 
     /**
@@ -160,7 +152,7 @@ public abstract class SimpleController<T> {
      * @param list
      * @return
      */
-    public Result addAll(@RequestBody List<T> list) {
+    public Result addAll(List<T> list) {
         try {
             getService().saveAll(list);
             for (T entity : list) {
@@ -246,7 +238,7 @@ public abstract class SimpleController<T> {
      * @param list
      * @return
      */
-    public Object deleteAll(@RequestBody List<T> list) {
+    public Object deleteAll(List<T> list) {
         try {
             for (T entity : list) {
                 getService().evictChche(entity);
@@ -457,19 +449,4 @@ public abstract class SimpleController<T> {
         return new Result(false, null != e.getCause() ? e.getCause().getMessage() : e.getMessage());
     }
 
-    public HttpServletRequest getRequest() {
-        return requestThreadLocal.get();
-    }
-
-    public HttpServletResponse getResponse() {
-        return responseThreadLocal.get();
-    }
-
-    public HttpSession getSession() {
-        return sessionThreadLocal.get();
-    }
-
-    public ServletContext getContext() {
-        return contextThreadLocal.get();
-    }
 }
