@@ -152,36 +152,29 @@ public abstract class SimpleController<T> {
         }
     }
 
-//    /**
-//     * 多条数据新增，例：
-//     * url:'api/sysUser/addAll'（数据为form表单数据，或ajax请求的data参数）
-//     * contentType : 'application/json;charset=utf-8', //设置请求头信息
-//     * data:[{name:"张三"},{name:"李四"}],// 如果是form表单，可直接使用 $("#form1").serializeJson(),注意，这个方法依赖于我从网上扒的form2json.js
-//     *
-//     * @param mapList
-//     * @param t
-//     * @return
-//     */
+    /**
+     * 多条数据新增。（这个方法需要自类接受前台参数，然后调用此方法！）例：
+     * url:'api/sysUser/addAll'（数据为form表单数据，或ajax请求的data参数）
+     * contentType : 'application/json;charset=utf-8', //设置请求头信息
+     * data:[{name:"张三"},{name:"李四"}],// 如果是form表单，可直接使用 $("#form1").serializeJson(),注意，这个方法依赖于我从网上扒的form2json.js
+     *
+     * @param list
+     * @return
+     */
 //    @RequestMapping("/addAll")
 //    @ResponseBody
-//    public Object addAll(@RequestBody List<Map<String,String>> mapList,T t) {
-//        try {
-//            List<T> entityList = new ArrayList<T>(mapList.size());
-//            for(Map map : mapList){
-//                T entity = ((Class<T>)t.getClass()).newInstance();
-//                getService().evictChche(entity);
-//                entityList.add((T)BeanUtils.toBean(entity,map));
-//            }
-//            getService().saveAll(entityList);
-//            for (T newEntity : entityList){
-//                getService().putChche(newEntity);
-//            }
-//            return success();
-//        } catch (Exception e) {
-//            catchException(e);
-//            return error(e);
-//        }
-//    }
+    public Object addAll(@RequestBody List<T> list) {
+        try {
+            getService().saveAll(list);
+            for (T entity : list){
+                getService().putChche(entity);
+            }
+            return success();
+        } catch (Exception e) {
+            catchException(e);
+            return error(e);
+        }
+    }
 
     /**
      * 单条数据修改，例：
@@ -191,7 +184,7 @@ public abstract class SimpleController<T> {
      * @param entity
      * @return
      */
-    @RequestMapping("/overwrite")
+    @RequestMapping("/update")
     @ResponseBody
     public Result update(T entity) {
         try {
@@ -213,7 +206,7 @@ public abstract class SimpleController<T> {
      * @param entity
      * @return
      */
-    @RequestMapping("/update")
+    @RequestMapping("/updateDynamic")
     @ResponseBody
     public Result updateDynamic(T entity) {
         try {
@@ -247,33 +240,29 @@ public abstract class SimpleController<T> {
         }
     }
 
-//    /**
-//     * 单条或多条数据删除，例：
-//     * url: "/api/sysUsers/deleteAll",
-//     * contentType : 'application/json;charset=utf-8', //设置请求头信息
-//     * data: [{id:1},{id:2}],// 如果是form表单，可直接使用 $("#form1").serializeJson(),注意，这个方法依赖于我从网上扒的form2json.js
-//     *
-//     * @param mapList
-//     * @param t
-//     * @return
-//     */
+    /**
+     * 单条或多条数据删除。（这个方法需要自类接受前台参数，然后调用此方法！）例：
+     * url: "/api/sysUsers/deleteAll",
+     * contentType : 'application/json;charset=utf-8', //设置请求头信息
+     * data: [{id:1},{id:2}],// 如果是form表单，可直接使用 $("#form1").serializeJson(),注意，这个方法依赖于我从网上扒的form2json.js
+     *
+     * @param list
+     * @return
+     */
 //    @RequestMapping("/deleteAll")
 //    @ResponseBody
-//    public Object deleteAll(@RequestBody List<Map<String,String>> mapList,T t) {
-//        try {
-//            List<T> entityList = new ArrayList<T>(mapList.size());
-//            for(Map map : mapList){
-//                T entity = ((Class<T>)t.getClass()).newInstance();
-//                getService().evictChche(entity);
-//                entityList.add((T)BeanUtils.toBean(entity,map));
-//            }
-//            getService().deleteAll(entityList);
-//            return success();
-//        } catch (Exception e) {
-//            catchException(e);
-//            return error(e);
-//        }
-//    }
+    public Object deleteAll(@RequestBody List<T> list) {
+        try {
+            for(T entity : list){
+                getService().evictChche(entity);
+            }
+            getService().deleteAll(list);
+            return success();
+        } catch (Exception e) {
+            catchException(e);
+            return error(e);
+        }
+    }
 
     /**
      * 搜索分页查询，例

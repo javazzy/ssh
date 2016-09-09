@@ -20,10 +20,11 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * 公共抽象控制层
+ * 公共抽象控制层(功能受rest风格影响，多个功能受限)
  *
  * @param <T>
  */
+@Deprecated
 public abstract class RestController<T> {
 
     private final Logger logger = Logger.getLogger(this.getClass());
