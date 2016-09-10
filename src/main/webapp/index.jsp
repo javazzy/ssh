@@ -385,6 +385,7 @@
 
     <%--<script src="assets/global/plugins/common.js" type="text/javascript"></script>--%>
     <script src="assets/global/plugins/DateFormat.js" type="text/javascript"></script>
+    <script src="assets/global/scripts/status.js" type="text/javascript"></script>
 
     <script type="text/javascript">
         $(function(){

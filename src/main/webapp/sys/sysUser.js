@@ -46,16 +46,16 @@ var SysUser = function () {
                     }},
                     {data:"username"},
                     {data: "enabled",mRender:function(value, display, row) {
-                        return value?'否':'是';
+                        return value?Status.on+"正常":Status.stop+"禁用";
                     }},
                     {data:"accountNonExpired",mRender:function(value, display, row) {
-                        return value?'否':'是';
+                        return !value?Status.stop+"账号过期":Status.on+"正常";
                     }},
                     {data:"accountNonLocked",mRender:function(value, display, row) {
-                        return value?'否':'是';
+                        return !value?Status.stop+"锁定":Status.on+"正常";
                     }},
                     {data:"credentialsNonExpired",mRender:function(value, display, row) {
-                        return value?'否':'是';
+                        return !value?Status.stop+"密码过期":Status.on+"正常";
                     }},
                     {mRender: function (value, display, row) {
                         return '';
@@ -65,7 +65,7 @@ var SysUser = function () {
                     // [1, "asc"]
                 ],columnDefs: [{ // define columns sorting options(by default all columns are sortable extept the first checkbox column)
                     orderable: false,
-                    targets: [0]
+                    targets: [0,6]
                 }],
             }
         });

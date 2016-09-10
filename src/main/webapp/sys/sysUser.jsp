@@ -65,10 +65,10 @@
                         <th width="30">
                             <input type="checkbox" class="group-checkable"> </th>
                         <th> 用户名 </th>
-                        <th width="80"> 是否启用 </th>
-                        <th width="80"> 账号过期 </th>
-                        <th width="80"> 账号锁定 </th>
-                        <th width="80"> 密码过期 </th>
+                        <th width="80"> 启用状态 </th>
+                        <th width="80"> 有效期状态 </th>
+                        <th width="80"> 锁定状态 </th>
+                        <th width="80"> 密码状态 </th>
                         <th width="120"> 操作 </th>
                     </tr>
                     <tr role="row" class="filter">
@@ -76,7 +76,9 @@
                         <td>
                             <input type="text" class="form-control form-filter input-sm" name="username">
                         </td>
-                        <td></td>
+                        <td>
+
+                        </td>
                         <td></td>
                         <td></td>
                         <td></td>

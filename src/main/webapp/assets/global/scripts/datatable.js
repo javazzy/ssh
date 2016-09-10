@@ -41,7 +41,7 @@ var Datatable = function() {
                 resetGroupActionInputOnSuccess: true,
                 loadingMessage: '载入中...',
                 dataTable: {
-                    dom: '<"datatable-header"><"datatable-scroll"t><"datatable-footer"ilp>', // datatable layout
+                    dom: '<"datatable-header"><"datatable-scroll"t><"datatable-footer text-right"ilp>', // datatable layout
                     pageLength: 10, // default records per page
                     lengthMenu: [
                         [5, 10, 20, 50, 100, 150, -1],
