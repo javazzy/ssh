@@ -44,13 +44,21 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
         }
 
         return new User(
+                sysUser.getId(),
                 sysUser.getUsername(),
                 sysUser.getPassword(),
                 sysUser.getEnabled(),
                 sysUser.getAccountNonExpired(),
                 sysUser.getCredentialsNonExpired(),
                 sysUser.getAccountNonLocked(),
-                sysUser.getAuthorities());
+                sysUser.getSex(),
+                sysUser.getBirthday(),
+                sysUser.getEmail(),
+                sysUser.getAddress(),
+                sysUser.getPhone(),
+                sysUser.getCreateTime(),
+                sysUser.getSysRoles()
+                );
     }
 
     @Override

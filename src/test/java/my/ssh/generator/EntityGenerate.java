@@ -20,7 +20,7 @@ public class EntityGenerate {
 
     @Test
     public void generatorAll() throws Exception{
-//        entityGenerator();
+        entityGenerator();
         daoGenerator();
         daoImplGenerator();
 //        serviceGenerator();

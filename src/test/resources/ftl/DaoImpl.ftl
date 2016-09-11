@@ -35,7 +35,7 @@ public class ${pojo.getDeclarationName()}DaoImpl extends BaseDaoImpl<${pojo.getD
             if (entity.${pojo.getGetterSignature(field)}() > 0) {
                dc.add(Restrictions.eq("${field.name}", entity.${pojo.getGetterSignature(field)}()));
             }
-        <#elseif  "Character"=pojo.getJavaTypeName(field, jdk5) || "Integer"=pojo.getJavaTypeName(field, jdk5)>
+        <#elseif  "Character"=pojo.getJavaTypeName(field, jdk5) || "Integer"=pojo.getJavaTypeName(field, jdk5)|| "Byte"=pojo.getJavaTypeName(field, jdk5)>
             <#foreach column in field.columnIterator><#if column.comment?exists && column.comment?trim?length!=0>
             /**
              * ${column.comment}

@@ -46,16 +46,16 @@ var SysUser = function () {
                     }},
                     {data:"username"},
                     {data: "enabled",mRender:function(value, display, row) {
-                        return value?Status.on+"正常":Status.stop+"禁用";
+                        return (value?Icons.on+" 正常":Icons.stop+" 禁用")
                     }},
                     {data:"accountNonExpired",mRender:function(value, display, row) {
-                        return !value?Status.stop+"账号过期":Status.on+"正常";
+                        return !value?Icons.stop+" 账号过期":Icons.on+" 正常";
                     }},
                     {data:"accountNonLocked",mRender:function(value, display, row) {
-                        return !value?Status.stop+"锁定":Status.on+"正常";
+                        return !value?Icons.stop+" 锁定":Icons.on+" 正常";
                     }},
                     {data:"credentialsNonExpired",mRender:function(value, display, row) {
-                        return !value?Status.stop+"密码过期":Status.on+"正常";
+                        return !value?Icons.stop+" 密码过期":Icons.on+" 正常";
                     }},
                     {mRender: function (value, display, row) {
                         return '';

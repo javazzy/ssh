@@ -35,13 +35,13 @@ public class SysRoleDaoImpl extends BaseDaoImpl<SysRole> implements SysRoleDao {
              * 角色名称
              */
             if (StringUtils.isNotBlank(entity.getName())) {
-                dc.add(Restrictions.eq("name", entity.getName()));
+                dc.add(Restrictions.like("name", entity.getName(), MatchMode.ANYWHERE));
             }
             /**
              * 角色标志
              */
             if (StringUtils.isNotBlank(entity.getAuthority())) {
-                dc.add(Restrictions.eq("authority", entity.getAuthority()));
+                dc.add(Restrictions.like("authority", entity.getAuthority(), MatchMode.ANYWHERE));
             }
         }
         return dc;

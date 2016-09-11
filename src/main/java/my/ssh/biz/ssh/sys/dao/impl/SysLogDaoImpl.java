@@ -41,19 +41,19 @@ public class SysLogDaoImpl extends BaseDaoImpl<SysLog> implements SysLogDao {
              * 用户名称
              */
             if (StringUtils.isNotBlank(entity.getUsername())) {
-                dc.add(Restrictions.eq("username", entity.getUsername()));
+                dc.add(Restrictions.like("username", entity.getUsername(), MatchMode.ANYWHERE));
             }
             /**
              * 类
              */
             if (StringUtils.isNotBlank(entity.getClass_())) {
-                dc.add(Restrictions.eq("class_", entity.getClass_()));
+                dc.add(Restrictions.like("class_", entity.getClass_(), MatchMode.ANYWHERE));
             }
             /**
              * 方法
              */
             if (StringUtils.isNotBlank(entity.getMethod())) {
-                dc.add(Restrictions.eq("method", entity.getMethod()));
+                dc.add(Restrictions.like("method", entity.getMethod(), MatchMode.ANYWHERE));
             }
             /**
              * 产生时间
@@ -65,13 +65,13 @@ public class SysLogDaoImpl extends BaseDaoImpl<SysLog> implements SysLogDao {
              * 日志级别
              */
             if (StringUtils.isNotBlank(entity.getLogLevel())) {
-                dc.add(Restrictions.eq("logLevel", entity.getLogLevel()));
+                dc.add(Restrictions.like("logLevel", entity.getLogLevel(), MatchMode.ANYWHERE));
             }
             /**
              * 日志内容
              */
             if (StringUtils.isNotBlank(entity.getMessage())) {
-                dc.add(Restrictions.eq("message", entity.getMessage()));
+                dc.add(Restrictions.like("message", entity.getMessage(), MatchMode.ANYWHERE));
             }
         }
         return dc;

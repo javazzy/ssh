@@ -4,8 +4,18 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 /**
  * Entity: 系统 - 菜单表
@@ -14,7 +24,7 @@ import java.util.List;
 @Table(name="sys_menu")
 @org.hibernate.annotations.Table(appliesTo = "sys_menu",comment = "系统 - 菜单表")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class SysMenu  implements GrantedAuthority {
+public class SysMenu  implements GrantedAuthority,java.io.Serializable {
 
  
     /**
@@ -61,8 +71,8 @@ public class SysMenu  implements GrantedAuthority {
      * 菜单标志
      */
     private String authority;
-
-    private List<SysRole> sysRoles;
+ 
+    private Set<SysRole> sysRoles = new HashSet<SysRole>(0);
 
     public SysMenu() {
     }
@@ -72,7 +82,7 @@ public class SysMenu  implements GrantedAuthority {
         this.id = id;
         this.title = title;
     }
-    public SysMenu(int id, String title, String levelCode, Integer parent, Integer sort, String type, String url, String method, List<SysRole> sysRoles) {
+    public SysMenu(int id, String title, String levelCode, Integer parent, Integer sort, String type, String url, String method, String authority, Set<SysRole> sysRoles) {
        this.id = id;
        this.title = title;
        this.levelCode = levelCode;
@@ -172,11 +182,11 @@ public class SysMenu  implements GrantedAuthority {
         @JoinColumn(name="MENU_ID", nullable=false, updatable=false) }, inverseJoinColumns = { 
         @JoinColumn(name="ROLE_ID", nullable=false, updatable=false) })
     @JsonIgnore
-    public List<SysRole> getSysRoles() {
+    public Set<SysRole> getSysRoles() {
         return this.sysRoles;
     }
     
-    public void setSysRoles(List<SysRole> sysRoles) {
+    public void setSysRoles(Set<SysRole> sysRoles) {
         this.sysRoles = sysRoles;
     }
 

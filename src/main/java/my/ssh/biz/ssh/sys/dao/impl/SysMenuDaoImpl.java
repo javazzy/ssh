@@ -35,13 +35,13 @@ public class SysMenuDaoImpl extends BaseDaoImpl<SysMenu> implements SysMenuDao {
              * 菜单标题
              */
             if (StringUtils.isNotBlank(entity.getTitle())) {
-                dc.add(Restrictions.eq("title", entity.getTitle()));
+                dc.add(Restrictions.like("title", entity.getTitle(), MatchMode.ANYWHERE));
             }
             /**
              * 菜单层级编码
              */
             if (StringUtils.isNotBlank(entity.getLevelCode())) {
-                dc.add(Restrictions.eq("levelCode", entity.getLevelCode()));
+                dc.add(Restrictions.like("levelCode", entity.getLevelCode(), MatchMode.ANYWHERE));
             }
             /**
              * 父级菜单编号
@@ -59,25 +59,25 @@ public class SysMenuDaoImpl extends BaseDaoImpl<SysMenu> implements SysMenuDao {
              * 菜单类型
              */
             if (StringUtils.isNotBlank(entity.getType())) {
-                dc.add(Restrictions.eq("type", entity.getType()));
+                dc.add(Restrictions.like("type", entity.getType(), MatchMode.ANYWHERE));
             }
             /**
              * 页面链接
              */
             if (StringUtils.isNotBlank(entity.getUrl())) {
-                dc.add(Restrictions.eq("url", entity.getUrl()));
+                dc.add(Restrictions.like("url", entity.getUrl(), MatchMode.ANYWHERE));
             }
             /**
              * 页面链接访问方式
              */
             if (StringUtils.isNotBlank(entity.getMethod())) {
-                dc.add(Restrictions.eq("method", entity.getMethod()));
+                dc.add(Restrictions.like("method", entity.getMethod(), MatchMode.ANYWHERE));
             }
             /**
              * 菜单标志
              */
             if (StringUtils.isNotBlank(entity.getAuthority())) {
-                dc.add(Restrictions.eq("authority", entity.getAuthority()));
+                dc.add(Restrictions.like("authority", entity.getAuthority(), MatchMode.ANYWHERE));
             }
         }
         return dc;

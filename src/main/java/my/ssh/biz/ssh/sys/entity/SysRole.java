@@ -4,8 +4,18 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 /**
  * Entity: 系统 - 角色表
@@ -14,7 +24,7 @@ import java.util.List;
 @Table(name="sys_role")
 @org.hibernate.annotations.Table(appliesTo = "sys_role",comment = "系统 - 角色表")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class SysRole  implements GrantedAuthority {
+public class SysRole  implements GrantedAuthority,java.io.Serializable {
 
  
     /**
@@ -32,9 +42,9 @@ public class SysRole  implements GrantedAuthority {
      */
     private String authority;
  
-    private List<SysMenu> sysMenus;
+    private Set<SysMenu> sysMenus = new HashSet<SysMenu>(0);
  
-    private List<SysUser> sysUsers;
+    private Set<SysUser> sysUsers = new HashSet<SysUser>(0);
 
     public SysRole() {
     }
@@ -43,7 +53,7 @@ public class SysRole  implements GrantedAuthority {
     public SysRole(int id) {
         this.id = id;
     }
-    public SysRole(int id, String name, String authority, List<SysMenu> sysMenus, List<SysUser> sysUsers) {
+    public SysRole(int id, String name, String authority, Set<SysMenu> sysMenus, Set<SysUser> sysUsers) {
        this.id = id;
        this.name = name;
        this.authority = authority;
@@ -84,11 +94,11 @@ public class SysRole  implements GrantedAuthority {
         @JoinColumn(name="ROLE_ID", nullable=false, updatable=false) }, inverseJoinColumns = { 
         @JoinColumn(name="MENU_ID", nullable=false, updatable=false) })
     @JsonIgnore
-    public List<SysMenu> getSysMenus() {
+    public Set<SysMenu> getSysMenus() {
         return this.sysMenus;
     }
     
-    public void setSysMenus(List<SysMenu> sysMenus) {
+    public void setSysMenus(Set<SysMenu> sysMenus) {
         this.sysMenus = sysMenus;
     }
     @ManyToMany(fetch=FetchType.LAZY)
@@ -96,11 +106,11 @@ public class SysRole  implements GrantedAuthority {
         @JoinColumn(name="ROLE_ID", nullable=false, updatable=false) }, inverseJoinColumns = { 
         @JoinColumn(name="USER_ID", nullable=false, updatable=false) })
     @JsonIgnore
-    public List<SysUser> getSysUsers() {
+    public Set<SysUser> getSysUsers() {
         return this.sysUsers;
     }
     
-    public void setSysUsers(List<SysUser> sysUsers) {
+    public void setSysUsers(Set<SysUser> sysUsers) {
         this.sysUsers = sysUsers;
     }
 
