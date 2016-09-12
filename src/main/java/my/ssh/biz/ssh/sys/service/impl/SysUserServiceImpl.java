@@ -43,22 +43,13 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
             throw new UsernameNotFoundException(String.format("用户：%s不存在！", username));
         }
 
-        return new User(
-                sysUser.getId(),
-                sysUser.getUsername(),
-                sysUser.getPassword(),
-                sysUser.getEnabled(),
-                sysUser.getAccountNonExpired(),
-                sysUser.getCredentialsNonExpired(),
-                sysUser.getAccountNonLocked(),
-                sysUser.getSex(),
-                sysUser.getBirthday(),
-                sysUser.getEmail(),
-                sysUser.getAddress(),
-                sysUser.getPhone(),
-                sysUser.getCreateTime(),
-                sysUser.getSysRoles()
-                );
+        return new User(sysUser.getUsername(),
+                        sysUser.getPassword(),
+                        sysUser.getEnabled(),
+                        sysUser.getAccountNonExpired(),
+                        sysUser.getCredentialsNonExpired(),
+                        sysUser.getAccountNonLocked(),
+                        sysUser.getAuthorities());
     }
 
     @Override

@@ -35,22 +35,22 @@ public class SysUser  implements java.io.Serializable {
     /**
      * 是否启用
      */
-    private Byte enabled;
+    private Boolean enabled;
  
     /**
      * 账号是否没有过期
      */
-    private Byte accountNonExpired;
+    private Boolean accountNonExpired;
  
     /**
      * 账号是否没有锁定
      */
-    private Byte accountNonLocked;
+    private Boolean accountNonLocked;
  
     /**
      * 密码是否没有过期
      */
-    private Byte credentialsNonExpired;
+    private Boolean credentialsNonExpired;
  
     /**
      * 性别
@@ -96,7 +96,7 @@ public class SysUser  implements java.io.Serializable {
     public SysUser(int id) {
         this.id = id;
     }
-    public SysUser(int id, String username, String password, Byte enabled, Byte accountNonExpired, Byte accountNonLocked, Byte credentialsNonExpired, String sex, Date birthday, String email, String phone, String address, String photo, Date createTime, Set<SysRole> sysRoles) {
+    public SysUser(int id, String username, String password, Boolean enabled, Boolean accountNonExpired, Boolean accountNonLocked, Boolean credentialsNonExpired, String sex, Date birthday, String email, String phone, String address, String photo, Date createTime, Set<SysRole> sysRoles) {
        this.id = id;
        this.username = username;
        this.password = password;
@@ -144,38 +144,38 @@ public class SysUser  implements java.io.Serializable {
     }
     
     @Column(name="enabled", columnDefinition= "tinyint comment '是否启用' null")
-    public Byte getEnabled() {
+    public Boolean getEnabled() {
         return this.enabled;
     }
     
-    public void setEnabled(Byte enabled) {
+    public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
     
     @Column(name="Account_Non_Expired", columnDefinition= "tinyint comment '账号是否没有过期' null")
-    public Byte getAccountNonExpired() {
+    public Boolean getAccountNonExpired() {
         return this.accountNonExpired;
     }
     
-    public void setAccountNonExpired(Byte accountNonExpired) {
+    public void setAccountNonExpired(Boolean accountNonExpired) {
         this.accountNonExpired = accountNonExpired;
     }
     
     @Column(name="Account_Non_Locked", columnDefinition= "tinyint comment '账号是否没有锁定' null")
-    public Byte getAccountNonLocked() {
+    public Boolean getAccountNonLocked() {
         return this.accountNonLocked;
     }
     
-    public void setAccountNonLocked(Byte accountNonLocked) {
+    public void setAccountNonLocked(Boolean accountNonLocked) {
         this.accountNonLocked = accountNonLocked;
     }
     
     @Column(name="Credentials_Non_Expired", columnDefinition= "tinyint comment '密码是否没有过期' null")
-    public Byte getCredentialsNonExpired() {
+    public Boolean getCredentialsNonExpired() {
         return this.credentialsNonExpired;
     }
     
-    public void setCredentialsNonExpired(Byte credentialsNonExpired) {
+    public void setCredentialsNonExpired(Boolean credentialsNonExpired) {
         this.credentialsNonExpired = credentialsNonExpired;
     }
     
