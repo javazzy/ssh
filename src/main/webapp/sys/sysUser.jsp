@@ -65,7 +65,7 @@
                         <th width="30">
                             <input type="checkbox" class="group-checkable"> </th>
                         <th> 用户名 </th>
-                        <%--<th width="60"> 启用状态 </th>--%>
+                        <th> 状态 </th>
                         <%--<th width="70"> 有效期状态 </th>--%>
                         <%--<th width="60"> 锁定状态 </th>--%>
                         <%--<th width="60"> 密码状态 </th>--%>

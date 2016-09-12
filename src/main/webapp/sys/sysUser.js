@@ -45,9 +45,20 @@ var SysUser = function () {
                         return '<input type="checkbox" class="checkbox" name="id" value="' + value + '">';
                     }},
                     {data:"username"},
-                    // {data: "enabled",mRender:function(value, display, row) {
-                    //     return (value?Icons.on+" 正常":Icons.stop+" 禁用")
-                    // }},
+                    {data: "accountNonExpired",mRender:function(value, display, row) {
+                        console.log(value);
+                        // if(!row.enabled){
+                        //     return Icons.stop+" 用户已禁用";
+                        // }else if(!row.accountNonExpired){
+                        //     return Icons.stop+" 用户已过期";
+                        // }else if(!row.accountNonLocked){
+                        //     return Icons.stop+" 用户已锁定";
+                        // }else if(!row.credentialsNonExpired){
+                        //     return Icons.stop+" 密码已过期";
+                        // }else{
+                        //     return Icons.on+" 正常";
+                        // }
+                    }},
                     // {data:"accountNonExpired",mRender:function(value, display, row) {
                     //     return !value?Icons.stop+" 账号过期":Icons.on+" 正常";
                     // }},
