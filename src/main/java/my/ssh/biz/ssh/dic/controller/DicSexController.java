@@ -1,4 +1,4 @@
-package my.ssh.biz.ssh.sys.controller;
+package my.ssh.biz.ssh.dic.controller;
 
 import my.ssh.biz.common.controller.*;
 import my.ssh.biz.common.service.BaseService;
@@ -7,24 +7,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 
-import my.ssh.biz.ssh.sys.entity.SysUser;
-import my.ssh.biz.ssh.sys.service.SysUserService;
+import my.ssh.biz.ssh.dic.entity.DicSex;
+import my.ssh.biz.ssh.dic.service.DicSexService;
 
 import java.util.List;
 
 /**
- * 控制器：系统 - 用户表
+ * 控制器：
  */
 @Controller
-@RequestMapping("/sysUsers")
-public class SysUserController extends SimpleController<SysUser> {
+@RequestMapping("/dicSexs")
+public class DicSexController extends SimpleController<DicSex> {
 
     @Resource
-    private SysUserService sysUserService;
+    private DicSexService dicSexService;
 
     @Override
     public BaseService getService() {
-        return sysUserService;
+        return dicSexService;
     }
 
     /**
@@ -35,7 +35,7 @@ public class SysUserController extends SimpleController<SysUser> {
     @RequestMapping("/addAll")
     @ResponseBody
     @Override
-    public Result addAll(@RequestBody List<SysUser> list) {
+    public Result addAll(@RequestBody List<DicSex> list) {
         return super.addAll(list);
     }
 
@@ -47,7 +47,7 @@ public class SysUserController extends SimpleController<SysUser> {
     @RequestMapping("/deleteAll")
     @ResponseBody
     @Override
-    public Object deleteAll(@RequestBody List<SysUser> list) {
+    public Object deleteAll(@RequestBody List<DicSex> list) {
         return super.deleteAll(list);
     }
 

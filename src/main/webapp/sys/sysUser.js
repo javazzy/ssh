@@ -45,17 +45,25 @@ var SysUser = function () {
                         return '<input type="checkbox" class="checkbox" name="id" value="' + value + '">';
                     }},
                     {data:"username"},
-                    {data: "enabled",mRender:function(value, display, row) {
-                        return (value?Icons.on+" 正常":Icons.stop+" 禁用")
-                    }},
-                    {data:"accountNonExpired",mRender:function(value, display, row) {
-                        return !value?Icons.stop+" 账号过期":Icons.on+" 正常";
-                    }},
-                    {data:"accountNonLocked",mRender:function(value, display, row) {
-                        return !value?Icons.stop+" 锁定":Icons.on+" 正常";
-                    }},
-                    {data:"credentialsNonExpired",mRender:function(value, display, row) {
-                        return !value?Icons.stop+" 密码过期":Icons.on+" 正常";
+                    // {data: "enabled",mRender:function(value, display, row) {
+                    //     return (value?Icons.on+" 正常":Icons.stop+" 禁用")
+                    // }},
+                    // {data:"accountNonExpired",mRender:function(value, display, row) {
+                    //     return !value?Icons.stop+" 账号过期":Icons.on+" 正常";
+                    // }},
+                    // {data:"accountNonLocked",mRender:function(value, display, row) {
+                    //     return !value?Icons.stop+" 锁定":Icons.on+" 正常";
+                    // }},
+                    // {data:"credentialsNonExpired",mRender:function(value, display, row) {
+                    //     return !value?Icons.stop+" 密码过期":Icons.on+" 正常";
+                    // }},
+                    {data:"dicSex.name"},
+                    {data:"birthday"},
+                    {data:"email"},
+                    {data:"phone"},
+                    {data:"address"},
+                    {data:"createTime", mRender: function (value, display, row) {
+                        return value?new Date(value).format("yyyy-MM-dd HH:mm:ss"):"";
                     }},
                     {mRender: function (value, display, row) {
                         return '';

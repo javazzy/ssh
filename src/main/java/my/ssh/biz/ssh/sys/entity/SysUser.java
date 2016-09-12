@@ -2,6 +2,7 @@ package my.ssh.biz.ssh.sys.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import my.ssh.biz.ssh.dic.entity.DicSex;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.*;
@@ -21,6 +22,11 @@ public class SysUser  implements java.io.Serializable {
      * 用户编号
      */
     private int id;
+ 
+    /**
+     * 性别
+     */
+    private DicSex dicSex;
  
     /**
      * 用户姓名
@@ -51,11 +57,6 @@ public class SysUser  implements java.io.Serializable {
      * 密码是否没有过期
      */
     private Boolean credentialsNonExpired;
- 
-    /**
-     * 性别
-     */
-    private String sex;
  
     /**
      * 生日
@@ -96,15 +97,15 @@ public class SysUser  implements java.io.Serializable {
     public SysUser(int id) {
         this.id = id;
     }
-    public SysUser(int id, String username, String password, Boolean enabled, Boolean accountNonExpired, Boolean accountNonLocked, Boolean credentialsNonExpired, String sex, Date birthday, String email, String phone, String address, String photo, Date createTime, Set<SysRole> sysRoles) {
+    public SysUser(int id, DicSex dicSex, String username, String password, Boolean enabled, Boolean accountNonExpired, Boolean accountNonLocked, Boolean credentialsNonExpired, Date birthday, String email, String phone, String address, String photo, Date createTime, Set<SysRole> sysRoles) {
        this.id = id;
+       this.dicSex = dicSex;
        this.username = username;
        this.password = password;
        this.enabled = enabled;
        this.accountNonExpired = accountNonExpired;
        this.accountNonLocked = accountNonLocked;
        this.credentialsNonExpired = credentialsNonExpired;
-       this.sex = sex;
        this.birthday = birthday;
        this.email = email;
        this.phone = phone;
@@ -123,6 +124,15 @@ public class SysUser  implements java.io.Serializable {
     
     public void setId(int id) {
         this.id = id;
+    }
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="sex_id")
+    public DicSex getDicSex() {
+        return this.dicSex;
+    }
+    
+    public void setDicSex(DicSex dicSex) {
+        this.dicSex = dicSex;
     }
     
     @Column(name="USERNAME", columnDefinition= "varchar(50) comment '用户姓名' null")
@@ -177,15 +187,6 @@ public class SysUser  implements java.io.Serializable {
     
     public void setCredentialsNonExpired(Boolean credentialsNonExpired) {
         this.credentialsNonExpired = credentialsNonExpired;
-    }
-    
-    @Column(name="sex", columnDefinition= "varchar(1) comment '性别' null")
-    public String getSex() {
-        return this.sex;
-    }
-    
-    public void setSex(String sex) {
-        this.sex = sex;
     }
     @Temporal(TemporalType.DATE)
     @Column(name="birthday", columnDefinition= "date comment '生日' null")
@@ -254,7 +255,6 @@ public class SysUser  implements java.io.Serializable {
         this.sysRoles = sysRoles;
     }
 
-
     @JsonIgnore
     @Transient
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -269,6 +269,8 @@ public class SysUser  implements java.io.Serializable {
         }
         return grantedAuthoritys;
     }
+
+
 
 }
 

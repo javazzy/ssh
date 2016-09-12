@@ -1,5 +1,6 @@
 ${pojo.getPackageDeclaration()}
 
+import java.util.List;
 import my.ssh.biz.common.controller.*;
 import my.ssh.biz.common.service.BaseService;
 import my.ssh.biz.common.entity.Result;
@@ -46,7 +47,7 @@ public class ${pojo.getDeclarationName()}Controller extends SimpleController<${p
     @ResponseBody
     @Override
     public Object deleteAll(@RequestBody List<${pojo.getDeclarationName()}> list) {
-        super.deleteAll(list);
+        return super.deleteAll(list);
     }
 
 }

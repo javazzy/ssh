@@ -32,6 +32,12 @@ public class SysUserDaoImpl extends BaseDaoImpl<SysUser> implements SysUserDao {
                dc.add(Restrictions.eq("id", entity.getId()));
             }
             /**
+             * 性别
+             */
+            if (null != entity.getDicSex()) {
+                dc.add(Restrictions.eq("dicSex.ID", entity.getDicSex().getId()));
+            }
+            /**
              * 用户姓名
              */
             if (StringUtils.isNotBlank(entity.getUsername())) {
@@ -66,12 +72,6 @@ public class SysUserDaoImpl extends BaseDaoImpl<SysUser> implements SysUserDao {
              */
             if (null != entity.getCredentialsNonExpired()) {
                dc.add(Restrictions.eq("credentialsNonExpired", entity.getCredentialsNonExpired()));
-            }
-            /**
-             * 性别
-             */
-            if (StringUtils.isNotBlank(entity.getSex())) {
-                dc.add(Restrictions.like("sex", entity.getSex(), MatchMode.ANYWHERE));
             }
             /**
              * 生日

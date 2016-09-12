@@ -23,9 +23,9 @@ public class EntityGenerate {
         entityGenerator();
         daoGenerator();
         daoImplGenerator();
-//        serviceGenerator();
-//        serviceImplGenerator();
-//        controllerGenerator();
+        serviceGenerator();
+        serviceImplGenerator();
+        controllerGenerator();
     }
 
     @Test
@@ -82,7 +82,7 @@ public class EntityGenerate {
 
         String schema = p.getProperty("generator.schema");
         String catalog = schema;
-        String table = p.getProperty("generator.table");
+        String tables = p.getProperty("generator.table");
         String outputDir = p.getProperty("generator.outputDir");
         String packageName = p.getProperty("generator.packageName");
 
@@ -92,7 +92,9 @@ public class EntityGenerate {
 
         //配置数据库表
         TableSelectorStrategy strategy = new TableSelectorStrategy(cfg.getReverseEngineeringStrategy());
-        strategy.addSchemaSelection(new SchemaSelection(catalog,schema,table));
+        for(String table : tables.split(",")) {
+            strategy.addSchemaSelection(new SchemaSelection(catalog, schema, table));
+        }
         strategy.tableToIdentifierPropertyName(new TableIdentifier("id"));
 
         //获取配置实体包名

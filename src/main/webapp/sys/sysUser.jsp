@@ -65,11 +65,21 @@
                         <th width="30">
                             <input type="checkbox" class="group-checkable"> </th>
                         <th> 用户名 </th>
-                        <th width="80"> 启用状态 </th>
-                        <th width="80"> 有效期状态 </th>
-                        <th width="80"> 锁定状态 </th>
-                        <th width="80"> 密码状态 </th>
-                        <th width="120"> 操作 </th>
+                        <%--<th width="60"> 启用状态 </th>--%>
+                        <%--<th width="70"> 有效期状态 </th>--%>
+                        <%--<th width="60"> 锁定状态 </th>--%>
+                        <%--<th width="60"> 密码状态 </th>--%>
+
+
+                        <th> 性别 </th>
+                        <th> 生日 </th>
+                        <th> 邮箱 </th>
+                        <th> 手机 </th>
+                        <th> 住址 </th>
+                        <th> 注册时间 </th>
+
+
+                        <th width="60"> 操作 </th>
                     </tr>
                     <tr role="row" class="filter">
                         <td> </td>
@@ -79,6 +89,8 @@
                         <td>
 
                         </td>
+                        <td></td>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>

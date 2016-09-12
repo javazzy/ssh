@@ -73,7 +73,12 @@ var Datatable = function() {
                     orderCellsTop: true,
                     columnDefs: [{ // define columns sorting options(by default all columns are sortable extept the first checkbox column)
                         orderable: false,
-                        targets: [0]
+                        targets: [0],
+                        searchable: false
+                    }, {
+                        defaultContent: '',
+                        orderable: true,
+                        targets: ['_all']
                     }],
 
                     pagingType: "bootstrap_extended", // pagination type(bootstrap, bootstrap_full_number or bootstrap_extended)
