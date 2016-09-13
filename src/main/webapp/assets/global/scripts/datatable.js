@@ -214,6 +214,11 @@ var Datatable = function() {
                 var checked = $(this).prop("checked");
                 $(set).each(function() {
                     $(this).prop("checked", checked);
+                    if(checked){
+                        $(this).parents("tr").addClass("selected");
+                    }else{
+                        $(this).parents("tr").removeClass("selected");
+                    }
                 });
                 $.uniform.update(set);
                 countSelectedRecords();
@@ -221,6 +226,29 @@ var Datatable = function() {
 
             // handle row's checkbox click
             table.on('change', 'tbody > tr > td:nth-child(1) input[type="checkbox"]', function() {
+                if(this.checked){
+                    $(this).parents("tr").addClass("selected");
+                }else{
+                    $(this).parents("tr").removeClass("selected");
+                }
+                countSelectedRecords();
+            });
+
+            // handle row's click
+            table.on('click', 'tbody > tr', function() {
+                var clickTr = this;
+                var set = table.find('tbody > tr > td:nth-child(1) input[type="checkbox"]');
+                $(set).each(function() {
+                    if($(this).parents("tr").get(0) == clickTr){
+                        $(this).prop("checked", true);
+                        $(this).parents("tr").addClass("selected");
+                    }else{
+                        $(this).prop("checked", false);
+                        $(this).parents("tr").removeClass("selected");
+                    }
+                });
+
+                $.uniform.update(set);
                 countSelectedRecords();
             });
 

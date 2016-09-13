@@ -10,7 +10,10 @@ import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
 import javax.annotation.Resource;
+import javax.persistence.Id;
 import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.List;
 
 /**
@@ -139,10 +142,31 @@ public abstract class BaseDaoImpl<T> extends HibernateDaoSupport implements Base
                 String[] orderArr = page.getOrder().split(",");
                 for (String order : orderArr) {
                     String[] columnDir = order.split(" ");
+                    String[] orderColumnInfos = columnDir[0].split("\\.");
+                    String orderProp = orderColumnInfos[0];
+                    if(orderColumnInfos.length>1){
+
+                        try {
+                            Field orderPropField = getClassType().getDeclaredField(orderProp);
+                            Class orderPropClass = orderPropField.getType();
+                            Method[] orderPropClassMethods = orderPropClass.getMethods();
+                            for(Method opcm : orderPropClassMethods){
+                                if(null != opcm.getAnnotation(Id.class)){
+                                    String methodName = opcm.getName();
+                                    String fieldName = methodName.substring(3,4).toLowerCase()+methodName.substring(4);
+                                    orderProp = orderProp+"."+fieldName;
+                                    break;
+                                }
+                            }
+                        } catch (NoSuchFieldException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
                     if (columnDir.length == 1 || "ASC".equals(columnDir[1].toUpperCase())) {
-                        dc.addOrder(Order.asc(columnDir[0]));
+                        dc.addOrder(Order.asc(orderProp));
                     } else {
-                        dc.addOrder(Order.desc(columnDir[0]));
+                        dc.addOrder(Order.desc(orderProp));
                     }
                 }
             }

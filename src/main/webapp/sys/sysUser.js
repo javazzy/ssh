@@ -45,29 +45,6 @@ var SysUser = function () {
                         return '<input type="checkbox" class="checkbox" name="id" value="' + value + '">';
                     }},
                     {data:"username"},
-                    {data: "accountNonExpired",mRender:function(value, display, row) {
-                        console.log(value);
-                        // if(!row.enabled){
-                        //     return Icons.stop+" 用户已禁用";
-                        // }else if(!row.accountNonExpired){
-                        //     return Icons.stop+" 用户已过期";
-                        // }else if(!row.accountNonLocked){
-                        //     return Icons.stop+" 用户已锁定";
-                        // }else if(!row.credentialsNonExpired){
-                        //     return Icons.stop+" 密码已过期";
-                        // }else{
-                        //     return Icons.on+" 正常";
-                        // }
-                    }},
-                    // {data:"accountNonExpired",mRender:function(value, display, row) {
-                    //     return !value?Icons.stop+" 账号过期":Icons.on+" 正常";
-                    // }},
-                    // {data:"accountNonLocked",mRender:function(value, display, row) {
-                    //     return !value?Icons.stop+" 锁定":Icons.on+" 正常";
-                    // }},
-                    // {data:"credentialsNonExpired",mRender:function(value, display, row) {
-                    //     return !value?Icons.stop+" 密码过期":Icons.on+" 正常";
-                    // }},
                     {data:"dicSex.name"},
                     {data:"birthday"},
                     {data:"email"},
@@ -75,6 +52,19 @@ var SysUser = function () {
                     {data:"address"},
                     {data:"createTime", mRender: function (value, display, row) {
                         return value?new Date(value).format("yyyy-MM-dd HH:mm:ss"):"";
+                    }},
+                    {data: "enabled",mRender:function(value, display, row) {
+                        if(!row.enabled){
+                            return Icons.stop+" 用户禁用";
+                        }else if(!row.accountNonExpired){
+                            return Icons.stop+" 账号过期";
+                        }else if(!row.accountNonLocked){
+                            return Icons.stop+" 账户锁定";
+                        }else if(!row.credentialsNonExpired){
+                            return Icons.stop+" 密码过期";
+                        }else{
+                            return Icons.on+" 正常";
+                        }
                     }},
                     {mRender: function (value, display, row) {
                         return '';
