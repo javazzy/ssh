@@ -208,7 +208,7 @@ var Datatable = function() {
                 $('.table-group-actions', tableWrapper).html($('.table-actions-wrapper', tableContainer).html()); // place the panel inside the wrapper
                 $('.table-actions-wrapper', tableContainer).remove(); // remove the template container
             }
-            // handle group checkboxes check/uncheck
+            // 表格头复选框改变事件
             $('.group-checkable', table).change(function() {
                 var set = table.find('tbody > tr > td:nth-child(1) input[type="checkbox"]');
                 var checked = $(this).prop("checked");
@@ -224,29 +224,39 @@ var Datatable = function() {
                 countSelectedRecords();
             });
 
-            // handle row's checkbox click
+            // 行复选框改变事件
             table.on('change', 'tbody > tr > td:nth-child(1) input[type="checkbox"]', function() {
                 if(this.checked){
                     $(this).parents("tr").addClass("selected");
                 }else{
                     $(this).parents("tr").removeClass("selected");
                 }
+
+                var flag = true;
+                table.find('tbody > tr > td:nth-child(1) input[type="checkbox"]').each(function(i,chk){
+                    if(!this.checked){
+                        flag = false;
+                        return false;
+                    }
+                });
+                table.find('.group-checkable').prop("checked",flag);
+                $.uniform.update(table.find('.group-checkable'));
                 countSelectedRecords();
             });
 
-            // handle row's click
-            table.on('click', 'tbody > tr', function() {
-                var clickTr = this;
+            // 行点击事件,排除事件源是复选框的情况
+            table.on('click', 'tbody > tr', function(event) {
+                if(event.target.type=="checkbox" && event.target.className=="checkbox"){
+                    return;
+                }
                 var set = table.find('tbody > tr > td:nth-child(1) input[type="checkbox"]');
                 $(set).each(function() {
-                    if($(this).parents("tr").get(0) == clickTr){
-                        $(this).prop("checked", true);
-                        $(this).parents("tr").addClass("selected");
-                    }else{
-                        $(this).prop("checked", false);
-                        $(this).parents("tr").removeClass("selected");
-                    }
+                    $(this).prop("checked", false);
+                    $(this).parents("tr").removeClass("selected");
                 });
+
+                $(this).find('td:nth-child(1) input[type="checkbox"]').prop("checked", true);
+                $(this).addClass("selected");
 
                 $.uniform.update(set);
                 countSelectedRecords();

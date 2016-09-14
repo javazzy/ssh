@@ -12,7 +12,6 @@ import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import javax.annotation.Resource;
 import javax.persistence.Id;
 import java.io.Serializable;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.List;
 
@@ -39,7 +38,7 @@ public abstract class BaseDaoImpl<T> extends HibernateDaoSupport implements Base
     @Override
     public void updateDynamic(T entity) throws Exception {
         T source = this.get(BeanUtils.getPrimaryKeyValue(entity));
-        BeanUtils.copyPropertiesIgnoreNull(entity,source);
+        BeanUtils.copyPropertiesIgnoreNull(entity, source);
         this.update(source);
     }
 
@@ -75,7 +74,7 @@ public abstract class BaseDaoImpl<T> extends HibernateDaoSupport implements Base
 
     @Override
     public List<T> list(T entiry) {
-        return this.pageList(entiry,new Page());
+        return this.pageList(entiry, new Page());
     }
 
     @Override
@@ -103,7 +102,7 @@ public abstract class BaseDaoImpl<T> extends HibernateDaoSupport implements Base
 
     @Override
     public long searchCount(T entity) {
-        DetachedCriteria dc = getDetachedCriteria(entity,null);
+        DetachedCriteria dc = getDetachedCriteria(entity, null);
         if (null == dc) {
             dc = DetachedCriteria.forClass(entity.getClass());
         }
@@ -118,7 +117,7 @@ public abstract class BaseDaoImpl<T> extends HibernateDaoSupport implements Base
 
     @Override
     public List<T> searchList(T entity, Page<T> page) {
-        return (List<T>) this.getHibernateTemplate().findByCriteria(this.getDetachedCriteria(entity,page));
+        return (List<T>) this.getHibernateTemplate().findByCriteria(this.getDetachedCriteria(entity, page));
 
     }
 
@@ -143,18 +142,15 @@ public abstract class BaseDaoImpl<T> extends HibernateDaoSupport implements Base
                 for (String order : orderArr) {
                     String[] columnDir = order.split(" ");
                     String[] orderColumnInfos = columnDir[0].split("\\.");
-                    String orderProp = orderColumnInfos[0];
-                    if(orderColumnInfos.length>1){
-
+                    if (orderColumnInfos.length > 1) {
                         try {
-                            Field orderPropField = getClassType().getDeclaredField(orderProp);
-                            Class orderPropClass = orderPropField.getType();
-                            Method[] orderPropClassMethods = orderPropClass.getMethods();
-                            for(Method opcm : orderPropClassMethods){
-                                if(null != opcm.getAnnotation(Id.class)){
-                                    String methodName = opcm.getName();
-                                    String fieldName = methodName.substring(3,4).toLowerCase()+methodName.substring(4);
-                                    orderProp = orderProp+"."+fieldName;
+                            Method[] orderPropClassMethods = getClassType().getDeclaredField(orderColumnInfos[0]).getType().getMethods();
+                            for (Method opcm : orderPropClassMethods) {
+                                if (null != opcm.getAnnotation(Id.class)) {
+                                    String propName = opcm.getName().substring(3, 4).toLowerCase() + opcm.getName().substring(4);
+                                    if (!propName.equals(orderColumnInfos[1])) {
+                                        columnDir[0] = orderColumnInfos[0] + "." + propName;
+                                    }
                                     break;
                                 }
                             }
@@ -164,9 +160,9 @@ public abstract class BaseDaoImpl<T> extends HibernateDaoSupport implements Base
 
                     }
                     if (columnDir.length == 1 || "ASC".equals(columnDir[1].toUpperCase())) {
-                        dc.addOrder(Order.asc(orderProp));
+                        dc.addOrder(Order.asc(columnDir[0]));
                     } else {
-                        dc.addOrder(Order.desc(orderProp));
+                        dc.addOrder(Order.desc(columnDir[0]));
                     }
                 }
             }
@@ -180,10 +176,10 @@ public abstract class BaseDaoImpl<T> extends HibernateDaoSupport implements Base
                 dc.setResultTransformer(Transformers.aliasToBean(getClassType()));
             }
 
-            if(page.getStart()>=0){
+            if (page.getStart() >= 0) {
                 dc.getExecutableCriteria(this.getSessionFactory().getCurrentSession()).setFirstResult(page.getStart());
             }
-            if(page.getLength()>0){
+            if (page.getLength() > 0) {
                 dc.getExecutableCriteria(this.getSessionFactory().getCurrentSession()).setMaxResults(page.getLength());
             }
 
