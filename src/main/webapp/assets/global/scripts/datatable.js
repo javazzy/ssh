@@ -42,10 +42,10 @@ var Datatable = function() {
                 loadingMessage: '载入中...',
                 dataTable: {
                     dom: '<"datatable-header"><"datatable-scroll"t><"datatable-footer text-right"ilp>', // datatable layout
-                    pageLength: 10, // default records per page
+                    pageLength: 5, // default records per page
                     lengthMenu: [
-                        [5, 10, 20, 50, 100, 150, -1],
-                        [5, 10, 20, 50, 100, 150, "All"] // change per page values here
+                        [5, 10, 20, 50, 100, -1],
+                        [5, 10, 20, 50, 100, "All"] // change per page values here
                     ],
                     // bStateSave: true, // save datatable state(pagination, sort, etc) in cookie.
                     language: { // language settings

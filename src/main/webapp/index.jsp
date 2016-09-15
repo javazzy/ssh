@@ -27,6 +27,9 @@
     <link href="assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css" />
     <link href="assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <link href="assets/global/plugins/bootstrap-toastr/toastr.min.css" rel="stylesheet" type="text/css" />
+    <!-- END PAGE LEVEL PLUGINS -->
     <!-- BEGIN THEME GLOBAL STYLES -->
     <link href="assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
     <link href="assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
@@ -374,6 +377,10 @@
     <script src="assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
     <script src="assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
     <!-- END CORE PLUGINS -->
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <script src="assets/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/bootstrap-toastr/toastr.min.js" type="text/javascript"></script>
+    <!-- END PAGE LEVEL PLUGINS -->
     <!-- BEGIN THEME GLOBAL SCRIPTS -->
     <script src="assets/global/scripts/app.min.js" type="text/javascript"></script>
     <!-- END THEME GLOBAL SCRIPTS -->
@@ -382,10 +389,11 @@
     <script src="assets/layouts/layout/scripts/demo.min.js" type="text/javascript"></script>
     <script src="assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
     <!-- END THEME LAYOUT SCRIPTS -->
-
-    <%--<script src="assets/global/plugins/common.js" type="text/javascript"></script>--%>
+    <%--<script src="assets/global/plugins/commonSetting.js" type="text/javascript"></script>--%>
     <script src="assets/global/plugins/DateFormat.js" type="text/javascript"></script>
     <script src="assets/global/scripts/status.js" type="text/javascript"></script>
+    <script src="assets/global/scripts/commonSetting.js" type="text/javascript"></script>
+    <script src="assets/global/scripts/alerts.js" type="text/javascript"></script>
 
     <script type="text/javascript">
         $(function(){

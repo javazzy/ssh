@@ -15,9 +15,9 @@
         </div>
         <div class="actions">
             <div class="btn-group btn-group-devided" data-toggle="buttons">
-                <label class="btn btn-transparent grey-salsa btn-outline btn-circle btn-sm active">
+                <label class="btn btn-transparent grey-salsa btn-outline btn-circle btn-sm active" onclick="alert('aaa')">
                     <input type="radio" name="options" class="toggle" id="option1">Actions</label>
-                <label class="btn btn-transparent grey-salsa btn-outline btn-circle btn-sm">
+                <label class="btn btn-transparent grey-salsa btn-outline btn-circle btn-sm" onclick="alert()">
                     <input type="radio" name="options" class="toggle" id="option2">Settings</label>
             </div>
             <div class="btn-group">
