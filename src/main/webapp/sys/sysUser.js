@@ -1,5 +1,7 @@
 var SysUser = function () {
 
+    var grid = new Datatable();
+
     var initPickers = function () {
         //init date pickers
         $('.date-picker').datepicker({
@@ -9,8 +11,6 @@ var SysUser = function () {
     }
 
     var handleRecords = function () {
-
-        var grid = new Datatable();
 
         grid.init({
             src: $("#datatable_ajax"),
@@ -113,6 +113,63 @@ var SysUser = function () {
         grid.clearAjaxParams();
     }
 
+    var initForm = function () {
+
+        $(".add").click(function(){
+            $(".form-modal").modal("show");
+        });
+        $(".edit").click(function(){
+            var c = grid.getSelectedRowsCount();
+            if(c == 0){
+                warning("请选择一条记录进行编辑！")
+                return;
+            }else if(c > 1){
+                warning("最多选择一条记录进行编辑！")
+                return;
+            }
+            console.log(c);
+            $('body').modalmanager('loading');
+
+            $('#form-modal').modal();
+        });
+
+        $('#blockui_sample_3_1_0').click(function() {
+            App.blockUI({
+                target: '#basic',
+                overlayColor: 'none',
+                cenrerY: true,
+                animate: true
+            });
+
+            window.setTimeout(function() {
+                App.unblockUI('#basic');
+            }, 2000);
+        });
+
+        $('#blockui_sample_3_1').click(function() {
+            App.blockUI({
+                target: '#blockui_sample_3_1_element',
+                overlayColor: 'none',
+                animate: true
+            });
+        });
+
+        $('#blockui_sample_3_1_1').click(function() {
+            App.unblockUI('#blockui_sample_3_1_element');
+        });
+
+        $('#blockui_sample_3_2').click(function() {
+            App.blockUI({
+                target: '#blockui_sample_3_2_element',
+                boxed: true
+            });
+        });
+
+        $('#blockui_sample_3_2_1').click(function() {
+            App.unblockUI('#blockui_sample_3_2_element');
+        });
+    }
+
     return {
 
         //main function to initiate the module
@@ -120,6 +177,7 @@ var SysUser = function () {
 
             initPickers();
             handleRecords();
+            initForm();
         }
 
     };
