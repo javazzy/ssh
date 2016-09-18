@@ -5,6 +5,8 @@ var SysUser = function () {
     var initPickers = function () {
         //init date pickers
         $('.date-picker').datepicker({
+            language:"zh-CN",
+            format:"yyyy-dd-mm",
             rtl: App.isRTL(),
             autoclose: true
         });
@@ -174,7 +176,6 @@ var SysUser = function () {
 
         //main function to initiate the module
         init: function () {
-
             initPickers();
             handleRecords();
             initForm();
