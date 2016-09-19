@@ -1,9 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<!-- BEGIN PAGE LEVEL PLUGINS -->
-
-<!-- END PAGE LEVEL PLUGINS -->
-
 <!-- Begin: life time stats -->
 <div class="portlet light portlet-fit portlet-datatable bordered">
     <div class="portlet-title">
@@ -87,54 +83,59 @@
 
 <!-- Begin:form modal -->
 <!-- stackable -->
-<div class="modal container fade form-modal" tabindex="-1" data-backdrop="static" data-width="900">
+<div class="modal container fade form-modal" tabindex="-1" data-backdrop="static" data-width="600">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
         <h4 class="modal-title">用户</h4>
     </div>
     <div class="modal-body form">
 
-        <form class="form-horizontal" role="form">
+        <form id="sysUserForm" class="form-horizontal" role="form">
             <div class="form-body">
                 <div class="form-group">
-                    <label class="col-md-2 control-label">用户名</label>
-                    <div class="col-md-4">
-                        <input name="username" type="text" class="form-control">
+                    <label class="col-md-3 control-label">用户名<span class="required"> * </span></label>
+                    <div class="col-md-7">
+                        <div class="input-icon right">
+                            <i class="fa"></i>
+                            <input type="text" class="form-control" name="username">
+                        </div>
                     </div>
-
-                    <label class="col-md-2 control-label">性别</label>
-                    <div class="col-md-4">
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">性别<span class="required"> * </span></label>
+                    <div class="col-md-7">
                         <div class="radio-list">
                             <label class="radio-inline">
-                                <input type="radio" name="dicSex.id" value="1" checked> 男 </label>
+                                <input type="radio" name="dicSex.id" value="1" checked> <span aria-hidden="true" class="icon-user"></span> 男 </label>
                             <label class="radio-inline">
-                                <input type="radio" name="dicSex.id" value="2"> 女 </label>
+                                <input type="radio" name="dicSex.id" value="2"> <span aria-hidden="true" class="icon-user-female"></span> 女 </label>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-2 control-label">密码</label>
-                    <div class="col-md-4">
-                        <div class="input-group">
+                    <label class="col-md-3 control-label">密码<span class="required"> * </span></label>
+                    <div class="col-md-7">
+                        <div class="input-icon right">
+                            <i class="fa"></i>
                             <input name="password" type="password" class="form-control">
-                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
                         </div>
                     </div>
-
-                    <label class="col-md-2 control-label">确认密码</label>
-                    <div class="col-md-4">
-                        <div class="input-group">
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">确认密码<span class="required"> * </span></label>
+                    <div class="col-md-7">
+                        <div class="input-icon right">
+                            <i class="fa"></i>
                             <input name="re-password" type="password" class="form-control">
-                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
                         </div>
                     </div>
 
                 </div>
                 <div class="form-group">
-                    <label class="col-md-2 control-label">生日</label>
-                    <div class="col-md-4">
+                    <label class="col-md-3 control-label">生日</label>
+                    <div class="col-md-7">
                         <div class="input-group date date-picker">
-                            <input type="text" class="form-control"  name="birthday">
+                            <input type="text" class="form-control" name="birthday">
                             <span class="input-group-btn">
                                 <button class="btn default" type="button">
                                     <i class="fa fa-calendar"></i>
@@ -142,23 +143,39 @@
                             </span>
                         </div>
                     </div>
-
-                    <label class="col-md-2 control-label">邮箱</label>
-                    <div class="col-md-4">
-                        <div class="input-group">
-                                                <span class="input-group-addon">
-                                                    <i class="fa fa-envelope"></i>
-                                                </span>
-                            <input name="email" type="email" class="form-control"> </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">邮箱</label>
+                    <div class="col-md-7">
+                        <div class="input-icon right">
+                            <i class="fa"></i>
+                            <input type="text" class="form-control" name="email">
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-2 control-label">手机</label>
-                    <div class="col-md-4">
-                        <input name="phone" type="text" class="form-control">
+                    <label class="col-md-3 control-label">是否禁用</label>
+                    <div class="col-md-7">
+                        <div class="radio-list">
+                            <label class="radio-inline">
+                                <input type="radio" name="enabled" value="1" checked> 启用 </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="enabled" value="0"> 禁用 </label>
+                        </div>
                     </div>
-                    <label class="col-md-2 control-label">住址</label>
-                    <div class="col-md-4">
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">手机</label>
+                    <div class="col-md-7">
+                        <div class="input-icon right">
+                            <i class="fa"></i>
+                            <input name="phone" type="text" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">住址</label>
+                    <div class="col-md-7">
                         <textarea name="address" class="form-control" rows="3"></textarea>
                     </div>
                 </div>
@@ -173,10 +190,6 @@
     </div>
 </div>
 <!-- Begin:form modal -->
-
-<!-- BEGIN PAGE LEVEL PLUGINS -->
-
-<!-- END PAGE LEVEL PLUGINS -->
 
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
 <script src="sys/sysUser.js" type="text/javascript"></script>
