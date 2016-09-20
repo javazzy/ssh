@@ -102,17 +102,6 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-3 control-label">性别<span class="required"> * </span></label>
-                    <div class="col-md-7">
-                        <div class="radio-list">
-                            <label class="radio-inline">
-                                <input type="radio" name="dicSex.id" value="1" checked> <span aria-hidden="true" class="icon-user"></span> 男 </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="dicSex.id" value="2"> <span aria-hidden="true" class="icon-user-female"></span> 女 </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
                     <label class="col-md-3 control-label">密码<span class="required"> * </span></label>
                     <div class="col-md-7">
                         <div class="input-icon right">
@@ -126,10 +115,20 @@
                     <div class="col-md-7">
                         <div class="input-icon right">
                             <i class="fa"></i>
-                            <input name="re-password" type="password" class="form-control">
+                            <input name="re_password" type="password" class="form-control">
                         </div>
                     </div>
-
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">性别</label>
+                    <div class="col-md-7">
+                        <div class="radio-list">
+                            <label class="radio-inline">
+                                <input type="radio" name="dicSex.id" value="1" checked> <span aria-hidden="true" class="icon-user"></span> 男 </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="dicSex.id" value="2"> <span aria-hidden="true" class="icon-user-female"></span> 女 </label>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-3 control-label">生日</label>
@@ -185,8 +184,8 @@
 
     </div>
     <div class="modal-footer">
-        <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
-        <button type="button" class="btn green">Ok</button>
+        <button type="button" data-dismiss="modal" class="btn btn-outline dark">关闭</button>
+        <button type="button" class="btn green"></button>
     </div>
 </div>
 <!-- Begin:form modal -->

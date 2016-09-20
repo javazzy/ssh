@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="utf-8" %>
+X<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="utf-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
@@ -399,6 +399,8 @@
 
     <script src="assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
     <script src="assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/jquery-validation/js/localization/messages_zh.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/jquery-validation/js/jquery.metadata.js" type="text/javascript"></script>
     <script src="assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
     <script src="assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
     <script src="assets/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js" type="text/javascript"></script>
@@ -417,7 +419,7 @@
     <script src="assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
     <!-- END THEME LAYOUT SCRIPTS -->
     <%--<script src="assets/global/plugins/commonSetting.js" type="text/javascript"></script>--%>
-    <script src="assets/global/scripts/status.js" type="text/javascript"></script>
+    <script src="assets/global/scripts/icons.js" type="text/javascript"></script>
     <script src="assets/global/scripts/commonSetting.js" type="text/javascript"></script>
     <script src="assets/global/scripts/alerts.js" type="text/javascript"></script>
 

@@ -192,9 +192,11 @@ var SysUser = function () {
                     required: true
                 },
                 password: {
+                    minlength: 6,
                     required: true
                 },
-                're-password': {
+                re_password: {
+                    minlength: 6,
                     equalTo: "[name='password']"
                 },
                 email: {
@@ -203,9 +205,7 @@ var SysUser = function () {
                 },
                 phone: {
                     required: true,
-                    digits: true,
-                    minlength:11,
-                    maxlength:11
+                    phone: true
                 }
             },
 
