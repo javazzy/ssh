@@ -399,16 +399,16 @@ X<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="ut
 
     <script src="assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
     <script src="assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
+    <%--<script src="assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>--%>
     <script src="assets/global/plugins/jquery-validation/js/localization/messages_zh.min.js" type="text/javascript"></script>
     <script src="assets/global/plugins/jquery-validation/js/jquery.metadata.js" type="text/javascript"></script>
-    <script src="assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
     <script src="assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
     <script src="assets/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js" type="text/javascript"></script>
-    <script src="assets/global/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js" type="text/javascript"></script>
-    <script src="assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js" type="text/javascript"></script>
-    <script src="assets/global/plugins/ckeditor/ckeditor.js" type="text/javascript"></script>
-    <script src="assets/global/plugins/bootstrap-markdown/lib/markdown.js" type="text/javascript"></script>
-    <script src="assets/global/plugins/bootstrap-markdown/js/bootstrap-markdown.js" type="text/javascript"></script>
+    <%--<script src="assets/global/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js" type="text/javascript"></script>--%>
+    <%--<script src="assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js" type="text/javascript"></script>--%>
+    <%--<script src="assets/global/plugins/ckeditor/ckeditor.js" type="text/javascript"></script>--%>
+    <%--<script src="assets/global/plugins/bootstrap-markdown/lib/markdown.js" type="text/javascript"></script>--%>
+    <%--<script src="assets/global/plugins/bootstrap-markdown/js/bootstrap-markdown.js" type="text/javascript"></script>--%>
     <!-- END PAGE LEVEL PLUGINS -->
     <!-- BEGIN THEME GLOBAL SCRIPTS -->
     <script src="assets/global/scripts/app.min.js" type="text/javascript"></script>

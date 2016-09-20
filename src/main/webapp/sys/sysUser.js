@@ -186,28 +186,28 @@ var SysUser = function () {
             errorClass: 'help-block help-block-error', // default input error message class
             focusInvalid: false, // do not focus the last invalid input
             ignore: "",  // validate all fields including form hidden input
-            rules: {
-                username: {
-                    minlength: 2,
-                    required: true
-                },
-                password: {
-                    minlength: 6,
-                    required: true
-                },
-                re_password: {
-                    minlength: 6,
-                    equalTo: "[name='password']"
-                },
-                email: {
-                    required: false,
-                    email: true
-                },
-                phone: {
-                    required: true,
-                    phone: true
-                }
-            },
+            // rules: {
+            //     username: {
+            //         minlength: 2,
+            //         required: true
+            //     },
+            //     password: {
+            //         minlength: 6,
+            //         required: true
+            //     },
+            //     re_password: {
+            //         minlength: 6,
+            //         equalTo: "[name='password']"
+            //     },
+            //     email: {
+            //         required: false,
+            //         email: true
+            //     },
+            //     phone: {
+            //         required: true,
+            //         phone: true
+            //     }
+            // },
 
             invalidHandler: function (event, validator) { //display error alert on form submit
                 success2.hide();
@@ -242,7 +242,6 @@ var SysUser = function () {
                 form[0].submit(); // submit the form
             }
         });
-
 
     }
 
