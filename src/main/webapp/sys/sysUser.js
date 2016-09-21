@@ -135,41 +135,20 @@ var SysUser = function () {
             $('#form-modal').modal();
         });
 
-        $('#blockui_sample_3_1_0').click(function() {
+
+        $('.btn-save').click(function() {
             App.blockUI({
-                target: '#basic',
+                target: '.form-modal',
                 overlayColor: 'none',
                 cenrerY: true,
                 animate: true
             });
-
-            window.setTimeout(function() {
-                App.unblockUI('#basic');
-            }, 2000);
         });
 
-        $('#blockui_sample_3_1').click(function() {
-            App.blockUI({
-                target: '#blockui_sample_3_1_element',
-                overlayColor: 'none',
-                animate: true
-            });
+        $('.btn-cancen').click(function() {
+            App.unblockUI('.form-modal');
         });
 
-        $('#blockui_sample_3_1_1').click(function() {
-            App.unblockUI('#blockui_sample_3_1_element');
-        });
-
-        $('#blockui_sample_3_2').click(function() {
-            App.blockUI({
-                target: '#blockui_sample_3_2_element',
-                boxed: true
-            });
-        });
-
-        $('#blockui_sample_3_2_1').click(function() {
-            App.unblockUI('#blockui_sample_3_2_element');
-        });
     }
 
     // validation using icons

@@ -178,8 +178,8 @@
 
     </div>
     <div class="modal-footer">
-        <button type="button" data-dismiss="modal" class="btn btn-outline dark">取消</button>
-        <button type="button" class="btn green">保存</button>
+        <button type="button" data-dismiss="modal" class="btn btn-outline dark btn-cancen">取消</button>
+        <button type="button" class="btn green btn-save">保存</button>
     </div>
 </div>
 <!-- Begin:form modal -->
