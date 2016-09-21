@@ -60,19 +60,6 @@ $(function(){
         }
     });
 
-    // $(document).keydown(function (event) {
-    //     if (event.keyCode == 8) { // 回置（删格）
-    //         try{
-    //             var target = $(event.target);
-    //             if(target.is(":text")
-    //                 || target.is(":password")
-    //                 || target.hasClass("cke_editable")){
-    //                 return true;
-    //             }
-    //         }catch(e){}
-    //         return false;
-    //     }
-    // });
 });
 
 /** * 对Date的扩展，将 Date 转化为指定格式的String * 月(M)、日(d)、12小时(h)、24小时(H)、分(m)、秒(s)、周(E)、季度(q)

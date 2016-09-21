@@ -1,5 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<style>
+    .btn{
+        padding: 9px 12px;
+    }
+</style>
+
 <!-- Begin: life time stats -->
 <div class="portlet light portlet-fit portlet-datatable bordered">
     <div class="portlet-title">
@@ -20,18 +26,6 @@
     </div>
     <div class="portlet-body">
         <div class="table-container">
-            <div class="table-actions-wrapper">
-                <span> </span>
-                <select class="table-group-action-input form-control input-inline input-small input-sm">
-                    <option value="">Select...</option>
-                    <option value="Cancel">Cancel</option>
-                    <option value="Cancel">Hold</option>
-                    <option value="Cancel">On Hold</option>
-                    <option value="Close">Close</option>
-                </select>
-                <button class="btn btn-sm green table-group-action-submit">
-                    <i class="fa fa-check"></i> Submit</button>
-            </div>
             <table class="table table-striped table-bordered table-hover table-checkable" id="datatable_ajax">
                 <thead>
                     <tr role="row" class="heading">
@@ -97,7 +91,7 @@
                     <div class="col-md-7">
                         <div class="input-icon right">
                             <i class="fa"></i>
-                            <input type="text" class="{required:true}" name="username">
+                            <input type="text" class="form-control" required="true" minlength="2" maxlength="20" name="username">
                         </div>
                     </div>
                 </div>
@@ -106,7 +100,7 @@
                     <div class="col-md-7">
                         <div class="input-icon right">
                             <i class="fa"></i>
-                            <input name="password" type="password" class="form-control">
+                            <input name="password" type="password" class="form-control" required="true" minlength="6" maxlength="20">
                         </div>
                     </div>
                 </div>
@@ -115,7 +109,7 @@
                     <div class="col-md-7">
                         <div class="input-icon right">
                             <i class="fa"></i>
-                            <input name="re_password" type="password" class="form-control">
+                            <input name="re-password" type="password" class="form-control" required="true" equalTo="[name='password']">
                         </div>
                     </div>
                 </div>
@@ -136,7 +130,7 @@
                         <div class="input-group date date-picker">
                             <input type="text" class="form-control" name="birthday">
                             <span class="input-group-btn">
-                                <button class="btn default" type="button">
+                                <button class="btn default">
                                     <i class="fa fa-calendar"></i>
                                 </button>
                             </span>
@@ -148,7 +142,7 @@
                     <div class="col-md-7">
                         <div class="input-icon right">
                             <i class="fa"></i>
-                            <input type="text" class="form-control" name="email">
+                            <input type="text" class="form-control" name="email" email="true">
                         </div>
                     </div>
                 </div>
@@ -168,14 +162,14 @@
                     <div class="col-md-7">
                         <div class="input-icon right">
                             <i class="fa"></i>
-                            <input name="phone" type="text" class="form-control">
+                            <input name="phone" type="text" class="form-control" phone="true">
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-3 control-label">住址</label>
                     <div class="col-md-7">
-                        <textarea name="address" class="form-control" rows="3"></textarea>
+                        <textarea name="address" class="form-control" rows="3" maxlength="200"></textarea>
                     </div>
                 </div>
 
@@ -184,8 +178,8 @@
 
     </div>
     <div class="modal-footer">
-        <button type="button" data-dismiss="modal" class="btn btn-outline dark">关闭</button>
-        <button type="button" class="btn green"></button>
+        <button type="button" data-dismiss="modal" class="btn btn-outline dark">取消</button>
+        <button type="button" class="btn green">保存</button>
     </div>
 </div>
 <!-- Begin:form modal -->

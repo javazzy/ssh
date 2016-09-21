@@ -14,7 +14,7 @@ X<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="ut
 <head>
     <base href="${pageContext.request.contextPath}/">
     <meta charset="utf-8" />
-    <title>Metronic | Blank Page Layout</title>
+    <title>SSH</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta content="" name="description" />
@@ -34,21 +34,18 @@ X<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="ut
     <link href="assets/global/plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css" rel="stylesheet" type="text/css" />
     <link href="assets/global/plugins/bootstrap-modal/css/bootstrap-modal.css" rel="stylesheet" type="text/css" />
 
-
     <link href="assets/global/plugins/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css" rel="stylesheet" type="text/css" />
-    <link href="assets/global/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css" rel="stylesheet" type="text/css" />
     <!-- END PAGE LEVEL PLUGINS -->
     <!-- BEGIN THEME GLOBAL STYLES -->
-    <link href="assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+    <link href="assets/global/css/components.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
     <!-- END THEME GLOBAL STYLES -->
     <!-- BEGIN THEME LAYOUT STYLES -->
     <link href="assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />
-    <link href="assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
+    <%--<link href="assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />--%>
     <!-- END THEME LAYOUT STYLES -->
     <link rel="shortcut icon" href="favicon.ico" />
 </head>
@@ -399,16 +396,11 @@ X<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="ut
 
     <script src="assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
     <script src="assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
-    <%--<script src="assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>--%>
-    <script src="assets/global/plugins/jquery-validation/js/localization/messages_zh.min.js" type="text/javascript"></script>
-    <script src="assets/global/plugins/jquery-validation/js/jquery.metadata.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/jquery-validation/js/additional-methods.min.js" type="text/javascript"></script>
     <script src="assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+
+    <script src="assets/global/plugins/jquery-validation/js/localization/messages_zh.min.js" type="text/javascript"></script>
     <script src="assets/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js" type="text/javascript"></script>
-    <%--<script src="assets/global/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js" type="text/javascript"></script>--%>
-    <%--<script src="assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js" type="text/javascript"></script>--%>
-    <%--<script src="assets/global/plugins/ckeditor/ckeditor.js" type="text/javascript"></script>--%>
-    <%--<script src="assets/global/plugins/bootstrap-markdown/lib/markdown.js" type="text/javascript"></script>--%>
-    <%--<script src="assets/global/plugins/bootstrap-markdown/js/bootstrap-markdown.js" type="text/javascript"></script>--%>
     <!-- END PAGE LEVEL PLUGINS -->
     <!-- BEGIN THEME GLOBAL SCRIPTS -->
     <script src="assets/global/scripts/app.min.js" type="text/javascript"></script>

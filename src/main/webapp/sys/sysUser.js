@@ -6,7 +6,7 @@ var SysUser = function () {
         //init date pickers
         $('.date-picker').datepicker({
             language:"zh-CN",
-            format:"yyyy-dd-mm",
+            format:"yyyy-mm-dd",
             rtl: App.isRTL(),
             autoclose: true
         });
@@ -186,29 +186,6 @@ var SysUser = function () {
             errorClass: 'help-block help-block-error', // default input error message class
             focusInvalid: false, // do not focus the last invalid input
             ignore: "",  // validate all fields including form hidden input
-            // rules: {
-            //     username: {
-            //         minlength: 2,
-            //         required: true
-            //     },
-            //     password: {
-            //         minlength: 6,
-            //         required: true
-            //     },
-            //     re_password: {
-            //         minlength: 6,
-            //         equalTo: "[name='password']"
-            //     },
-            //     email: {
-            //         required: false,
-            //         email: true
-            //     },
-            //     phone: {
-            //         required: true,
-            //         phone: true
-            //     }
-            // },
-
             invalidHandler: function (event, validator) { //display error alert on form submit
                 success2.hide();
                 error2.show();
@@ -218,7 +195,7 @@ var SysUser = function () {
             errorPlacement: function (error, element) { // render error placement for each input type
                 var icon = $(element).parent('.input-icon').children('i');
                 icon.removeClass('fa-check').addClass("fa-warning");
-                icon.attr("data-original-title", error.text()).tooltip({'container': 'body'});
+                icon.attr("data-original-title", error.text()).tooltip({'container': "form"});
             },
 
             highlight: function (element) { // hightlight error inputs
