@@ -45,7 +45,7 @@ X<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="ut
     <!-- BEGIN THEME LAYOUT STYLES -->
     <link href="assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />
-    <%--<link href="assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />--%>
+    <link href="assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
     <!-- END THEME LAYOUT STYLES -->
     <link rel="shortcut icon" href="favicon.ico" />
 </head>
@@ -401,6 +401,8 @@ X<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="ut
 
     <script src="assets/global/plugins/jquery-validation/js/localization/messages_zh.min.js" type="text/javascript"></script>
     <script src="assets/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js" type="text/javascript"></script>
+
+    <script src="assets/global/plugins/jquery.form.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL PLUGINS -->
     <!-- BEGIN THEME GLOBAL SCRIPTS -->
     <script src="assets/global/scripts/app.min.js" type="text/javascript"></script>
@@ -416,9 +418,11 @@ X<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="ut
     <script src="assets/global/scripts/alerts.js" type="text/javascript"></script>
 
     <script type="text/javascript">
-        $(function(){
-            $("li.active>a").click();
-        });
+        (function($, undefined) {
+            $(function () {
+                $("li.active>a").click();
+            });
+        })(window.jQuery);
     </script>
 </body>
 
