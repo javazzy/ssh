@@ -120,6 +120,27 @@ public abstract class BaseController<T> {
     }
 
     /**
+     * 单条数据新增或修改，例：
+     * url:'api/sysUser/saveOrUpdate'（数据为form表单数据，或ajax请求的data参数）
+     * type:'POST'
+     * data:{id:1,name:"张三"} //（或数据为form表单数据）
+     *
+     * @param entity
+     * @return
+     */
+    @RequestMapping(value = "saveOrUpdate", method = RequestMethod.POST)
+    @ResponseBody
+    public Object saveOrUpdate(T entity) {
+        try {
+            getService().saveOrUpdate(entity);
+            return getService().putChche(entity);
+        } catch (Exception e) {
+            catchException(e);
+            return error(e);
+        }
+    }
+
+    /**
      * 数据删除，例：
      * url:'api/sysUser'
      * type:'DELETE'

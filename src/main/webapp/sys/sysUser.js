@@ -144,6 +144,12 @@ var SysUser = function () {
                 cenrerY: true,
                 animate: true
             });
+
+            $('#sysUserForm')[0].submit({
+                success:function(){
+                    App.unblockUI('.form-modal');
+                }
+            });
         });
 
         $('.btn-cancen').click(function() {

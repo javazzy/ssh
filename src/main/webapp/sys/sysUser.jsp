@@ -84,7 +84,7 @@
     </div>
     <div class="modal-body form">
 
-        <form id="sysUserForm" class="form-horizontal" role="form">
+        <form id="sysUserForm" class="form-horizontal" role="form" action="/api/sysUsers/saveOrUpdate" method="post">
             <div class="form-body">
                 <div class="form-group">
                     <label class="col-md-3 control-label">用户名<span class="required"> * </span></label>
