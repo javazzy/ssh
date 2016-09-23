@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/sysUsers")
-public class SysUserController extends SimpleController<SysUser> {
+public class SysUserController extends BaseController<SysUser> {
 
     @Resource
     private SysUserService sysUserService;

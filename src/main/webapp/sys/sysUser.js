@@ -40,7 +40,8 @@ var SysUser = function () {
 
                 // pageLength: 10, // default record count per page
                 ajax: {
-                    "url": "api/sysUsers/searchPage", // ajax source
+                    type:'GET',
+                    url: "api/sysUsers/searchPage" // ajax source
                 },
                 columns: [
                     {data:"id", mRender: function (value, display, row) {

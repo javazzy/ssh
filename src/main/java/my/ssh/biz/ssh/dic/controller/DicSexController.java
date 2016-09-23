@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/dicSexs")
-public class DicSexController extends SimpleController<DicSex> {
+public class DicSexController extends BaseController<DicSex> {
 
     @Resource
     private DicSexService dicSexService;

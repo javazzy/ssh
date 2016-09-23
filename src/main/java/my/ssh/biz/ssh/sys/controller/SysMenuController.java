@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/sysMenus")
-public class SysMenuController extends SimpleController<SysMenu> {
+public class SysMenuController extends BaseController<SysMenu> {
 
     @Resource
     private SysMenuService sysMenuService;
