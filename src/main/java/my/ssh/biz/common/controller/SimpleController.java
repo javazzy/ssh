@@ -4,6 +4,7 @@ import my.ssh.biz.common.entity.Page;
 import my.ssh.biz.common.entity.Result;
 import my.ssh.biz.common.service.BaseService;
 import my.ssh.util.ConvertUtils;
+import my.ssh.util.WebUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.WebDataBinder;
@@ -45,8 +46,8 @@ public abstract class SimpleController<T> {
      */
     @ModelAttribute
     public void setAttribute(HttpServletRequest request, HttpServletResponse response) {
-        ServletContextResource.setRequest(request);
-        ServletContextResource.setResponse(response);
+        WebUtils.setRequest(request);
+        WebUtils.setResponse(response);
     }
 
     /**

@@ -1,4 +1,6 @@
-package my.ssh.biz.common.controller;
+package my.ssh.util;
+
+import org.springframework.web.context.WebApplicationContext;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -8,12 +10,12 @@ import javax.servlet.http.HttpSession;
 /**
  * Created by zzy on 16/9/9.
  */
-public class ServletContextResource {
+public class WebUtils {
 
-
+    private static ServletContext servletContext;
+    private static WebApplicationContext webApplicationContext;
     private static ThreadLocal<HttpServletRequest> requestThreadLocal = new ThreadLocal();
     private static ThreadLocal<HttpServletResponse> responseThreadLocal = new ThreadLocal();
-
 
     public static HttpServletRequest getRequest() {
         return requestThreadLocal.get();
@@ -27,9 +29,6 @@ public class ServletContextResource {
         return requestThreadLocal.get().getSession();
     }
 
-    public static javax.servlet.ServletContext getServletContext() {
-        return requestThreadLocal.get().getServletContext();
-    }
 
     public static void setRequest(HttpServletRequest request) {
         requestThreadLocal.set(request);
@@ -39,4 +38,18 @@ public class ServletContextResource {
         responseThreadLocal.set(response);
     }
 
+    public static ServletContext getServletContext() {
+        return servletContext;
+    }
+    public static void setServletContext(ServletContext servletContext) {
+        WebUtils.servletContext = servletContext;
+    }
+
+    public static WebApplicationContext getWebApplicationContext() {
+        return webApplicationContext;
+    }
+
+    public static void setWebApplicationContext(WebApplicationContext webApplicationContext) {
+        WebUtils.webApplicationContext = webApplicationContext;
+    }
 }

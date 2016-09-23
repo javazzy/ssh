@@ -1,12 +1,9 @@
 apply plugin: 'java'
+apply plugin: 'maven'
 apply plugin: 'war'
-
 apply plugin: 'eclipse'
-apply plugin: 'eclipse-wtp'
 apply plugin: 'idea'
 
-apply plugin: 'maven'
-apply plugin: 'jetty'
 
 group = 'my.ssh'
 version = '1.0'
@@ -139,7 +136,22 @@ dependencies {
     //热部署spring相关资源
     testCompile 'org.springframework:springloaded:1.2.4.RELEASE'
     //spring单元测试支持
-    testCompile 'org.springframework:spring-test:4.2.4.RELEASE'
+    compile 'org.springframework:spring-test:4.2.4.RELEASE'
     //java单元测试支持
-    testCompile 'junit:junit:4.12'
+    compile 'junit:junit:4.12'
+}
+
+task pom << {
+    pom {
+        project {
+            inceptionYear '2016'
+            licenses {
+                license {
+                    name 'The Apache Software License, Version 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    distribution 'repo'
+                }
+            }
+        }
+    }.writeTo("pom.xml")
 }

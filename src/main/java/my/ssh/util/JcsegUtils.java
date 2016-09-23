@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public class JcsegUtils {
 
-    private static Map<String,ADictionary> dicMap = new HashMap<>();
+    private static Map<String,ADictionary> dicMap = new HashMap<String,ADictionary>();
 
     /**
      * 根据词库目录生成词库对象
@@ -64,15 +64,14 @@ public class JcsegUtils {
      * @throws Exception
      */
     public static List<IWord> analyzer(String source,String...lexiconPaths) throws Exception {
-         ADictionary dic = getDictionary(lexiconPaths);
-
+        ADictionary dic = getDictionary(lexiconPaths);
         List<IWord> words = new ArrayList<>();
         if(null == dic){
             return words;
         }
 
         //依据给定的ADictionary和JcsegTaskConfig来创建ISegment
-        ISegment segment = SegmentFactory.createJcseg(JcsegTaskConfig.DETECT_MODE, new Object[]{dic.getConfig(), dic});;
+        ISegment segment = SegmentFactory.createJcseg(JcsegTaskConfig.DETECT_MODE, new Object[]{dic.getConfig(), dic});
 
         //设置要被分词的文本。备注：以下代码可以反复调用，seg为非线程安全
         segment.reset(new StringReader(source));
@@ -136,12 +135,11 @@ public class JcsegUtils {
         for (int i = 0;i< words.size(); i++) {
             IWord word = words.get(i);
 
-            currentIndex = content.indexOf(word.getValue(),currentIndex) + word.getValue().length();
+            currentIndex = word.getPosition() + word.getValue().length();
 
             if("n".equals(word.getPartSpeech()[0]) && (i+1)<words.size() && "q".equals(words.get(i+1).getPartSpeech()[0])){
                 String attrName = word.getValue();
-                String unit = words.get(i+1).getValue();
-                int unitIndex = content.indexOf(unit,currentIndex);
+                int unitIndex = words.get(i+1).getPosition();
                 String attrValue = content.substring(currentIndex,unitIndex);
 //                if(attrValue.length() < 20 && !attrValue.matches(".*\\s.*") ) {
                     attrMap.put(valueOf(attrName), valueOf(attrValue));
@@ -184,6 +182,30 @@ public class JcsegUtils {
             return value.replace("／","/");
         }
         return null;
+    }
+
+    /**
+     * 对文本内容加入词条超链接
+     * @param content
+     * @return
+     * @throws Exception
+     */
+    public static List<String> getAllWords(String content) throws Exception {
+        ADictionary dic = getDictionary("/lexicons/lexicon");
+
+        //依据给定的ADictionary和JcsegTaskConfig来创建ISegment
+        ISegment segment = SegmentFactory.createJcseg(JcsegTaskConfig.COMPLEX_MODE, new Object[]{dic.getConfig(), dic});
+
+        //设置要被分词的文本。备注：以下代码可以反复调用，seg为非线程安全
+        segment.reset(new StringReader(content));
+
+        List<String> wordList = new ArrayList<>();
+        //获取分词结果
+        IWord word;
+        while ((word = segment.next()) != null) {
+            wordList.add(word.getValue());
+        }
+        return wordList;
     }
 
 }

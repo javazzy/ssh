@@ -85,7 +85,7 @@ public class SecurityURLInterceptor extends HandlerInterceptorAdapter {
         }
 
         logger.warn("该用户(" + sysUser.getUsername() + ")没有访问该路径(" + requestURI + ")的权限！");
-        response.getWriter().println("{success:false,msg:\"该用户没有权限访问该功能！\"}");
+        response.getWriter().println("{success:false,msg:'该用户没有权限访问该功能！'}");
 
         return false;
     }

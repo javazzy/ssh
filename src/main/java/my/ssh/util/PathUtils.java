@@ -19,14 +19,14 @@ public class PathUtils {
      * @return 获取WebRoot目录
      */
     public static String getWebRootDir() {
-        return new File(getWebInfDir()).getParent();
+        return WebUtils.getServletContext().getRealPath("");
     }
 
     /**
      * @return 获取WEB-INFO目录
      */
     public static String getWebInfDir() {
-        return new File(getClassesDir()).getParent();
+        return getWebRootDir()+"/WEB-INF";
     }
 
     /**

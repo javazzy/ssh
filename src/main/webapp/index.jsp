@@ -184,6 +184,18 @@ X<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="ut
                                     <span class="title">中文分词器</span>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="test/word2vec.jsp" class="nav-link ajaxify">
+                                    <i class="icon-bar-chart"></i>
+                                    <span class="title">word2vec</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="test/tsne.jsp" class="nav-link ajaxify">
+                                    <i class="icon-bar-chart"></i>
+                                    <span class="title">tsne</span>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li class="nav-item last">
@@ -401,7 +413,6 @@ X<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="ut
 
     <script src="assets/global/plugins/jquery-validation/js/localization/messages_zh.min.js" type="text/javascript"></script>
     <script src="assets/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js" type="text/javascript"></script>
-
     <script src="assets/global/plugins/jquery.form.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL PLUGINS -->
     <!-- BEGIN THEME GLOBAL SCRIPTS -->

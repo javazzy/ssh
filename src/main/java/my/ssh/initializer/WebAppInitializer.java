@@ -6,6 +6,7 @@ import org.springframework.orm.hibernate5.support.OpenSessionInViewFilter;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.util.IntrospectorCleanupListener;
+import my.ssh.listener.WebContextListener;
 
 import javax.servlet.*;
 import java.util.EnumSet;
@@ -17,8 +18,7 @@ import java.util.EnumSet;
 public class WebAppInitializer implements WebApplicationInitializer {
 
     @Override
-    public void onStartup(ServletContext servletContext)
-            throws ServletException {
+    public void onStartup(ServletContext servletContext) throws ServletException {
 
         servletContext.setInitParameter("webAppRootKey", "webapp.root");
 
@@ -34,11 +34,13 @@ public class WebAppInitializer implements WebApplicationInitializer {
         //Spring 刷新Introspector防止内存泄露
         servletContext.addListener(IntrospectorCleanupListener.class);
 
+        //服务器启动关闭监听
+        servletContext.addListener(WebContextListener.class);
+
         //CXF配置
         ServletRegistration.Dynamic servletDynamic = servletContext.addServlet("jaxws-servlet", CXFServlet.class);
 //        servletDynamic.setLoadOnStartup(1);
         servletDynamic.addMapping("/ws/*");
-
 
         //开启session过滤器
         OpenSessionInViewFilter openSessionInViewFilter = new OpenSessionInViewFilter();
@@ -53,17 +55,6 @@ public class WebAppInitializer implements WebApplicationInitializer {
                 false,
                 "/j_spring_security_check"
         );
-//
-//        //spring字符转码过滤器
-//        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
-//        characterEncodingFilter.setEncoding("UTF-8");
-//        characterEncodingFilter.setForceEncoding(true);
-//        filterRegistration = servletContext.addFilter("characterEncodingFilter", characterEncodingFilter);
-//        filterRegistration.addMappingForUrlPatterns(
-//                EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD, DispatcherType.INCLUDE),
-//                false,
-//                "/*"
-//        );
 
     }
 
