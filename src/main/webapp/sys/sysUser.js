@@ -1,6 +1,7 @@
 var SysUser = function () {
 
     var grid = new Datatable();
+    var submitType = "POST";
 
     var initPickers = function () {
         //init date pickers
@@ -15,28 +16,9 @@ var SysUser = function () {
     var handleRecords = function () {
 
         grid.init({
-            src: $("#datatable_ajax"),
-            onSuccess: function (grid, response) {
-                // grid:        grid object
-                // response:    json object of server side ajax response
-                // execute some code after table records loaded
-            },
-            onError: function (grid) {
-                // execute some code on network or other general error
-            },
-            onDataLoad: function(grid) {
-                // execute some code on ajax data load
-            },
-            // loadingMessage: '载入中...',
+            src: $("#datatable_sysUser"),
             dataTable: { // here you can define a typical datatable settings from http://datatables.net/usage/options
-
-                // Uncomment below line("dom" parameter) to fix the dropdown overflow issue in the datatable cells. The default datatable layout
-                // setup uses scrollable div(table-scrollable) with overflow:auto to enable vertical scroll(see: assets/global/scripts/datatable.js).
-                // So when dropdowns used the scrollable div should be removed.
-                //"dom": "<'row'<'col-md-8 col-sm-12'pli><'col-md-4 col-sm-12'<'table-group-actions pull-right'>>r>t<'row'<'col-md-8 col-sm-12'pli><'col-md-4 col-sm-12'>>",
-
                 // bStateSave: true, // save datatable state(pagination, sort, etc) in cookie.
-
 
                 // pageLength: 10, // default record count per page
                 ajax: {
@@ -59,12 +41,12 @@ var SysUser = function () {
                     {data: "enabled",mRender:function(value, display, row) {
                         if(!row.enabled){
                             return Icons.stop+" 用户禁用";
-                        }else if(!row.accountNonExpired){
-                            return Icons.stop+" 账号过期";
-                        }else if(!row.accountNonLocked){
-                            return Icons.stop+" 账户锁定";
-                        }else if(!row.credentialsNonExpired){
-                            return Icons.stop+" 密码过期";
+                        // }else if(!row.accountNonExpired){
+                        //     return Icons.stop+" 账号过期";
+                        // }else if(!row.accountNonLocked){
+                        //     return Icons.stop+" 账户锁定";
+                        // }else if(!row.credentialsNonExpired){
+                        //     return Icons.stop+" 密码过期";
                         }else{
                             return Icons.on+" 正常";
                         }
@@ -77,7 +59,7 @@ var SysUser = function () {
                     // [1, "asc"]
                 ],columnDefs: [{ // define columns sorting options(by default all columns are sortable extept the first checkbox column)
                     orderable: false,
-                    targets: [0,6]
+                    targets: [0,9]
                 }],
             }
         });
@@ -119,9 +101,11 @@ var SysUser = function () {
     var handleControl = function () {
 
         $(".add").click(function(){
+            submitType = "POST";
             $(".form-modal").modal("show");
         });
         $(".edit").click(function(){
+            submitType = "PUT";
             var c = grid.getSelectedRowsCount();
             if(c == 0){
                 warning("请选择一条记录进行编辑！")
@@ -130,26 +114,20 @@ var SysUser = function () {
                 warning("最多选择一条记录进行编辑！")
                 return;
             }
-            console.log(c);
-            $('body').modalmanager('loading');
 
-            $('#form-modal').modal();
+            $('.form-modal').modal("show");
+            $.get("api/sysUsers/"+grid.getSelectedRows()[0],function(data){
+                $('#form_sysUser').loalData(data);
+                $("[name='re-password']").val(data.password);
+            });
         });
-
-
-        $('.btn-save').click(function() {
-            App.blockUI({
-                target: '.form-modal',
-                overlayColor: 'none',
-                cenrerY: true,
-                animate: true
-            });
-
-            $('#sysUserForm')[0].submit({
-                success:function(){
-                    App.unblockUI('.form-modal');
-                }
-            });
+        $(".remove").click(function(){
+            var c = grid.getSelectedRowsCount();
+            if(c == 0){
+                warning("请选择要删除的记录！")
+                return;
+            }
+            
         });
 
         $('.btn-cancen').click(function() {
@@ -163,19 +141,18 @@ var SysUser = function () {
         // for more info visit the official plugin documentation:
         // http://docs.jquery.com/Plugins/Validation
 
-        var form2 = $('#sysUserForm');
-        var error2 = $('.alert-danger', form2);
-        var success2 = $('.alert-success', form2);
+        var form = $('#form_sysUser');
+        var errorAlert = $('.alert-danger', form);
+        var successAlert = $('.alert-success', form);
 
-        form2.validate({
+        var validator = form.validate({
             errorElement: 'span', //default input error message container
             errorClass: 'help-block help-block-error', // default input error message class
             focusInvalid: false, // do not focus the last invalid input
             ignore: "",  // validate all fields including form hidden input
             invalidHandler: function (event, validator) { //display error alert on form submit
-                success2.hide();
-                error2.show();
-                App.scrollTo(error2, -200);
+                successAlert.hide();
+                errorAlert.show();
             },
 
             errorPlacement: function (error, element) { // render error placement for each input type
@@ -185,12 +162,7 @@ var SysUser = function () {
             },
 
             highlight: function (element) { // hightlight error inputs
-                $(element)
-                    .closest('.form-group').removeClass("has-success").addClass('has-error'); // set error class to the control group
-            },
-
-            unhighlight: function (element) { // revert the change done by hightlight
-
+                $(element).closest('.form-group').removeClass("has-success").addClass('has-error'); // set error class to the control group
             },
 
             success: function (label, element) {
@@ -200,12 +172,37 @@ var SysUser = function () {
             },
 
             submitHandler: function (form) {
-                success2.show();
-                error2.hide();
-                form[0].submit(); // submit the form
+                App.blockUI({
+                    target: '.form-modal',
+                    overlayColor: 'none',
+                    cenrerY: true,
+                    animate: true
+                });
+
+                // submit the form
+                $(form).ajaxSubmit({
+                    url:"/api/sysUsers",
+                    type:submitType,
+                    success:function(){
+                        success("保存成功！");
+                        App.unblockUI('.form-modal');
+                        validator.resetForm();
+                        $(form).find(".has-success").removeClass("has-success")
+                        $(form).find("i.fa-check").remove();
+                        $(".form-modal").modal("hide");
+                        refreshGrid();
+                    },
+                    error:function (e) {
+                        error(e);
+                    }
+                });
             }
         });
 
+    }
+
+    var refreshGrid = function(){
+        grid.getDataTable().ajax.reload();
     }
 
     return {

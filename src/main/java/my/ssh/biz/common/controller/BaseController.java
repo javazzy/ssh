@@ -104,9 +104,9 @@ public abstract class BaseController<T> {
      */
     @RequestMapping(method = RequestMethod.PUT)
     @ResponseBody
-    public Result updateDynamic(T entity, @RequestParam(defaultValue = "false") boolean overwrite) {
+    public Result updateDynamic(T entity, @RequestParam(defaultValue = "false") boolean all) {
         try {
-            if (overwrite) {
+            if (all) {
                 getService().update(entity);
             } else {
                 getService().updateDynamic(entity);
@@ -165,6 +165,7 @@ public abstract class BaseController<T> {
     /**
      * 单条或多条数据删除。（这个方法需要自类接受前台参数，然后调用此方法！）例：
      * url: "/api/sysUsers/deleteAll",
+     * type:'DELETE'
      * contentType : 'application/json;charset=utf-8', //设置请求头信息
      * data: [{id:1},{id:2}],// 如果是form表单，可直接使用 $("#form1").serializeJson(),注意，这个方法依赖于我从网上扒的form2json.js
      *
@@ -187,6 +188,7 @@ public abstract class BaseController<T> {
     /**
      * 根据主键单条数据查询，例：
      * url:'api/sysUser/1'
+     * type:'GET'
      * data:null
      *
      * @param key
@@ -205,7 +207,8 @@ public abstract class BaseController<T> {
 
     /**
      * 根据非主键单条数据查询（注：本查询方法主键字段值不参与条件查询），例：
-     * url:'api/sysUser/get'
+     * url:'api/sysUser'
+     * type:'GET'
      * data:{name:'张三'}
      *
      * @param entity
@@ -225,6 +228,7 @@ public abstract class BaseController<T> {
     /**
      * 精确条件查询,但不包括主键，例：
      * url:'api/sysUser/list'
+     * type:'GET'
      * data:{name:'张三'}
      *
      * @param entity
@@ -232,9 +236,9 @@ public abstract class BaseController<T> {
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
-    public List<T> list(T entity, Page<T> page, @RequestParam(defaultValue = "false") boolean cache) {
+    public List<T> list(T entity, Page<T> page, @RequestParam(defaultValue = "false") boolean all) {
         try {
-            if(cache){
+            if(all){
                 return getService().listAll();
             }
             return getService().pageList(entity, page);
@@ -247,6 +251,7 @@ public abstract class BaseController<T> {
     /**
      * 搜索分页查询，例
      * url:'api/sysUsers/searchPage'
+     * type:'GET'
      * data:{
      * name:"张", age:26, // 搜索内容
      * start:0, length:10, //分页内容
@@ -271,6 +276,7 @@ public abstract class BaseController<T> {
     /**
      * 搜索列表查询，例
      * url:'api/sysUsers/searchList'
+     * type:'GET'
      * data:{
      * name:"张", age:26, // 搜索内容
      * }
@@ -292,6 +298,7 @@ public abstract class BaseController<T> {
     /**
      * 精确匹配列表条数查询，例
      * url:'api/sysUsers/count'
+     * type:'GET'
      * data:{
      * name:"张三" // 搜索内容
      * }
@@ -313,6 +320,7 @@ public abstract class BaseController<T> {
     /**
      * 搜索列表条数查询，例
      * url:'api/sysUsers/searchCount'
+     * type:'GET'
      * data:{
      * name:"张三" // 搜索内容
      * }
