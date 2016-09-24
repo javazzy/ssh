@@ -127,7 +127,7 @@ var SysUser = function () {
                 warning("请选择要删除的记录！")
                 return;
             }
-            
+
         });
 
         $('.btn-cancen').click(function() {
@@ -137,7 +137,7 @@ var SysUser = function () {
     }
 
     // validation using icons
-    var handleValidation = function() {
+    var handleSubmit = function() {
         // for more info visit the official plugin documentation:
         // http://docs.jquery.com/Plugins/Validation
 
@@ -212,7 +212,7 @@ var SysUser = function () {
             initPickers();
             handleRecords();
             handleControl();
-            handleValidation();
+            handleSubmit();
         }
 
     };
