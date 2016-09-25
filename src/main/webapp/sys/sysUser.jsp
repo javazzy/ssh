@@ -1,11 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<%--<style>--%>
-<%--.btn{--%>
-<%--padding: 9px 12px;--%>
-<%--}--%>
-<%--</style>--%>
-
 <!-- Begin: life time stats -->
 <div class="portlet light portlet-fit portlet-datatable bordered">
     <div class="portlet-title">
