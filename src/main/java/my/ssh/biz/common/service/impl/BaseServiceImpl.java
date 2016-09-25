@@ -50,31 +50,8 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
     @Override
     @Transactional
-    public void deleteById(Serializable id) throws Exception {
-        this.delete(get(id));
-    }
-
-    @Override
-    @Transactional
-    public void deleteByIds(Serializable...id) throws Exception {
-        for(Serializable _id : id){
-            this.deleteById(_id);
-        }
-    }
-
-    @Override
-    @Transactional
-    public void delete(T entity) throws Exception {
-        getDao().delete(entity);
-    }
-
-
-    @Override
-    @Transactional
-    public void deleteAll(List<T> entities) throws Exception {
-        for(T entity : entities){
-            this.delete(entity);
-        }
+    public void deleteById(Serializable...id) throws Exception {
+        getDao().deleteById(id);
     }
 
     @Override

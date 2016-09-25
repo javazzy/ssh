@@ -39,16 +39,4 @@ public class SysUserController extends BaseController<SysUser> {
         return super.addAll(list);
     }
 
-    /**
-     * 批量删除
-     * @param list
-     * @return
-     */
-    @RequestMapping("/deleteAll")
-    @ResponseBody
-    @Override
-    public Object deleteAll(@RequestBody List<SysUser> list) {
-        return super.deleteAll(list);
-    }
-
 }

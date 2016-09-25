@@ -39,16 +39,4 @@ public class SysRoleController extends BaseController<SysRole> {
         return super.addAll(list);
     }
 
-    /**
-     * 批量删除
-     * @param list
-     * @return
-     */
-    @RequestMapping("/deleteAll")
-    @ResponseBody
-    @Override
-    public Object deleteAll(@RequestBody List<SysRole> list) {
-        return super.deleteAll(list);
-    }
-
 }

@@ -38,16 +38,4 @@ public class ${pojo.getDeclarationName()}Controller extends SimpleController<${p
         return super.addAll(list);
     }
 
-    /**
-     * 批量删除
-     * @param list
-     * @return
-     */
-    @RequestMapping("/deleteAll")
-    @ResponseBody
-    @Override
-    public Object deleteAll(@RequestBody List<${pojo.getDeclarationName()}> list) {
-        return super.deleteAll(list);
-    }
-
 }

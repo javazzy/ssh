@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.Serializable;
 
 /**
  * 服务实现：
@@ -54,9 +55,13 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser> implements SysU
 
     @Override
     public void evictChche(SysUser entity) throws Exception {
-        SysUser sysUser = this.getDao().get(entity.getId());
-        if (null != sysUser) {
+        this.evictChche(entity.getId());
+    }
 
+    @Override
+    public void evictChche(Serializable id) throws Exception {
+        SysUser sysUser = this.getDao().get(id);
+        if (null != sysUser) {
             evictUserChche(sysUser.getUsername());
         }
     }

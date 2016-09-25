@@ -10,6 +10,7 @@ import my.ssh.biz.ssh.sys.service.SysUserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.Serializable;
 
 /**
  * 服务实现：
@@ -39,13 +40,18 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRole> implements SysR
     }
 
     @Override
-    public SysRole putChche(SysRole entity) throws Exception {
-        SysRole sysRole = sysRoleDao.get(entity.getId());
+    public void evictChche(Serializable id) throws Exception {
+        SysRole sysRole = sysRoleDao.get(id);
         if (null != sysRole) {
             for (SysUser sysUser : sysRole.getSysUsers()) {
                 sysUserService.evictChche(sysUser);
             }
         }
+    }
+
+    @Override
+    public SysRole putChche(SysRole entity) throws Exception {
+        this.evictChche(entity.getId());
         return entity;
     }
 }

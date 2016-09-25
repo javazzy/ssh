@@ -1,5 +1,6 @@
 package my.ssh.biz.common.controller;
 
+import com.alibaba.fastjson.JSON;
 import my.ssh.biz.common.entity.Page;
 import my.ssh.biz.common.entity.Result;
 import my.ssh.biz.common.service.BaseService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -142,42 +144,27 @@ public abstract class BaseController<T> {
 
     /**
      * 数据删除，例：
-     * url:'api/sysUser'
+     * url:'api/sysUser/{id}'
      * type:'DELETE'
-     * data:{id:1}
      *
-     * @param entity
+     * @param keys
      * @return
      */
-    @RequestMapping(method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{keys}", method = RequestMethod.DELETE)
     @ResponseBody
-    public Result delete(T entity) {
+    public Object delete(@PathVariable String keys, T t) {
         try {
-            getService().evictChche(entity);
-            getService().delete(entity);
-            return success();
-        } catch (Exception e) {
-            catchException(e);
-            return error(e);
-        }
-    }
-
-    /**
-     * 单条或多条数据删除。（这个方法需要自类接受前台参数，然后调用此方法！）例：
-     * url: "/api/sysUsers/deleteAll",
-     * type:'DELETE'
-     * contentType : 'application/json;charset=utf-8', //设置请求头信息
-     * data: [{id:1},{id:2}],// 如果是form表单，可直接使用 $("#form1").serializeJson(),注意，这个方法依赖于我从网上扒的form2json.js
-     *
-     * @param list
-     * @return
-     */
-    public Object deleteAll(List<T> list) {
-        try {
-            for (T entity : list) {
-                getService().evictChche(entity);
+            String[] keyArr = keys.split(",");
+            if(keyArr.length == 0){
+                return error("没有删除主键！");
             }
-            getService().deleteAll(list);
+
+            Serializable[] ids = new Serializable[keyArr.length];
+            for(int i = 0; i < keyArr.length; i++){
+                ids[i] = ConvertUtils.toPrimaryData(t.getClass(), keyArr[i]);
+                getService().evictChche(ids[i]);
+            }
+            getService().deleteById(ids);
             return success();
         } catch (Exception e) {
             catchException(e);

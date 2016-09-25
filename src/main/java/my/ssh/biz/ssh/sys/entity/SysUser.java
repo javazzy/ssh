@@ -21,7 +21,7 @@ public class SysUser  implements java.io.Serializable {
     /**
      * 用户编号
      */
-    private int id;
+    private Integer id;
  
     /**
      * 性别
@@ -94,10 +94,10 @@ public class SysUser  implements java.io.Serializable {
     }
 
 	
-    public SysUser(int id) {
+    public SysUser(Integer id) {
         this.id = id;
     }
-    public SysUser(int id, DicSex dicSex, String username, String password, Boolean enabled, Boolean accountNonExpired, Boolean accountNonLocked, Boolean credentialsNonExpired, Date birthday, String email, String phone, String address, String photo, Date createTime, Set<SysRole> sysRoles) {
+    public SysUser(Integer id, DicSex dicSex, String username, String password, Boolean enabled, Boolean accountNonExpired, Boolean accountNonLocked, Boolean credentialsNonExpired, Date birthday, String email, String phone, String address, String photo, Date createTime, Set<SysRole> sysRoles) {
        this.id = id;
        this.dicSex = dicSex;
        this.username = username;
@@ -117,12 +117,12 @@ public class SysUser  implements java.io.Serializable {
    
     @Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY)    
-    @Column(name="ID", columnDefinition= "int comment '用户编号' not null")
-    public int getId() {
+    @Column(name="ID", columnDefinition= "Integer comment '用户编号' not null")
+    public Integer getId() {
         return this.id;
     }
     
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
     @ManyToOne(fetch=FetchType.EAGER)
@@ -153,7 +153,7 @@ public class SysUser  implements java.io.Serializable {
         this.password = password;
     }
     
-    @Column(name="enabled", columnDefinition= "tinyint comment '是否启用' null")
+    @Column(name="enabled", columnDefinition= "tinyInteger comment '是否启用' null")
     public Boolean getEnabled() {
         return this.enabled;
     }
@@ -162,7 +162,7 @@ public class SysUser  implements java.io.Serializable {
         this.enabled = enabled;
     }
     
-    @Column(name="Account_Non_Expired", columnDefinition= "tinyint comment '账号是否没有过期' null")
+    @Column(name="Account_Non_Expired", columnDefinition= "tinyInteger comment '账号是否没有过期' null")
     public Boolean getAccountNonExpired() {
         return this.accountNonExpired;
     }
@@ -171,7 +171,7 @@ public class SysUser  implements java.io.Serializable {
         this.accountNonExpired = accountNonExpired;
     }
     
-    @Column(name="Account_Non_Locked", columnDefinition= "tinyint comment '账号是否没有锁定' null")
+    @Column(name="Account_Non_Locked", columnDefinition= "tinyInteger comment '账号是否没有锁定' null")
     public Boolean getAccountNonLocked() {
         return this.accountNonLocked;
     }
@@ -180,7 +180,7 @@ public class SysUser  implements java.io.Serializable {
         this.accountNonLocked = accountNonLocked;
     }
     
-    @Column(name="Credentials_Non_Expired", columnDefinition= "tinyint comment '密码是否没有过期' null")
+    @Column(name="Credentials_Non_Expired", columnDefinition= "tinyInteger comment '密码是否没有过期' null")
     public Boolean getCredentialsNonExpired() {
         return this.credentialsNonExpired;
     }
@@ -269,9 +269,6 @@ public class SysUser  implements java.io.Serializable {
         }
         return grantedAuthoritys;
     }
-
-
-
 }
 
 

@@ -19,10 +19,7 @@ public interface BaseService<T> {
 
     void saveOrUpdate(T entity) throws Exception;
 
-    void deleteById(Serializable id) throws Exception;
-    void deleteByIds(Serializable...id) throws Exception;
-    void delete(T entity) throws Exception;
-    void deleteAll(List<T> entities) throws Exception;
+    void deleteById(Serializable...id) throws Exception;
 
     T get(Serializable id) throws Exception;
     T getOne(T entiry);
@@ -38,4 +35,5 @@ public interface BaseService<T> {
 
     T putChche(T entity) throws Exception;
     void evictChche(T entity) throws Exception;
+    void evictChche(Serializable id) throws Exception;
 }

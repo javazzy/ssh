@@ -39,16 +39,4 @@ public class SysMenuController extends BaseController<SysMenu> {
         return super.addAll(list);
     }
 
-    /**
-     * 批量删除
-     * @param list
-     * @return
-     */
-    @RequestMapping("/deleteAll")
-    @ResponseBody
-    @Override
-    public Object deleteAll(@RequestBody List<SysMenu> list) {
-        return super.deleteAll(list);
-    }
-
 }

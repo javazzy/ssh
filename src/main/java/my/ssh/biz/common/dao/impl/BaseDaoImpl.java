@@ -3,6 +3,7 @@ package my.ssh.biz.common.dao.impl;
 import my.ssh.biz.common.dao.BaseDao;
 import my.ssh.biz.common.entity.Page;
 import my.ssh.util.BeanUtils;
+import my.ssh.util.ConvertUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.*;
 import org.hibernate.transform.Transformers;
@@ -48,8 +49,11 @@ public abstract class BaseDaoImpl<T> extends HibernateDaoSupport implements Base
     }
 
     @Override
-    public void delete(T entity) {
-        this.getHibernateTemplate().delete(entity);
+    public void deleteById(Serializable...ids) throws Exception {
+        DetachedCriteria dc = DetachedCriteria.forClass(getClassType());
+        dc.add(Restrictions.in(ConvertUtils.getPrimaryFieldName(getClassType()), ids));
+        List<T> list = (List<T>) this.getHibernateTemplate().findByCriteria(dc);
+        this.getHibernateTemplate().deleteAll(list);
     }
 
     @Override

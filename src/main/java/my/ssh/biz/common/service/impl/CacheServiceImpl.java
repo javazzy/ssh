@@ -49,24 +49,12 @@ public abstract class CacheServiceImpl<T> extends BaseServiceImpl<T> implements 
     }
 
     @Override
-    @CacheEvict(value = "service", key = "#root.targetClass")
-    @Transactional
-    public void delete(T entity) throws Exception {
-        getDao().delete(entity);
-    }
-
-    @Override
-    @CacheEvict(value = "service", key = "#root.targetClass")
-    @Transactional
-    public void deleteAll(List<T> entities) throws Exception {
-        for(T entity : entities){
-            this.delete(entity);
-        }
-    }
-
-    @Override
     @CacheEvict(value = "service", key = "#root.targetClass + '_' + #entity.id")
     public void evictChche(T entity) throws Exception {}
+
+    @Override
+    @CacheEvict(value = "service", key = "#root.targetClass + '_' + #id")
+    public void evictChche(Serializable id) throws Exception {}
 
     @Override
     @Cacheable(value = "service", key = "#root.targetClass + '_' + #id")

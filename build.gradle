@@ -4,7 +4,6 @@ apply plugin: 'war'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 
-
 group = 'my.ssh'
 version = '1.0'
 
@@ -15,6 +14,8 @@ compileJava {
 }
 webAppDirName = 'src/main/webapp'    // 设置 WebApp 根目录
 [compileJava, javadoc, compileTestJava]*.options*.encoding = 'UTF-8'
+
+def a = new String("Hello Word");
 
 //工程目录结构设置
 sourceSets {

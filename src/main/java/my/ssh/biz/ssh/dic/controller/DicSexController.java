@@ -39,16 +39,4 @@ public class DicSexController extends BaseController<DicSex> {
         return super.addAll(list);
     }
 
-    /**
-     * 批量删除
-     * @param list
-     * @return
-     */
-    @RequestMapping("/deleteAll")
-    @ResponseBody
-    @Override
-    public Object deleteAll(@RequestBody List<DicSex> list) {
-        return super.deleteAll(list);
-    }
-
 }

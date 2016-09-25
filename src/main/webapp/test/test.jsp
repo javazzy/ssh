@@ -17,8 +17,8 @@
 </div>
 
 <!-- END THEME GLOBAL SCRIPTS -->
-<script src="../assets/global/plugins/jquery.form.js" type="text/javascript"></script>
-<script src="../assets/global/scripts/form2json.js" type="text/javascript"></script>
+<script src="assets/global/plugins/jquery.form.js" type="text/javascript"></script>
+<script src="assets/global/scripts/form2json.js" type="text/javascript"></script>
 
 <script type="text/javascript">
     function ajaxSubmit(){

@@ -1,6 +1,8 @@
 var SysUser = function () {
 
     var grid = new Datatable();
+    var form = $('#form_sysUser');
+    var validate = null;
     var submitType = "POST";
 
     var initPickers = function () {
@@ -128,6 +130,16 @@ var SysUser = function () {
                 return;
             }
 
+            confirm("确定要删除该记录吗？",function(){
+                $.ajax({
+                    url:"api/sysUsers/"+grid.getSelectedRows().join(","),
+                    type:"DELETE",
+                    success:function(data){
+                        success("删除成功！");
+                        refreshGrid();
+                    }
+                });
+            });
         });
 
         $('.btn-cancen').click(function() {
@@ -141,11 +153,11 @@ var SysUser = function () {
         // for more info visit the official plugin documentation:
         // http://docs.jquery.com/Plugins/Validation
 
-        var form = $('#form_sysUser');
+
         var errorAlert = $('.alert-danger', form);
         var successAlert = $('.alert-success', form);
 
-        var validator = form.validate({
+        validate = form.validate({
             errorElement: 'span', //default input error message container
             errorClass: 'help-block help-block-error', // default input error message class
             focusInvalid: false, // do not focus the last invalid input
@@ -186,9 +198,6 @@ var SysUser = function () {
                     success:function(){
                         success("保存成功！");
                         App.unblockUI('.form-modal');
-                        validator.resetForm();
-                        $(form).find(".has-success").removeClass("has-success")
-                        $(form).find("i.fa-check").remove();
                         $(".form-modal").modal("hide");
                         refreshGrid();
                     },
@@ -201,8 +210,22 @@ var SysUser = function () {
 
     }
 
+    var clearValidate = function(){
+        validate.resetForm();
+        form.find(".has-success").removeClass("has-success")
+        form.find("i.fa-check").remove();
+        form.find(".has-error").removeClass("has-error")
+        form.find("i.fa-warning").remove();
+    }
+
     var refreshGrid = function(){
         grid.getDataTable().ajax.reload();
+    }
+
+    var initFormModal = function(){
+        $('.form-modal').on('hidden.bs.modal', function () {
+            clearValidate();
+        })
     }
 
     return {
@@ -213,6 +236,7 @@ var SysUser = function () {
             handleRecords();
             handleControl();
             handleSubmit();
+            initFormModal();
         }
 
     };

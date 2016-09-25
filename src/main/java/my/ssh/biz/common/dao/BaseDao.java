@@ -16,7 +16,7 @@ public interface BaseDao<T> {
     void updateDynamic(T entity) throws Exception;
     void saveOrUpdate(T entity);
 
-    void delete(T entity);
+    void deleteById(Serializable...id) throws Exception;
 
     T get(Serializable id);
     T load(Serializable id);

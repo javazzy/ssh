@@ -28,7 +28,7 @@ public class SysUserDaoImpl extends BaseDaoImpl<SysUser> implements SysUserDao {
             /**
              * 用户编号
              */
-            if (entity.getId() > 0) {
+            if (null != entity.getId()) {
                dc.add(Restrictions.eq("id", entity.getId()));
             }
             /**
