@@ -1,7 +1,6 @@
 package my.ssh.generator.exporter;
 
 import org.hibernate.cfg.Configuration;
-import org.hibernate.tool.hbm2x.GenericExporter;
 
 import java.io.File;
 

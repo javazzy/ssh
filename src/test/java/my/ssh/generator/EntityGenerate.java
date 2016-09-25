@@ -5,7 +5,6 @@ import org.hibernate.cfg.JDBCMetaDataConfiguration;
 import org.hibernate.cfg.reveng.ReverseEngineeringSettings;
 import org.hibernate.cfg.reveng.SchemaSelection;
 import org.hibernate.cfg.reveng.TableIdentifier;
-import org.hibernate.tool.hbm2x.POJOExporter;
 import org.hibernate.tool.hbmlint.detector.TableSelectorStrategy;
 import org.junit.Test;
 
@@ -21,11 +20,11 @@ public class EntityGenerate {
     @Test
     public void generatorAll() throws Exception{
         entityGenerator();
-        daoGenerator();
-        daoImplGenerator();
-        serviceGenerator();
-        serviceImplGenerator();
-        controllerGenerator();
+//        daoGenerator();
+//        daoImplGenerator();
+//        serviceGenerator();
+//        serviceImplGenerator();
+//        controllerGenerator();
     }
 
     @Test
