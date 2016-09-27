@@ -2,6 +2,8 @@ package my.ssh.biz.ssh.sys.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import org.springframework.security.core.GrantedAuthority;
+
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -22,7 +24,7 @@ import javax.persistence.Table;
 @Table(name="sys_role")
 @org.hibernate.annotations.Table(appliesTo = "sys_role",comment = "系统 - 角色表")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class SysRole  implements java.io.Serializable {
+public class SysRole  implements GrantedAuthority,java.io.Serializable {
 
  
     /**
