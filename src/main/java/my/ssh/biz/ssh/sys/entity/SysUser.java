@@ -2,11 +2,23 @@ package my.ssh.biz.ssh.sys.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import my.ssh.biz.ssh.dic.entity.DicSex;
-import org.springframework.security.core.GrantedAuthority;
-
-import java.util.*;
-import javax.persistence.*;
 
 /**
  * Entity: 系统 - 用户表
@@ -21,7 +33,7 @@ public class SysUser  implements java.io.Serializable {
     /**
      * 用户编号
      */
-    private Integer id;
+    private int id;
  
     /**
      * 性别
@@ -41,22 +53,22 @@ public class SysUser  implements java.io.Serializable {
     /**
      * 是否启用
      */
-    private Boolean enabled;
+    private Byte enabled;
  
     /**
      * 账号是否没有过期
      */
-    private Boolean accountNonExpired;
+    private Byte accountNonExpired;
  
     /**
      * 账号是否没有锁定
      */
-    private Boolean accountNonLocked;
+    private Byte accountNonLocked;
  
     /**
      * 密码是否没有过期
      */
-    private Boolean credentialsNonExpired;
+    private Byte credentialsNonExpired;
  
     /**
      * 生日
@@ -94,10 +106,10 @@ public class SysUser  implements java.io.Serializable {
     }
 
 	
-    public SysUser(Integer id) {
+    public SysUser(int id) {
         this.id = id;
     }
-    public SysUser(Integer id, DicSex dicSex, String username, String password, Boolean enabled, Boolean accountNonExpired, Boolean accountNonLocked, Boolean credentialsNonExpired, Date birthday, String email, String phone, String address, String photo, Date createTime, Set<SysRole> sysRoles) {
+    public SysUser(int id, DicSex dicSex, String username, String password, Byte enabled, Byte accountNonExpired, Byte accountNonLocked, Byte credentialsNonExpired, Date birthday, String email, String phone, String address, String photo, Date createTime, Set<SysRole> sysRoles) {
        this.id = id;
        this.dicSex = dicSex;
        this.username = username;
@@ -117,12 +129,12 @@ public class SysUser  implements java.io.Serializable {
    
     @Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY)    
-    @Column(name="ID", columnDefinition= "Integer comment '用户编号' not null")
-    public Integer getId() {
+    @Column(name="ID", columnDefinition= "int comment '用户编号' not null")
+    public int getId() {
         return this.id;
     }
     
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
     @ManyToOne(fetch=FetchType.EAGER)
@@ -153,39 +165,39 @@ public class SysUser  implements java.io.Serializable {
         this.password = password;
     }
     
-    @Column(name="enabled", columnDefinition= "tinyInteger comment '是否启用' null")
-    public Boolean getEnabled() {
+    @Column(name="enabled", columnDefinition= "tinyint comment '是否启用' null")
+    public Byte getEnabled() {
         return this.enabled;
     }
     
-    public void setEnabled(Boolean enabled) {
+    public void setEnabled(Byte enabled) {
         this.enabled = enabled;
     }
     
-    @Column(name="Account_Non_Expired", columnDefinition= "tinyInteger comment '账号是否没有过期' null")
-    public Boolean getAccountNonExpired() {
+    @Column(name="Account_Non_Expired", columnDefinition= "tinyint comment '账号是否没有过期' null")
+    public Byte getAccountNonExpired() {
         return this.accountNonExpired;
     }
     
-    public void setAccountNonExpired(Boolean accountNonExpired) {
+    public void setAccountNonExpired(Byte accountNonExpired) {
         this.accountNonExpired = accountNonExpired;
     }
     
-    @Column(name="Account_Non_Locked", columnDefinition= "tinyInteger comment '账号是否没有锁定' null")
-    public Boolean getAccountNonLocked() {
+    @Column(name="Account_Non_Locked", columnDefinition= "tinyint comment '账号是否没有锁定' null")
+    public Byte getAccountNonLocked() {
         return this.accountNonLocked;
     }
     
-    public void setAccountNonLocked(Boolean accountNonLocked) {
+    public void setAccountNonLocked(Byte accountNonLocked) {
         this.accountNonLocked = accountNonLocked;
     }
     
-    @Column(name="Credentials_Non_Expired", columnDefinition= "tinyInteger comment '密码是否没有过期' null")
-    public Boolean getCredentialsNonExpired() {
+    @Column(name="Credentials_Non_Expired", columnDefinition= "tinyint comment '密码是否没有过期' null")
+    public Byte getCredentialsNonExpired() {
         return this.credentialsNonExpired;
     }
     
-    public void setCredentialsNonExpired(Boolean credentialsNonExpired) {
+    public void setCredentialsNonExpired(Byte credentialsNonExpired) {
         this.credentialsNonExpired = credentialsNonExpired;
     }
     @Temporal(TemporalType.DATE)
@@ -255,20 +267,9 @@ public class SysUser  implements java.io.Serializable {
         this.sysRoles = sysRoles;
     }
 
-    @JsonIgnore
-    @Transient
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> grantedAuthoritys = new ArrayList<>();
-        for(SysRole sysRole : sysRoles){
-            grantedAuthoritys.add(sysRole);
 
-            for(SysMenu sysMenu : sysRole.getSysMenus()){
-                grantedAuthoritys.add(sysMenu);
-            }
 
-        }
-        return grantedAuthoritys;
-    }
+
 }
 
 
