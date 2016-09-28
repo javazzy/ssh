@@ -23,6 +23,9 @@ public abstract class ToOne extends SimpleValue implements Fetchable {
     protected String referencedPropertyName;
     private String referencedEntityName;
     private boolean embedded;
+    /**
+     * Update false By ZhangZhengyang
+     */
     private boolean lazy = false;
     protected boolean unwrapProxy;
     protected boolean referenceToPrimaryKey = true;

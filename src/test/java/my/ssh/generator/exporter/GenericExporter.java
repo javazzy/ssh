@@ -143,6 +143,12 @@ public class GenericExporter extends AbstractExporter {
         exportPOJO(additionalContext, element);
     }
 
+    /**
+     * Overwrite by ZhangZhengyang
+     * @param additionalContext
+     * @param element
+     * @return
+     */
     protected void exportPOJO(Map<String, Object> additionalContext, POJOClass element) {
         TemplateProducer producer = new TemplateProducer(getTemplateHelper(), getArtifactCollector());
         additionalContext.put("pojo", element);
