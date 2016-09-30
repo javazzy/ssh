@@ -124,6 +124,11 @@ public class ImportContextImpl implements ImportContext {
         return "java.lang".equals(StringHelper.qualifier(className));
     }
 
+
+    /**
+     * Overwrite by ZhangZhengyang
+     * @return
+     */
     public String generateImports() {
         StringBuffer buf = new StringBuffer();
 
