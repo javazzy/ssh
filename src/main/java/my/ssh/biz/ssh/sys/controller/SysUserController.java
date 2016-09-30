@@ -32,11 +32,11 @@ public class SysUserController extends BaseController<SysUser> {
      * @param list
      * @return
      */
-    @RequestMapping("/addAll")
+    @RequestMapping(value = "/addAll", method = RequestMethod.POST)
     @ResponseBody
     @Override
     public Result addAll(@RequestBody List<SysUser> list) {
-        return super.addAll(list);
+        return null;
     }
 
 }

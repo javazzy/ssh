@@ -8,22 +8,22 @@
     <h1>submitUserList_4</h1>
     <form id="form1" method="post" onsubmit="return ajaxSubmit()">
         ID:<input type="text" name="id"><br/>
-        NAME:<input type="text" name="name"><br/>
+        NAME:<input type="text" name="username"><br/>
 
         ID:<input type="text" name="id"><br/>
-        NAME:<input type="text" name="name"><br/>
+        NAME:<input type="text" name="username"><br/>
         <input type="submit" value="submit">
     </form>
 </div>
 
 <!-- END THEME GLOBAL SCRIPTS -->
-<script src="assets/global/plugins/jquery.form.js" type="text/javascript"></script>
 <script src="assets/global/scripts/form2json.js" type="text/javascript"></script>
 
 <script type="text/javascript">
     function ajaxSubmit(){
+        console.log($("#form1").serializeJson());
         $.ajax({
-            url: "/api/sysUsers/deleteAll",
+            url: "/api/sysUsers/addAll",
             type: "POST",
             contentType : 'application/json;charset=utf-8', //设置请求头信息
             dataType:"json",

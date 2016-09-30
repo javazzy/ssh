@@ -167,9 +167,15 @@ X<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="ut
                         </a>
                         <ul class="sub-menu">
                             <li class="nav-item">
-                                <a href="test/ws.jsp" class="nav-link ajaxify">
+                                <a href="test/webqq.jsp" class="nav-link ajaxify">
                                     <i class="icon-bar-chart"></i>
                                     <span class="title">WebSocket</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="test/test.jsp" class="nav-link ajaxify">
+                                    <i class="icon-bar-chart"></i>
+                                    <span class="title">表单提交实体集合</span>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -414,6 +420,7 @@ X<%@ page language="java" contentType="text/html;charset=UTF-8" pageEncoding="ut
     <script src="assets/global/plugins/jquery-validation/js/localization/messages_zh.min.js" type="text/javascript"></script>
     <script src="assets/global/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js" type="text/javascript"></script>
     <script src="assets/global/plugins/jquery.form.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/Base64.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL PLUGINS -->
     <!-- BEGIN THEME GLOBAL SCRIPTS -->
     <script src="assets/global/scripts/app.min.js" type="text/javascript"></script>

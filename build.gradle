@@ -137,7 +137,7 @@ dependencies {
     //热部署spring相关资源
     testCompile 'org.springframework:springloaded:1.2.4.RELEASE'
     //spring单元测试支持
-    compile 'org.springframework:spring-test:4.2.4.RELEASE'
+    compile 'org.springframework:spring-test:4.2.6.RELEASE'
     //java单元测试支持
     compile 'junit:junit:4.12'
 }
