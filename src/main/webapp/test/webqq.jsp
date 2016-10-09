@@ -3,6 +3,8 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
+<link href="assets/global/plugins/lightbox2/css/lightbox.min.css" rel="stylesheet">
+
 <div>
     <div id="conversationDiv">
 
@@ -32,14 +34,24 @@
 </div>
 
 <br>
-
+﻿<div id="fullSizeImage" class="modal hide">
+<div class="modal-header">
+    <button data-dismiss="modal" class="close" type="button"></button>
+</div>
+<div class="modal-body">
+    <div id="img_show">
+    </div>
+</div>
+</div>
 <!-- BEGIN THEME GLOBAL SCRIPTS -->
 
 <!-- END THEME GLOBAL SCRIPTS -->
 <script type="text/javascript" src="../assets/global/plugins/sockjs-1.0.3.min.js"></script>
 <script type="text/javascript" src="../assets/global/plugins/stomp-2.3.3.min.js"></script>
 
+<script type="text/javascript" src="assets/global/plugins/lightbox2/js/lightbox.min.js"></script>
 <script type="text/javascript">
     var username = '<sec:authentication property="principal.username"/>';
 </script>
 <script type="text/javascript" src="test/webqq.js"></script>
+

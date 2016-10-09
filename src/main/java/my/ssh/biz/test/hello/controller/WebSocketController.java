@@ -51,7 +51,9 @@ public class WebSocketController {
     public void message(String content,
                        @Header("from") String from,
                        @Header("to") String to,
+                       @Header(name = "name",required = false) String name,
                        @Header(name = "time",required = false) Long time,
+                       @Header(name = "type",required = false) String type,
                        @Headers Map<String, Object> _headers) throws Exception {
         time = Calendar.getInstance().getTime().getTime();
 

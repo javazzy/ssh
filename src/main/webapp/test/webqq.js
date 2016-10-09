@@ -63,26 +63,42 @@ function disconnect() {
 
 function requestHandler() {
     var to = $("#to").val();
+    var type = "message";
+    var name = "";
 
     var files = document.getElementById("file").files;
     if (files.length > 0) {
         var reader = new FileReader();
         //文件读取完毕后该函数响应
         reader.onload = function (evt) {
-            sendMessage(username, to, evt.target.result);
+            sendMessage(username, to, evt.target.result,type,name);
         }
-        reader.readAsDataURL(files[0]);
+
+        console.log(files[0]);
+        type = files[0].type;
+        name = files[0].name;
+        if(files[0].type.startWith("application")) {
+            reader.readAsBinaryString(files[0]);
+        } else if(files[0].type.startWith("image")){
+            reader.readAsDataURL(files[0]);
+        } else if(files[0].type.startWith("text")) {
+            reader.readAsText(files[0],"utf8");
+        } else {
+            reader.readAsText(files[0]);
+        }
     }
 
     if ($("#content").val()) {
-        sendMessage(username, to, $("#content").val());
+        sendMessage(username, to, $("#content").val(),type,name);
         $("#content").val("");
     }
 }
-function sendMessage(from,to,content){
+function sendMessage(from,to,content,type,name){
     var headers = {
         from: from,
         to: to,
+        type:type,
+        name:name,
         taskId: from+'-'+to+'-'+new Date().getTime(),
         packageIndex: 0,
         packageTotal: 1,
@@ -106,9 +122,10 @@ function sendMessage(from,to,content){
 }
 
 function responseHandler(response) {
-    console.log(response);
     var from = response.headers.from;
     var to = response.headers.to;
+    var type = response.headers.type;
+    var name = response.headers.name;
     var time = new Date(parseInt(response.headers.time)).format("yyyy-MM-dd HH:mm:ss");
     var taskId = response.headers.taskId;
     var packageIndex = response.headers.packageIndex;
@@ -125,11 +142,25 @@ function responseHandler(response) {
         for (var i=0; i < parseInt(packageTotal); i++) {
             allContent += taskMessage[taskId][i];
         }
-        console.log(allContent);
-        if(allContent.startsWith("data:image")){
+        if(type == "message") {
+            content = allContent;
+        } else if(type.startWith("image")) {
+            var a = document.createElement("a");
+            a.href=allContent;
+            a.setAttribute("data-lightbox",from);
+            a.setAttribute("data-title",name);
+
             var img = document.createElement("img");
+            img.width = 150;
             img.src = allContent;
-            content = img.outerHTML;
+
+            a.innerHTML = img.outerHTML;
+            content = a.outerHTML;
+        }else if(type.startWith("application")) {
+        }else{
+            var pre = document.createElement("pre");
+            pre.innerHTML = allContent;
+            content = pre.outerHTML;
         }
         show(from, to, time, content);
     }
