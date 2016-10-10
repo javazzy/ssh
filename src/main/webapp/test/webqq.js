@@ -2,7 +2,7 @@
  * Created by admin on 2016/9/27.
  */
 var stompClient = null;
-var allusers = [];
+var allUsers = [];
 var taskMessage = {};
 
 function setConnected(connected) {
@@ -24,32 +24,44 @@ function connect() {
             responseHandler(response);
         });
 
+        stompClient.subscribe('/topic/files', function (response) {
+            receiveFile(response.body);
+        });
+        stompClient.subscribe('/user/' + username + '/files', function (response) {
+            receiveFile(response.body);
+        });
+
         stompClient.subscribe('/topic/addUser', function (response) {
-            allusers[allusers.length] = response.body;
+            allUsers[allUsers.length] = response.body;
             showAllUser();
         });
         stompClient.subscribe('/topic/removeUser', function (response) {
-            for (var i in allusers) {
-                if (allusers[i] == response.body) {
-                    allusers.splice(i, 1);
+            for (var i in allUsers) {
+                if (allUsers[i] == response.body) {
+                    allUsers.splice(i, 1);
                     break;
                 }
             }
             showAllUser();
         });
         $.get('api/users', function (users) {
-            allusers = users;
+            allUsers = users;
             showAllUser();
         });
     });
 }
 
+function changeTo(to,label){
+    $("#toLabel").html(label);
+    $("input[name='to']").val(to);
+}
+
 function showAllUser() {
-    var toAllHref = '<a onclick="to.value=\'\';toLabel.innerHTML=this.innerHTML">所有人</a> ';
+    var toAllHref = '<a onclick="changeTo(\'\',this.innerHTML)">所有人</a> ';
     $("#allUser").html(toAllHref);
-    $(allusers).each(function (i, user) {
+    $(allUsers).each(function (i, user) {
         if (user == username) return;
-        var toHref = '<a onclick="to.value=this.innerHTML;toLabel.innerHTML=this.innerHTML">' + user + '</a>';
+        var toHref = '<a onclick="changeTo(this.innerHTML,this.innerHTML)">' + user + '</a>';
         $("#allUser").append(toHref).append(" ");
     });
 }
@@ -68,17 +80,17 @@ function requestHandler() {
 
     var files = document.getElementById("file").files;
     if (files.length > 0) {
+        type = files[0].type;
+        name = files[0].name;
+
         var reader = new FileReader();
         //文件读取完毕后该函数响应
         reader.onload = function (evt) {
-            sendMessage(username, to, evt.target.result,type,name);
+            sendMessage(username, to, this.result,type,name);
         }
 
-        console.log(files[0]);
-        type = files[0].type;
-        name = files[0].name;
         if(files[0].type.startWith("application")) {
-            reader.readAsBinaryString(files[0]);
+            reader.readAsArrayBuffer(files[0]);
         } else if(files[0].type.startWith("image")){
             reader.readAsDataURL(files[0]);
         } else if(files[0].type.startWith("text")) {
@@ -107,7 +119,7 @@ function sendMessage(from,to,content,type,name){
 
     var packageIndex = 0;
     var splitSize = 10000; //最大传输字符数:65536
-    var contentLength = content.length;
+    var contentLength = content.byteLength || content.length;
     headers["packageTotal"]=Math.ceil(contentLength / splitSize);
     for (var i = 0; i < contentLength; i += splitSize) {
         headers["packageIndex"]=packageIndex;
@@ -115,7 +127,7 @@ function sendMessage(from,to,content,type,name){
         if(contentLength - i < splitSize){
             splitSize = contentLength - i;
         }
-        var subContent = content.substr(i, splitSize);
+        var subContent = content.substr?content.substr(i, splitSize):content.slice(i, i+splitSize);
         stompClient.send("/app/send", headers, subContent);
         packageIndex++;
     }
@@ -156,7 +168,12 @@ function responseHandler(response) {
 
             a.innerHTML = img.outerHTML;
             content = a.outerHTML;
-        }else if(type.startWith("application")) {
+        }else if(type.startWith("file")) {
+            var a = document.createElement("a");
+            a.innerHTML = name;
+            a.href="api/download/"+encodeURI(name);
+            a.alt = "点击下载";
+            content = a.outerHTML;
         }else{
             var pre = document.createElement("pre");
             pre.innerHTML = allContent;
@@ -164,6 +181,15 @@ function responseHandler(response) {
         }
         show(from, to, time, content);
     }
+}
+
+function receiveFile(responseBody){
+    var info = eval("("+responseBody+")");
+    var a = document.createElement("a");
+    a.innerHTML = info.name;
+    a.href="api/download?fileName="+encodeURI(info.name);
+    a.alt = "点击下载";
+    show(info.from, info.to, info.time, a.outerHTML)
 }
 
 function show(from, to, time, content) {
