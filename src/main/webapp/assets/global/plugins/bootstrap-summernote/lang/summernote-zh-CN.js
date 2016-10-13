@@ -26,6 +26,7 @@
         shapeCircle: '形状: 圆',
         shapeThumbnail: '形状: 缩略图',
         shapeNone: '形状: 无',
+        dropImage: '将图片拖拽至此处',
         dragImageHere: '将图片拖拽至此处',
         selectFromFiles: '从本地上传',
         maximumFileSize: '文件大小最大值',

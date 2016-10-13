@@ -22,7 +22,7 @@ import java.util.List;
 @Configuration
 @EnableWebMvc
 @EnableWebSocket
-public class WebSocketConfig  extends WebSocketMessageBrokerConfigurationSupport {
+public class WebSocketConfig extends WebSocketMessageBrokerConfigurationSupport {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
@@ -33,9 +33,7 @@ public class WebSocketConfig  extends WebSocketMessageBrokerConfigurationSupport
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry
-                .addEndpoint("/websocket")
-                .withSockJS()
+        registry.addEndpoint("/websocket").withSockJS()
                 .setSessionCookieNeeded(true)
                 .setWebSocketEnabled(true);
     }

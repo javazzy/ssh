@@ -9,7 +9,6 @@ function setConnected(connected) {
     document.getElementById('connect').disabled = connected;
     document.getElementById('disconnect').disabled = !connected;
     document.getElementById('conversationDiv').style.display = connected ? '' : 'none';
-    document.getElementById('content').innerHTML = '';
 }
 
 function connect() {
@@ -22,13 +21,6 @@ function connect() {
         });
         stompClient.subscribe('/user/' + username + '/message', function (response) {
             responseHandler(response);
-        });
-
-        stompClient.subscribe('/topic/files', function (response) {
-            receiveFile(response.body);
-        });
-        stompClient.subscribe('/user/' + username + '/files', function (response) {
-            receiveFile(response.body);
         });
 
         stompClient.subscribe('/topic/addUser', function (response) {
@@ -74,122 +66,57 @@ function disconnect() {
 }
 
 function requestHandler() {
-    var to = $("#to").val();
-    var type = "message";
-    var name = "";
-
-    var files = document.getElementById("file").files;
-    if (files.length > 0) {
-        type = files[0].type;
-        name = files[0].name;
-
-        var reader = new FileReader();
-        //文件读取完毕后该函数响应
-        reader.onload = function (evt) {
-            sendMessage(username, to, this.result,type,name);
-        }
-
-        if(files[0].type.startWith("application")) {
-            reader.readAsArrayBuffer(files[0]);
-        } else if(files[0].type.startWith("image")){
-            reader.readAsDataURL(files[0]);
-        } else if(files[0].type.startWith("text")) {
-            reader.readAsText(files[0],"utf8");
-        } else {
-            reader.readAsText(files[0]);
-        }
-    }
-
-    if ($("#content").val()) {
-        sendMessage(username, to, $("#content").val(),type,name);
-        $("#content").val("");
-    }
-}
-function sendMessage(from,to,content,type,name){
-    var headers = {
-        from: from,
-        to: to,
-        type:type,
-        name:name,
-        taskId: from+'-'+to+'-'+new Date().getTime(),
-        packageIndex: 0,
-        packageTotal: 1,
-        time: 0,
-    };
-
-    var packageIndex = 0;
-    var splitSize = 10000; //最大传输字符数:65536
-    var contentLength = content.byteLength || content.length;
-    headers["packageTotal"]=Math.ceil(contentLength / splitSize);
-    for (var i = 0; i < contentLength; i += splitSize) {
-        headers["packageIndex"]=packageIndex;
-
-        if(contentLength - i < splitSize){
-            splitSize = contentLength - i;
-        }
-        var subContent = content.substr?content.substr(i, splitSize):content.slice(i, i+splitSize);
-        stompClient.send("/app/send", headers, subContent);
-        packageIndex++;
+    var content = $('#contentEditor').code();
+    if (content != '<p><br></p>') {
+        $("[name='content']").val(content);
+        $("#sendMessageForm").ajaxSubmit({
+            success:function(){
+                $('#content').code("<p><br></p>");
+                $("[name='content']").val("");
+            }
+        });
+    }else{
+        warning("发送信息为空！");
     }
 }
 
 function responseHandler(response) {
-    var from = response.headers.from;
-    var to = response.headers.to;
-    var type = response.headers.type;
-    var name = response.headers.name;
-    var time = new Date(parseInt(response.headers.time)).format("yyyy-MM-dd HH:mm:ss");
-    var taskId = response.headers.taskId;
-    var packageIndex = response.headers.packageIndex;
-    var packageTotal = response.headers.packageTotal;
-    var content = response.body;
+    try{
+        var from = response.headers.from;
+        var to = response.headers.to;
+        var type = response.headers.type;
+        var time = new Date(parseInt(response.headers.time)).format("yyyy-MM-dd HH:mm:ss");
+        var taskId = response.headers.taskId;
+        var packageIndex = response.headers.packageIndex;
+        var packageTotal = response.headers.packageTotal;
+        var content = response.body;
 
-    if(!taskMessage[taskId]){
-        taskMessage[taskId] = {};
-    }
-    taskMessage[taskId][packageIndex] = content;
-
-    if(Object.keys(taskMessage[taskId]).length == packageTotal){
-        var allContent = "";
-        for (var i=0; i < parseInt(packageTotal); i++) {
-            allContent += taskMessage[taskId][i];
+        if(!taskMessage[taskId]){
+            taskMessage[taskId] = {};
         }
-        if(type == "message") {
-            content = allContent;
-        } else if(type.startWith("image")) {
-            var a = document.createElement("a");
-            a.href=allContent;
-            a.setAttribute("data-lightbox",from);
-            a.setAttribute("data-title",name);
+        taskMessage[taskId][packageIndex] = content;
 
-            var img = document.createElement("img");
-            img.width = 150;
-            img.src = allContent;
-
-            a.innerHTML = img.outerHTML;
-            content = a.outerHTML;
-        }else if(type.startWith("file")) {
-            var a = document.createElement("a");
-            a.innerHTML = name;
-            a.href="api/download/"+encodeURI(name);
-            a.alt = "点击下载";
-            content = a.outerHTML;
-        }else{
-            var pre = document.createElement("pre");
-            pre.innerHTML = allContent;
-            content = pre.outerHTML;
+        if(Object.keys(taskMessage[taskId]).length == packageTotal){
+            var allContent = "";
+            for (var i=0; i < parseInt(packageTotal); i++) {
+                allContent += taskMessage[taskId][i];
+            }
+            if(type == "message") {
+                content = allContent;
+            }else if(type == "file") {
+                var a = document.createElement("a");
+                a.innerHTML = content;
+                a.href="api/download?fileName="+encodeURI(content);
+                a.alt = "点击下载";
+                content = a.outerHTML;
+            }
+            delete taskMessage[taskId];
+            show(from, to, time, content);
         }
-        show(from, to, time, content);
+    }catch(e){
+        console.log(e);
     }
-}
 
-function receiveFile(responseBody){
-    var info = eval("("+responseBody+")");
-    var a = document.createElement("a");
-    a.innerHTML = info.name;
-    a.href="api/download?fileName="+encodeURI(info.name);
-    a.alt = "点击下载";
-    show(info.from, info.to, info.time, a.outerHTML)
 }
 
 function show(from, to, time, content) {
@@ -208,3 +135,31 @@ function show(from, to, time, content) {
     $("#message").append(line);
 }
 disconnect();
+
+
+$(function () {
+    $(".dropzone").dropzone({
+        dictDefaultMessage: "点击选择文件或拖拽文件到此",
+        init: function () {
+            this.on("addedfile", function (file) {
+                var removeButton = Dropzone.createElement("<a href='javascript:;'' class='btn red btn-sm btn-block'>删除</a>");
+                var _this = this;
+                removeButton.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    _this.removeFile(file);
+                });
+                file.previewElement.appendChild(removeButton);
+            });
+        },
+        url: "api/upload"
+    });
+    $('#contentEditor').summernote({
+//            width:800,
+        height: 200,
+        lang: 'zh-CN'
+    });
+    //API:
+    //var sHTML = $('#content').code(); // get code
+    //$('#content').destroy(); // destroy
+});
