@@ -16,7 +16,7 @@ import ${pojo.getPackageDeclaration().substring(8,pojo.getPackageDeclaration().l
  */
 @Controller
 @RequestMapping("/${pojo.getDeclarationName()?uncap_first}s")
-public class ${pojo.getDeclarationName()}Controller extends SimpleController<${pojo.getDeclarationName()}> {
+public class ${pojo.getDeclarationName()}Controller extends BaseController<${pojo.getDeclarationName()}> {
 
     @Resource
     private ${pojo.getDeclarationName()}Service ${pojo.getDeclarationName()?uncap_first}Service;

@@ -19,12 +19,12 @@ public class EntityGenerate {
 
     @Test
     public void generatorAll() throws Exception{
-        entityGenerator();
-//        daoGenerator();
-//        daoImplGenerator();
-//        serviceGenerator();
-//        serviceImplGenerator();
-//        controllerGenerator();
+//        entityGenerator();
+        daoGenerator();
+        daoImplGenerator();
+        serviceGenerator();
+        serviceImplGenerator();
+        controllerGenerator();
     }
 
     @Test

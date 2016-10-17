@@ -87,7 +87,13 @@ abstract public class BasicPOJOClass implements POJOClass, MetaAttributeConstant
      */
     protected String getPackageDeclaration(String pkgName) {
 
-        int endPointIndex = pkgName.lastIndexOf(".");
+        int endPointIndex = 0;
+        if(pkgName.endsWith(".dao.impl") ||
+                pkgName.endsWith(".service.impl")){
+            endPointIndex = pkgName.substring(0,pkgName.lastIndexOf(".")).lastIndexOf(".");
+        }else{
+            endPointIndex = pkgName.lastIndexOf(".");
+        }
         int startPointIndex = pkgName.substring(0,endPointIndex).lastIndexOf(".");
         String modualName = pkgName.substring(startPointIndex+1,endPointIndex);
 

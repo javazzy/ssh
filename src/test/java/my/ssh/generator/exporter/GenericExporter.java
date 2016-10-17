@@ -158,17 +158,23 @@ public class GenericExporter extends AbstractExporter {
             log.warn("Filename for " + getClassNameForFile(element) + " contains a $. Innerclass generation is not supported.");
         }
 
-        String packagePath = filename.substring(0,filename.lastIndexOf("/"));
-        int endPointIndex = packagePath.lastIndexOf("/");
-        int startPointIndex = filename.substring(0,endPointIndex).lastIndexOf("/");
-        String modualName = filename.substring(startPointIndex+1,endPointIndex);
+        String packagePath = filename.substring(0, filename.lastIndexOf("/"));
+        int endPointIndex = 0;
+        if(packagePath.endsWith("/dao/impl") ||
+                packagePath.endsWith("/service/impl")){
+            endPointIndex = packagePath.substring(0,packagePath.lastIndexOf("/")).lastIndexOf("/");
+        }else{
+            endPointIndex = packagePath.lastIndexOf("/");
+        }
+        int startPointIndex = filename.substring(0, endPointIndex).lastIndexOf("/");
+        String modualName = filename.substring(startPointIndex + 1, endPointIndex);
 
         Pattern p = Pattern.compile("[A-Z][a-z0-9]+");
         Matcher matcher = p.matcher(element.getDeclarationName());
-        if(matcher.find()) {
+        if (matcher.find()) {
             String modualName1 = matcher.group(0).toLowerCase();
-            if(!modualName.equals(modualName1)){
-                filename = new StringBuilder(filename).replace(startPointIndex+1,endPointIndex,modualName1).toString();
+            if (!modualName.equals(modualName1)) {
+                filename = new StringBuilder(filename).replace(startPointIndex + 1, endPointIndex, modualName1).toString();
             }
         }
 

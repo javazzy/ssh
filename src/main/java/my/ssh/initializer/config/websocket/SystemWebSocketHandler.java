@@ -25,15 +25,17 @@ public class SystemWebSocketHandler extends SubProtocolWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+        super.afterConnectionEstablished(session);
         String username = session.getPrincipal().getName();
+        LOGGER.info("用户“"+username+"”上线");
         sessions.put(username,session);
         sendAddUser(username);
-        super.afterConnectionEstablished(session);
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
         String username = session.getPrincipal().getName();
+        LOGGER.info("用户“"+username+"”下线");
         sessions.remove(username);
         sendRemoveUser(username);
         super.afterConnectionClosed(session, closeStatus);
