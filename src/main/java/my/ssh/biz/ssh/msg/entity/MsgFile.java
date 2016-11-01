@@ -69,7 +69,7 @@ public class MsgFile  implements java.io.Serializable {
     }
    
     @Id
-    @GeneratedValue(generator="generator",strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id", columnDefinition= "int comment '附件编号' not null")
     public int getId() {
         return this.id;

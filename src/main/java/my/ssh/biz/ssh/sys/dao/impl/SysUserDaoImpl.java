@@ -35,7 +35,7 @@ public class SysUserDaoImpl extends BaseDaoImpl<SysUser> implements SysUserDao {
              * 性别
              */
             if (null != entity.getDicSex()) {
-                dc.add(Restrictions.eq("dicSex.ID", entity.getDicSex().getId()));
+                dc.add(Restrictions.eq("dicSex.id", entity.getDicSex().getId()));
             }
             /**
              * 用户姓名

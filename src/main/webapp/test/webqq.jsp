@@ -8,9 +8,15 @@
 <link href="assets/global/plugins/dropzone/basic.min.css" rel="stylesheet" type="text/css"/>
 <link href="assets/global/plugins/bootstrap-summernote/summernote.css" rel="stylesheet" type="text/css"/>
 
-<div>
+<div style="padding: 10px">
+    <div>
+        <button id="connect" onclick="connect();">连接</button>
+        <button id="disconnect" disabled="disabled" onclick="disconnect();">断开</button>
+    </div>
     <div id="conversationDiv">
-        <div id="message" style="border:1px solid gray;"></div>
+        <div style="overflow: auto; height:300px;border:1px solid gray;padding:10px">
+            <div id="message"></div>
+        </div>
         当前用户：<sec:authentication property="principal.username"/><br>
         其他用户：<span id="allUser"></span><br><br>
         <label>目 标：</label><strong><span id="toLabel"></span></strong><input type="hidden" id="to" name="to"/><br>
@@ -44,10 +50,7 @@
             </div>
         </div>
     </div>
-    <div>
-        <button id="connect" onclick="connect();">连接</button>
-        <button id="disconnect" disabled="disabled" onclick="disconnect();">断开</button>
-    </div>
+
 </div>
 
 <%--<br>--%>

@@ -105,4 +105,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
     }
     @Override
     public void evictChche(T entity) throws Exception {}
+
+    @Override
+    public void evictChche(Serializable id) throws Exception {}
 }

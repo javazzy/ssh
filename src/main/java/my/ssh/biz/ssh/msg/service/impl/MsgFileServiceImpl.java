@@ -8,6 +8,7 @@ import my.ssh.biz.ssh.msg.service.MsgFileService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.Serializable;
 
 /**
  *  服务实现： 消息附件表

@@ -14,7 +14,7 @@ import java.util.Map;
 public class ChatMessageHandler extends TextWebSocketHandler{
 
     private static Logger logger = Logger.getLogger(ChatMessageHandler.class);
-    private static final Map<WebSocketSession,UserDetails> users = new Hashtable<>();
+    private static final Map<String,WebSocketSession> users = new Hashtable<>();
 
     /**
      * 连接成功时候，会触发UI上onopen方法
@@ -23,7 +23,7 @@ public class ChatMessageHandler extends TextWebSocketHandler{
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         System.out.println("connect to the websocket success......");
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        users.put(session,(UserDetails)principal);
+        users.put(((UserDetails)principal).getUsername(),session);
         //这块会实现自己业务，比如，当用户登录后，会把离线消息推送给用户
         //TextMessage returnMessage = new TextMessage("你将收到的离线");
         //session.sendMessage(returnMessage);
@@ -40,17 +40,20 @@ public class ChatMessageHandler extends TextWebSocketHandler{
 
     @Override
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
+        logger.debug("websocket connection closed......");
+        users.remove(session.getPrincipal().getName());
         if(session.isOpen()){
             session.close();
         }
-        logger.debug("websocket connection closed......");
-        users.remove(session);
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
         logger.debug("websocket connection closed......");
-        users.remove(session);
+        users.remove(session.getPrincipal().getName());
+        if(session.isOpen()){
+            session.close();
+        }
     }
 
     @Override

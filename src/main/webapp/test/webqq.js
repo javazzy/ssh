@@ -6,6 +6,8 @@ var allUsers = [];
 var taskMessage = {};
 
 function setConnected(connected) {
+    $("#message").empty();
+    $('#contentEditor').code("<p><br></p>");
     document.getElementById('connect').disabled = connected;
     document.getElementById('disconnect').disabled = !connected;
     document.getElementById('conversationDiv').style.display = connected ? '' : 'none';
@@ -71,8 +73,7 @@ function requestHandler() {
         $("[name='content']").val(content);
         $("#sendMessageForm").ajaxSubmit({
             success:function(){
-                $('#content').code("<p><br></p>");
-                $("[name='content']").val("");
+                $('#contentEditor').code("<p><br></p>");
             }
         });
     }else{
@@ -134,7 +135,7 @@ function show(from, to, time, content) {
 
     $("#message").append(line);
 }
-disconnect();
+// disconnect();
 
 
 $(function () {
@@ -162,4 +163,6 @@ $(function () {
     //API:
     //var sHTML = $('#content').code(); // get code
     //$('#content').destroy(); // destroy
+
+    connect();
 });
