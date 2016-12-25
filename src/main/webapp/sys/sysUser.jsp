@@ -22,7 +22,11 @@
                 <thead>
                 <tr role="row" class="heading">
                     <th width="30">
-                        <input type="checkbox" class="group-checkable"></th>
+                        <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                            <input type="checkbox" class="group-checkable" data-set="#datatable_sysUser .checkboxes" />
+                            <span></span>
+                        </label>
+                    </th>
                     <th> 用户名</th>
                     <th> 性别</th>
                     <th> 生日</th>

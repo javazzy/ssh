@@ -93,6 +93,9 @@ Portfolio
 .cbp-popup-singlePage-open {
   z-index: 10105 !important; }
 
+.cbp-popup-singlePage .cbp-popup-navigation-wrap {
+  z-index: 10106 !important; }
+
 .portfolio-tile {
   margin-bottom: 30px; }
 

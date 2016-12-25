@@ -20,7 +20,7 @@ var ChartsFlotcharts = function() {
             var data = [];
             var totalPoints = 250;
 
-            // random data my.ssh.generator for plot charts
+            // random data generator for plot charts
 
             function getRandomData() {
                 if (data.length > 0) data = data.slice(1);
@@ -892,15 +892,78 @@ var ChartsFlotcharts = function() {
                 alert('' + obj.series.label + ': ' + percent + '%');
             }
 
+        },
+
+        initAxisLabelsPlugin: function() {
+            var d1 = [];
+
+                for (var i = 0; i < Math.PI * 2; i += 0.25)
+                    d1.push([i, Math.sin(i)]);
+
+                var d2 = [];
+                for (var i = 0; i < Math.PI * 2; i += 0.25)
+                    d2.push([i, Math.cos(i)]);
+
+                var d3 = [];
+                for (var i = 0; i < Math.PI * 2; i += 0.1)
+                    d3.push([i, Math.tan(i)]);
+
+            var options = {
+                axisLabels: {
+                    show: true
+                },
+                xaxes: [{
+                    axisLabel: 'hor label',
+                    tickColor: "#eee",
+                }],
+                yaxes: [{
+                    position: 'left',
+                    axisLabel: 'ver label',
+                    tickColor: "#eee",
+                }, {
+                    position: 'right',
+                    axisLabel: 'bleem'
+                }],
+
+                grid: {
+                    borderColor: "#eee",
+                    borderWidth: 1
+                }
+            };
+
+            $.plot($("#chart_1_1"),
+                [{
+                    label: "sin(x)",
+                    data: d1,
+                    lines: {
+                        lineWidth: 1,
+                    },
+                    shadowSize: 0
+                }, {
+                    label: "cos(x)",
+                    data: d2,
+                    lines: {
+                        lineWidth: 1,
+                    },
+                    shadowSize: 0
+                }, {
+                    label: "tan(x)",
+                    data: d3,
+                    lines: {
+                        lineWidth: 1,
+                    },
+                    shadowSize: 0
+                }],
+                options
+            );
         }
-
     };
-
 }();
 
 jQuery(document).ready(function() {    
-      ChartsFlotcharts.init();
-   ChartsFlotcharts.initCharts();
-   ChartsFlotcharts.initPieCharts();
-   ChartsFlotcharts.initBarCharts();
+    ChartsFlotcharts.init();
+    ChartsFlotcharts.initCharts();
+    ChartsFlotcharts.initPieCharts();
+    ChartsFlotcharts.initBarCharts();
+    ChartsFlotcharts.initAxisLabelsPlugin();
 });

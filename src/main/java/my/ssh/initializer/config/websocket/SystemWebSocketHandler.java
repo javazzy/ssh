@@ -1,6 +1,6 @@
 package my.ssh.initializer.config.websocket;
 
-import my.ssh.biz.test.hello.controller.WebSocketController;
+import my.ssh.biz.ssh.hello.controller.WebSocketController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.messaging.MessageChannel;
@@ -27,7 +27,7 @@ public class SystemWebSocketHandler extends SubProtocolWebSocketHandler {
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         super.afterConnectionEstablished(session);
         String username = session.getPrincipal().getName();
-        LOGGER.info("用户“"+username+"”上线");
+        LOGGER.info("user “"+username+"” online!");
         sessions.put(username,session);
         sendAddUser(username);
     }
@@ -35,7 +35,7 @@ public class SystemWebSocketHandler extends SubProtocolWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
         String username = session.getPrincipal().getName();
-        LOGGER.info("用户“"+username+"”下线");
+        LOGGER.info("user “"+username+"” offline");
         sessions.remove(username);
         sendRemoveUser(username);
         super.afterConnectionClosed(session, closeStatus);

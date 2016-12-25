@@ -26,13 +26,19 @@
         shapeCircle: '形状: 圆',
         shapeThumbnail: '形状: 缩略图',
         shapeNone: '形状: 无',
-        dropImage: '将图片拖拽至此处',
         dragImageHere: '将图片拖拽至此处',
         selectFromFiles: '从本地上传',
         maximumFileSize: '文件大小最大值',
         maximumFileSizeError: '文件大小超出最大值。',
         url: '图片地址',
         remove: '移除图片'
+      },
+      video: {
+        video: '视频',
+        videoLink: '视频链接',
+        insert: '插入视频',
+        url: '视频地址',
+        providers: '(优酷, Instagram, DailyMotion, Youtube等)'
       },
       link: {
         link: '链接',

@@ -6,15 +6,16 @@ var allUsers = [];
 var taskMessage = {};
 
 function setConnected(connected) {
+    debugger
     $("#message").empty();
-    $('#contentEditor').code("<p><br></p>");
+    $('#contentEditor').summernote('code', "<p><br></p>");
     document.getElementById('connect').disabled = connected;
     document.getElementById('disconnect').disabled = !connected;
     document.getElementById('conversationDiv').style.display = connected ? '' : 'none';
 }
 
 function connect() {
-    var socket = new SockJS('/api/websocket');
+    var socket = new SockJS(basepath+'api/websocket');
     stompClient = Stomp.over(socket);
     stompClient.connect("", "", function (frame) {
         setConnected(true);
@@ -68,12 +69,12 @@ function disconnect() {
 }
 
 function requestHandler() {
-    var content = $('#contentEditor').code();
+    var content = $('#contentEditor').summernote('code');
     if (content != '<p><br></p>') {
         $("[name='content']").val(content);
         $("#sendMessageForm").ajaxSubmit({
             success:function(){
-                $('#contentEditor').code("<p><br></p>");
+                $('#contentEditor').summernote('code',"<p><br></p>");
             }
         });
     }else{

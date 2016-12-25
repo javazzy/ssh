@@ -1176,10 +1176,7 @@ $.extend( $.validator, {
 			}
 			return value.length > 0;
 		},
-		phone:function(val, element) {
-				var tel = /^(\d{3,4}-?)?\d{7,9}$/g;
-			return this.optional(element) || (tel.test(val));
-		},
+
 		// http://jqueryvalidation.org/email-method/
 		email: function( value, element ) {
 			// From https://html.spec.whatwg.org/multipage/forms.html#valid-e-mail-address

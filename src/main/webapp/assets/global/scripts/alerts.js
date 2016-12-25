@@ -6,7 +6,7 @@ var windowPrompt = window.prompt;
  * 常规消息提示
  * @param msg
  */
-var info = function(msg,clickFn) {
+var info = function (msg, clickFn) {
     toastr.options = {
         "closeButton": true,
         "debug": false,
@@ -21,13 +21,13 @@ var info = function(msg,clickFn) {
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     }
-    toastr["info"](msg,"信息提示");
+    toastr["info"](msg, "信息提示");
 }
 /**
  * 警告消息提示（推荐用alert）
  * @param msg
  */
-var warning = function(msg,clickFn) {
+var warning = function (msg, clickFn) {
     toastr.options = {
         "closeButton": true,
         "debug": false,
@@ -42,13 +42,13 @@ var warning = function(msg,clickFn) {
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     }
-    toastr["warning"](msg,"警告");
+    toastr["warning"](msg, "警告");
 }
 /**
  * 成功消息提示
  * @param msg
  */
-var success = function(msg,clickFn) {
+var success = function (msg, clickFn) {
     toastr.options = {
         "closeButton": true,
         "debug": false,
@@ -63,14 +63,14 @@ var success = function(msg,clickFn) {
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     }
-    toastr["success"](msg,"成功提示");
+    toastr["success"](msg, "成功提示");
 }
 
 /**
  * 失败消息提示
  * @param msg
  */
-var error = function(msg,clickFn) {
+var error = function (msg, clickFn) {
     toastr.options = {
         "closeButton": true,
         "debug": false,
@@ -85,7 +85,7 @@ var error = function(msg,clickFn) {
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     }
-    toastr["error"](msg,"错误提示");
+    toastr["error"](msg, "错误提示");
 }
 
 /**
@@ -93,21 +93,25 @@ var error = function(msg,clickFn) {
  * @param msg
  * @param callback
  */
-var alert = function(msg, callback) {
-    if(!msg){
+var alert = function (msg, callback) {
+    if (!msg) {
         windowAlert();
-    }else{
-        bootbox.dialog({
-            message: '<i class="fa-lg fa fa-warning"></i> '+msg,
-            title: "警告",
-            buttons: {
-                main: {
-                    label: "确定",
-                    className: "blue",
-                    callback: callback
+    } else {
+        swal({
+                title: msg,
+                type: "warning",
+                allowOutsideClick: true,
+                showConfirmButton: true,
+                showCancelButton: false,
+                confirmButtonClass: "btn-info",
+                closeOnConfirm: true,
+                confirmButtonText: "确定"
+            },
+            function (isConfirm) {
+                if (isConfirm && callback) {
+                    callback();
                 }
-            }
-        });
+            });
     }
 }
 
@@ -117,40 +121,29 @@ var alert = function(msg, callback) {
  * @param fnYes
  * @param eventElement
  */
-var confirm = function(msg, fnOk,fnCancen) {
-    if(!fnOk && !fnCancen){
+var confirm = function (msg, fnOk, fnCancen) {
+    if (!fnOk && !fnCancen) {
         return windowConfirm(msg);
     } else {
-        bootbox.dialog({
-            message: '<i class="fa-lg fa fa-question-circle"></i> '+msg,
-            title: "确认提示",
-            buttons: {
-                main: {
-                    label: "确定",
-                    className: "blue",
-                    callback: fnOk
-                },
-                cancel: {
-                    label: "取消",
-                    className: "default",
-                    callback: fnCancen
+        swal({
+                title: msg,
+                type: "warning",
+                allowOutsideClick: true,
+                showConfirmButton: true,
+                showCancelButton: true,
+                confirmButtonClass: "btn-info",
+                cancelButtonClass: "btn-default",
+                closeOnConfirm: true,
+                closeOnCancel: true,
+                confirmButtonText: "确定",
+                confirmCancelText: "取消"
+            },
+            function (isConfirm) {
+                if (isConfirm && fnOk) {
+                    fnOk();
+                } else if (!isConfirm && fnCancen) {
+                    fnCancen();
                 }
-            }
-        });
-    }
-}
-
-/**
- * 输入模态框
- * @param msg
- * @param callback
- */
-var prompt = function(msg, callback) {
-    if(!callback){
-        return windowPrompt(msg);
-    }else{
-        bootbox.prompt(msg, function(result) {
-            callback(result);
-        });
+            });
     }
 }

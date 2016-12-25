@@ -15195,7 +15195,7 @@
 	/* jslint node: true */
 	'use strict';
 	/*jshint -W004 */
-	/* qr.js -- QR code my.ssh.generator in Javascript (revision 2011-01-19)
+	/* qr.js -- QR code generator in Javascript (revision 2011-01-19)
 	 * Written by Kang Seonghoon <public+qrjs@mearie.org>.
 	 *
 	 * This source code is in the public domain; if your jurisdiction does not
@@ -15206,7 +15206,7 @@
 
 	// per-version information (cf. JIS X 0510:2004 pp. 30--36, 71)
 	//
-	// [0]: the degree of my.ssh.generator polynomial by ECC levels
+	// [0]: the degree of generator polynomial by ECC levels
 	// [1]: # of code blocks by ECC levels
 	// [2]: left-top positions of alignment patterns
 	//
@@ -15276,10 +15276,10 @@
 		v = (v * 2) ^ (v >= 128 ? 0x11d : 0);
 	}
 
-	// my.ssh.generator polynomials up to degree 30
+	// generator polynomials up to degree 30
 	// (should match with polynomials in JIS X 0510:2004 Appendix A)
 	//
-	// my.ssh.generator polynomial of degree K is product of (x-\alpha^0), (x-\alpha^1),
+	// generator polynomial of degree K is product of (x-\alpha^0), (x-\alpha^1),
 	// ..., (x-\alpha^(K-1)). by convention, we omit the K-th coefficient (always 1)
 	// from the result; also other coefficients are written in terms of the exponent
 	// to \alpha to avoid the redundant calculation. (see also calculateecc below.)
@@ -15503,13 +15503,13 @@
 		return buf;
 	};
 
-	// calculates ECC code words for given code words and my.ssh.generator polynomial.
+	// calculates ECC code words for given code words and generator polynomial.
 	//
 	// this is quite similar to CRC calculation as both Reed-Solomon and CRC use
 	// the certain kind of cyclic codes, which is effectively the division of
-	// zero-augumented polynomial by the my.ssh.generator polynomial. the only difference
+	// zero-augumented polynomial by the generator polynomial. the only difference
 	// is that Reed-Solomon uses GF(2^8), instead of CRC's GF(2), and Reed-Solomon
-	// uses the different my.ssh.generator polynomial than CRC's.
+	// uses the different generator polynomial than CRC's.
 	var calculateecc = function(poly, genpoly) {
 		var modulus = poly.slice(0);
 		var polylen = poly.length, genpolylen = genpoly.length;

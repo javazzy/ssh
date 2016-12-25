@@ -29,7 +29,7 @@ var SysUser = function () {
                 },
                 columns: [
                     {data:"id", mRender: function (value, display, row) {
-                        return '<input type="checkbox" class="checkbox" name="id" value="' + value + '">';
+                        return '<label class="mt-checkbox mt-checkbox-single mt-checkbox-outline"><input name="id" type="checkbox" class="checkboxes" value="' + value + '"/><span></span></label>';
                     }},
                     {data:"username"},
                     {data:"dicSex.name"},

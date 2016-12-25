@@ -41,39 +41,42 @@ var Datatable = function() {
                 resetGroupActionInputOnSuccess: true,
                 loadingMessage: '载入中...',
                 dataTable: {
-                    dom: '<"datatable-header"><"datatable-scroll"t><"datatable-footer text-right"ilp>', // datatable layout
-                    pageLength: 5, // default records per page
-                    lengthMenu: [
-                        [5, 10, 20, 50, 100, -1],
-                        [5, 10, 20, 50, 100, "All"] // change per page values here
-                    ],
-                    // bStateSave: true, // save datatable state(pagination, sort, etc) in cookie.
-                    language: { // language settings
+                    //语法结构
+                    //l - 每页数量选择select
+                    //f – 搜索框search
+                    //t – 表单内容table
+                    //i – 当前条数，总共条数information
+                    //p – 翻页按钮pagination
+                    //r – 请求中的提示信息
+                    //< 和 > – 一个div的开始与结束
+                    //<"class"> – class为div的class名称
+                    "dom": '<"datatable-header"><"datatable-scroll"t><"datatable-footer"ilp>', // datatable layout
+                    "pageLength": 10, // default records per page
+                    "language": { // language settings
                         // metronic spesific
-                        metronicGroupActions: "_TOTAL_ 条记录被选中:  ",
-                        metronicAjaxRequestGeneralError: "无法完成请求，请检查你的网络连接",
+                        "metronicGroupActions": "_TOTAL_ 条数据被选中:  ",
+                        "metronicAjaxRequestGeneralError": "无法完成请求。请检查你的网络连接！",
 
                         // data tables spesific
-                        lengthMenu: " <span class='seperator'> | </span> 每页显示 _MENU_ 条记录",
-                        info: "发现 _TOTAL_ 条记录",
-                        infoFiltered: "(从 _MAX_ 条记录中过滤)",
-                        infoEmpty: "没有发现数据",
-                        emptyTable: "没有数据",
-                        zeroRecords: "没有过滤到记录",
-                        paginate: {
-                            previous: "上一页",
-                            next: "下一页",
-                            last: "最后一页",
-                            first: "第一页",
-                            page: " <span class='seperator'> | </span> 当前页",
-                            pageOf: "总页数"
+                        "lengthMenu": "<span class='seperator'>|</span>每页 _MENU_ 条",
+                        "info": "<span class='seperator'></span>共 _TOTAL_ 条",
+                        "infoEmpty": "没有数据",
+                        "emptyTable": "表中无数据存在！",
+                        "zeroRecords": "对不起，查询不到相关数据！",
+                        "paginate": {
+                            "previous": "上一页",
+                            "next": "下一页",
+                            "last": "末页",
+                            "first": "首页",
+                            "page": "<span class='seperator'>|</span>转到页",
+                            "pageOf": "/"
                         }
                     },
 
-                    orderCellsTop: true,
-                    columnDefs: [{ // define columns sorting options(by default all columns are sortable extept the first checkbox column)
-                        orderable: false,
+                    "orderCellsTop": true,
+                    columnDefs: [{
                         targets: [0],
+                        orderable: false,
                         searchable: false
                     }, {
                         defaultContent: '',
@@ -81,32 +84,30 @@ var Datatable = function() {
                         targets: ['_all']
                     }],
 
-                    pagingType: "bootstrap_extended", // pagination type(bootstrap, bootstrap_full_number or bootstrap_extended)
-                    autoWidth: false, // disable fixed width and enable fluid table
-                    processing: true, // enable/disable display message box on record load
-                    serverSide: true, // enable/disable server side ajax loading
+                    "pagingType": "bootstrap_extended", // pagination type(bootstrap, bootstrap_full_number or bootstrap_extended)
+                    "autoWidth": false, // disable fixed width and enable fluid table
+                    "processing": true, // enable/disable display message box on record load
+                    "serverSide": true, // enable/disable server side ajax loading
 
-                    ajax: { // define ajax settings
-                        url: "", // ajax URL
-                        type: "POST", // request type
-                        timeout: 20000,
-                        data: function(data) { // add request parameters before submit
-                            var columns = data.columns;
-                            var orderArr = data.order;
+                    "ajax": { // define ajax settings
+                        "url": "", // ajax URL
+                        "type": "GET", // request type
+                        "timeout": 20000,
+                        "data": function(data) { // add request parameters before submit
+                            $.each(ajaxParams, function(key, value) {
+                                data[key] = value;
+                            });
+
                             var orderby = [];
-                            for(var i in orderArr){
-                                var order = orderArr[i];
+                            for(var i in data.order){
+                                var order = data.order[i];
                                 var orderColumnIndex = order.column;
-                                var orderColumnName = columns[orderColumnIndex].data;
+                                var orderColumnName = data.columns[orderColumnIndex].data;
                                 var orderColumnDir = order.dir;
                                 orderby.push(orderColumnName+' '+orderColumnDir);
                             }
                             delete data.columns;
                             data.order = orderby.join(",");
-
-                            $.each(ajaxParams, function(key, value) {
-                                data[key] = value;
-                            });
 
                             App.blockUI({
                                 message: tableOptions.loadingMessage,
@@ -116,7 +117,7 @@ var Datatable = function() {
                                 boxed: true
                             });
                         },
-                        dataSrc: function(res) { // Manipulate the data returned from the server
+                        "dataSrc": function(res) { // Manipulate the data returned from the server
                             if (res.customActionMessage) {
                                 App.alert({
                                     type: (res.customActionStatus == 'OK' ? 'success' : 'danger'),
@@ -135,7 +136,6 @@ var Datatable = function() {
 
                             if ($('.group-checkable', table).size() === 1) {
                                 $('.group-checkable', table).attr("checked", false);
-                                $.uniform.update($('.group-checkable', table));
                             }
 
                             if (tableOptions.onSuccess) {
@@ -146,7 +146,7 @@ var Datatable = function() {
 
                             return res.data;
                         },
-                        error: function() { // handle general connection errors
+                        "error": function() { // handle general connection errors
                             if (tableOptions.onError) {
                                 tableOptions.onError.call(undefined, the);
                             }
@@ -163,12 +163,11 @@ var Datatable = function() {
                         }
                     },
 
-                    drawCallback: function(oSettings) { // run some code on table redraw
+                    "drawCallback": function(oSettings) { // run some code on table redraw
                         if (tableInitialized === false) { // check if table has been initialized
                             tableInitialized = true; // set table initialized
                             table.show(); // display table
                         }
-                        App.initUniform($('input[type="checkbox"]', table)); // reinitialize uniform checkboxes on each table reload
                         countSelectedRecords(); // reset selected records indicator
 
                         // callback for ajax data load
@@ -208,57 +207,18 @@ var Datatable = function() {
                 $('.table-group-actions', tableWrapper).html($('.table-actions-wrapper', tableContainer).html()); // place the panel inside the wrapper
                 $('.table-actions-wrapper', tableContainer).remove(); // remove the template container
             }
-            // 表格头复选框改变事件
+            // handle group checkboxes check/uncheck
             $('.group-checkable', table).change(function() {
                 var set = table.find('tbody > tr > td:nth-child(1) input[type="checkbox"]');
                 var checked = $(this).prop("checked");
                 $(set).each(function() {
                     $(this).prop("checked", checked);
-                    if(checked){
-                        $(this).parents("tr").addClass("selected");
-                    }else{
-                        $(this).parents("tr").removeClass("selected");
-                    }
                 });
-                $.uniform.update(set);
                 countSelectedRecords();
             });
 
-            // 行复选框改变事件
+            // handle row's checkbox click
             table.on('change', 'tbody > tr > td:nth-child(1) input[type="checkbox"]', function() {
-                if(this.checked){
-                    $(this).parents("tr").addClass("selected");
-                }else{
-                    $(this).parents("tr").removeClass("selected");
-                }
-
-                var flag = true;
-                table.find('tbody > tr > td:nth-child(1) input[type="checkbox"]').each(function(i,chk){
-                    if(!this.checked){
-                        flag = false;
-                        return false;
-                    }
-                });
-                table.find('.group-checkable').prop("checked",flag);
-                $.uniform.update(table.find('.group-checkable'));
-                countSelectedRecords();
-            });
-
-            // 行点击事件,排除事件源是复选框的情况
-            table.on('click', 'tbody > tr', function(event) {
-                if(event.target.type=="checkbox" && event.target.className=="checkbox"){
-                    return;
-                }
-                var set = table.find('tbody > tr > td:nth-child(1) input[type="checkbox"]');
-                $(set).each(function() {
-                    $(this).prop("checked", false);
-                    $(this).parents("tr").removeClass("selected");
-                });
-
-                $(this).find('td:nth-child(1) input[type="checkbox"]').prop("checked", true);
-                $(this).addClass("selected");
-
-                $.uniform.update(set);
                 countSelectedRecords();
             });
 

@@ -8,13 +8,12 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import java.util.Hashtable;
-import java.util.Map;
+import java.util.*;
 
 public class ChatMessageHandler extends TextWebSocketHandler{
 
     private static Logger logger = Logger.getLogger(ChatMessageHandler.class);
-    private static final Map<String,WebSocketSession> users = new Hashtable<>();
+    private static final Set<String> users = Collections.synchronizedSet(new HashSet());
 
     /**
      * 连接成功时候，会触发UI上onopen方法
@@ -23,7 +22,7 @@ public class ChatMessageHandler extends TextWebSocketHandler{
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         System.out.println("connect to the websocket success......");
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        users.put(((UserDetails)principal).getUsername(),session);
+        users.add(((UserDetails)principal).getUsername());
         //这块会实现自己业务，比如，当用户登录后，会把离线消息推送给用户
         //TextMessage returnMessage = new TextMessage("你将收到的离线");
         //session.sendMessage(returnMessage);

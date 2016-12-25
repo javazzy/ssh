@@ -40,7 +40,7 @@
     <h2>Eiffel mode</h2>
     <form>
         <textarea id="code" name="code"> note description: "[ Project-wide universal properties. This class is an ancestor to all developer-written classes. ANY may be customized for individual projects or teams. ]" library: "Free implementation of ELKS library" status: "See notice at
-            end of class." legal: "See notice at end of class." date: "$Date: 2013-01-25 11:49:00 -0800 (Fri, 25 Jan 2013) $" revision: "$Revision: 712 $" class ANY feature -- Customization feature -- Access my.ssh.generator: STRING -- Name of current object's
+            end of class." legal: "See notice at end of class." date: "$Date: 2013-01-25 11:49:00 -0800 (Fri, 25 Jan 2013) $" revision: "$Revision: 712 $" class ANY feature -- Customization feature -- Access generator: STRING -- Name of current object's
             generating class -- (base class of the type of which it is a direct instance) external "built_in" ensure generator_not_void: Result /= Void generator_not_empty: not Result.is_empty end generating_type: TYPE [detachable like Current] -- Type
             of current object -- (type of which it is a direct instance) do Result := {detachable like Current} ensure generating_type_not_void: Result /= Void end feature -- Status report conforms_to (other: ANY): BOOLEAN -- Does type of current object
             conform to type -- of `other' (as per Eiffel: The Language, chapter 13)? require other_not_void: other /= Void external "built_in" end same_type (other: ANY): BOOLEAN -- Is type of current object identical to type of `other'? require other_not_void:

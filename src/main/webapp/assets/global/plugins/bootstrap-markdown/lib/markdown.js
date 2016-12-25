@@ -973,7 +973,7 @@ Markdown.dialects.Gruber.inline = {
 
 };
 
-// Meta Helper/my.ssh.generator method for em and strong handling
+// Meta Helper/generator method for em and strong handling
 function strong_em( tag, md ) {
 
   var state_slot = tag + "_state",

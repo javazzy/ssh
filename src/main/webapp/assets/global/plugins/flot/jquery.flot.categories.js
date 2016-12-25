@@ -35,7 +35,7 @@ Internally, the plugin works by transforming the input data through an auto-
 generated mapping where the first category becomes 0, the second 1, etc.
 Hence, a point like ["February", 34] becomes [0, 34] internally in Flot (this
 is visible in hover and click events that return numbers rather than the
-category labels). The plugin also overrides the tick my.ssh.generator to spit out the
+category labels). The plugin also overrides the tick generator to spit out the
 categories as ticks instead of the values.
 
 If you need to map a value back to its label, the mapping is always accessible
