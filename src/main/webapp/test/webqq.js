@@ -6,7 +6,6 @@ var allUsers = [];
 var taskMessage = {};
 
 function setConnected(connected) {
-    debugger
     $("#message").empty();
     $('#contentEditor').summernote('code', "<p><br></p>");
     document.getElementById('connect').disabled = connected;

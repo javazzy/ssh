@@ -65,6 +65,9 @@ public abstract class BaseController<T> {
     @ResponseBody
     public Object add(T entity) {
         try {
+            if(logger.isDebugEnabled()){
+                logger.debug("method:add entry:"+JSON.toJSONString(entity));
+            }
             getService().save(entity);
             return getService().putChche(entity);
         } catch (Exception e) {
@@ -84,6 +87,9 @@ public abstract class BaseController<T> {
      */
     public Result addAll(List<T> list) {
         try {
+            if(logger.isDebugEnabled()){
+                logger.debug("method:addAll list:"+JSON.toJSONString(list));
+            }
             getService().saveAll(list);
             for (T entity : list) {
                 getService().putChche(entity);
@@ -108,6 +114,9 @@ public abstract class BaseController<T> {
     @ResponseBody
     public Result updateDynamic(T entity, @RequestParam(defaultValue = "false") boolean all) {
         try {
+            if(logger.isDebugEnabled()){
+                logger.debug("method:updateDynamic entity:"+JSON.toJSONString(entity)+" all:"+all);
+            }
             if (all) {
                 getService().update(entity);
             } else {
@@ -134,6 +143,9 @@ public abstract class BaseController<T> {
     @ResponseBody
     public Object saveOrUpdate(T entity) {
         try {
+            if(logger.isDebugEnabled()){
+                logger.debug("method:saveOrUpdate entity:"+JSON.toJSONString(entity));
+            }
             getService().saveOrUpdate(entity);
             return getService().putChche(entity);
         } catch (Exception e) {
@@ -154,6 +166,9 @@ public abstract class BaseController<T> {
     @ResponseBody
     public Object delete(@PathVariable String keys, T t) {
         try {
+            if(logger.isDebugEnabled()){
+                logger.debug("method:delete keys:"+JSON.toJSONString(keys));
+            }
             String[] keyArr = keys.split(",");
             if(keyArr.length == 0){
                 return error("没有删除主键！");
@@ -183,8 +198,11 @@ public abstract class BaseController<T> {
      */
     @RequestMapping(value = "/{key}", method = RequestMethod.GET)
     @ResponseBody
-    public T get(@PathVariable String key, T t) {
+    public T getByKey(@PathVariable String key, T t) {
         try {
+            if(logger.isDebugEnabled()){
+                logger.debug("method:getByKey key:"+key);
+            }
             return getService().get(ConvertUtils.toPrimaryData(t.getClass(), key));
         } catch (Exception e) {
             catchException(e);
@@ -203,8 +221,11 @@ public abstract class BaseController<T> {
      */
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public T get(T entity) {
+    public T row(T entity) {
         try {
+            if(logger.isDebugEnabled()){
+                logger.debug("method:row entity:"+JSON.toJSONString(entity));
+            }
             return getService().getOne(entity);
         } catch (Exception e) {
             catchException(e);
@@ -225,6 +246,9 @@ public abstract class BaseController<T> {
     @ResponseBody
     public List<T> list(T entity, Page<T> page, @RequestParam(defaultValue = "false") boolean all) {
         try {
+            if(logger.isDebugEnabled()){
+                logger.debug("method:list entity:"+JSON.toJSONString(entity)+" page:"+JSON.toJSONString(page)+" all:"+all);
+            }
             if(all){
                 return getService().listAll();
             }
@@ -253,6 +277,9 @@ public abstract class BaseController<T> {
     @ResponseBody
     public Page searchPage(T entity, Page page) {
         try {
+            if(logger.isDebugEnabled()){
+                logger.debug("method:searchPage entity:"+JSON.toJSONString(entity)+" page:"+JSON.toJSONString(page));
+            }
             return getService().searchPage(entity, page);
         } catch (Exception e) {
             catchException(e);
@@ -275,6 +302,9 @@ public abstract class BaseController<T> {
     @ResponseBody
     public List<T> searchList(T entity, Page page) {
         try {
+            if(logger.isDebugEnabled()){
+                logger.debug("method:searchList entity:"+JSON.toJSONString(entity)+" page:"+JSON.toJSONString(page));
+            }
             return getService().searchList(entity, page);
         } catch (Exception e) {
             catchException(e);
@@ -297,6 +327,9 @@ public abstract class BaseController<T> {
     @ResponseBody
     public Long count(T entity) {
         try {
+            if(logger.isDebugEnabled()){
+                logger.debug("method:count entity:"+JSON.toJSONString(entity));
+            }
             return this.getService().count(entity);
         } catch (Exception e) {
             catchException(e);
@@ -319,6 +352,9 @@ public abstract class BaseController<T> {
     @ResponseBody
     public Long searchCount(T entity) {
         try {
+            if(logger.isDebugEnabled()){
+                logger.debug("method:searchCount entity:"+JSON.toJSONString(entity));
+            }
             return this.getService().searchCount(entity);
         } catch (Exception e) {
             catchException(e);
@@ -337,6 +373,9 @@ public abstract class BaseController<T> {
     @ResponseBody
     public List<T> tree(T rootEntity) throws Exception {
         try {
+            if(logger.isDebugEnabled()){
+                logger.debug("method:tree entity:"+JSON.toJSONString(rootEntity));
+            }
             //获取实体参数中的ID
             Method idMethod = rootEntity.getClass().getMethod("getId");
             Object parentIdObj = idMethod.invoke(rootEntity);
