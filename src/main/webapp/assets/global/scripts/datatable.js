@@ -22,7 +22,7 @@ var Datatable = function() {
         }
     };
 
-    var activeRows = function() {
+    var checkboxChange = function() {
         var flag = true;
         $('tbody > tr > td:nth-child(1) input[type="checkbox"]',table).each(function(i,chk){
             if(this.checked){
@@ -238,7 +238,7 @@ var Datatable = function() {
                     $(this).prop("checked", checked);
                 });
                 countSelectedRecords();
-                activeRows();
+                checkboxChange();
             });
 
             // 注册行单击事件
@@ -246,13 +246,13 @@ var Datatable = function() {
                 var checkbox = $(this).find('td:nth-child(1) input[type="checkbox"]');
                 checkbox.prop("checked", !checkbox.prop("checked"));
                 countSelectedRecords();
-                activeRows();
+                checkboxChange();
             });
 
             // 注册内容行第一列复选框改变事件
             table.on('change', 'tbody > tr > td:nth-child(1) input[type="checkbox"]', function() {
                 countSelectedRecords();
-                activeRows();
+                checkboxChange();
             });
 
             // 注册搜索按钮点击事件
