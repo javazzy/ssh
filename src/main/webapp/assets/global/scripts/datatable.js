@@ -347,7 +347,7 @@ var Datatable = function() {
             return tableWrapper;
         },
 
-        gettableContainer: function() {
+        getTableContainer: function() {
             return tableContainer;
         },
 
