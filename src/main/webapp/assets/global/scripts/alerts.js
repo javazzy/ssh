@@ -1,6 +1,5 @@
 var windowAlert = window.alert;
 var windowConfirm = window.confirm;
-var windowPrompt = window.prompt;
 
 /**
  * 常规消息提示
