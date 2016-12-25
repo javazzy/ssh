@@ -17,30 +17,46 @@ var SysUser = function () {
 
     var handleRecords = function () {
 
+        var tableId = "#datatable_sysUser";
+
         grid.init({
-            src: $("#datatable_sysUser"),
+            src: $(tableId),
             dataTable: { // here you can define a typical datatable settings from http://datatables.net/usage/options
-                // bStateSave: true, // save datatable state(pagination, sort, etc) in cookie.
+                bStateSave: true, // save datatable state(pagination, sort, etc) in cookie.
 
                 // pageLength: 10, // default record count per page
                 ajax: {
                     type:'GET',
                     url: "api/sysUsers/searchPage" // ajax source
                 },
+                buttons: [
+                    { className: 'btn green-jungle btn-outline add', text: '<i class="fa fa-plus"></i> 新 增'},
+                    { className: 'btn blue btn-outline edit', text: '<i class="fa fa-edit"></i> 编 辑'},
+                    { className: 'btn red-sunglo btn-outline remove', text: '<i class="fa fa-trash-o"></i> 删 除'},
+                    { extend: 'excel', className: 'btn yellow btn-outline', text: '<i class="fa fa-file-excel-o"></i> 导出Excel'},
+                    { extend: 'colvis', className: 'btn dark btn-outline', text: '<i class="fa fa-columns"></i> 定制列'}
+                ],
+                responsive: true,
                 columns: [
-                    {data:"id", mRender: function (value, display, row) {
-                        return '<label class="mt-checkbox mt-checkbox-single mt-checkbox-outline"><input name="id" type="checkbox" class="checkboxes" value="' + value + '"/><span></span></label>';
-                    }},
-                    {data:"username"},
-                    {data:"dicSex.name"},
-                    {data:"birthday"},
-                    {data:"email"},
-                    {data:"phone"},
-                    {data:"address"},
-                    {data:"createTime", mRender: function (value, display, row) {
+                    {
+                        data:"id",
+                        title:'<label class="mt-checkbox mt-checkbox-single mt-checkbox-outline"><input type="checkbox" class="group-checkable" data-set="'+tableId+' .checkboxes" /><span></span></label>',
+                        width:30,
+                        mRender: function (value, display, row) {
+                            return '<label class="mt-checkbox mt-checkbox-single mt-checkbox-outline"><input name="id" type="checkbox" class="checkboxes" value="' + value + '"/><span></span></label>';
+                        }
+                    },
+
+                    {data:"username",title:"用户名",searchable: true},
+                    {data:"dicSex.name",title: "性别"},
+                    {data:"birthday",title: "生日"},
+                    {data:"email",title: "邮箱"},
+                    {data:"phone",title: "手机"},
+                    {data:"address",title: "住址"},
+                    {data:"createTime",title: "注册时间",mRender: function (value, display, row) {
                         return value?new Date(value).format("yyyy-MM-dd HH:mm:ss"):"";
                     }},
-                    {data: "enabled",mRender:function(value, display, row) {
+                    {data: "enabled",title: "状态",mRender:function(value, display, row) {
                         if(!row.enabled){
                             return Icons.stop+" 用户禁用";
                         // }else if(!row.accountNonExpired){
@@ -53,7 +69,7 @@ var SysUser = function () {
                             return Icons.on+" 正常";
                         }
                     }},
-                    {mRender: function (value, display, row) {
+                    {title: "操作",mRender: function (value, display, row) {
                         return '';
                     }}
                 ],
@@ -61,8 +77,11 @@ var SysUser = function () {
                     // [1, "asc"]
                 ],columnDefs: [{ // define columns sorting options(by default all columns are sortable extept the first checkbox column)
                     orderable: false,
-                    targets: [0,9]
-                }],
+                    targets: [0]
+                },{
+                    className: 'none',
+                    targets:   [3,4,5,6,7]
+                }]
             }
         });
 

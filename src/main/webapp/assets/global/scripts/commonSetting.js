@@ -42,20 +42,18 @@ $(function(){
             return data;
         },
         beforeSend:function(){
-            // pace.start();
         },
         complete:function(){
-            // pace.stop();
         },
         statusCode: {
             404 : function(){
-                warning("没有找到指定的资源!");
+                error("没有找到指定的资源!");
             },
             500 : function(){
-                warning("服务器产生内部错误!");
+                error("服务器产生内部错误!");
             },
             503 : function(){
-                warning("服务器过载或暂停维修!");
+                error("服务器过载或暂停维修!");
             }
         }
     });

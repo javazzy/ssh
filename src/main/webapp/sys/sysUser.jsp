@@ -1,43 +1,38 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<!-- Begin: life time stats -->
-<div class="portlet light portlet-fit portlet-datatable bordered">
+<style type="text/css">
+    .portlet>.portlet-title{
+        margin-bottom: 0px;
+    }
+    .dataTables_extended_wrapper .table.dataTable {
+        margin: 0px 0px 20px 0px!important;
+    }
+</style>
+
+<!-- BEGIN EXAMPLE TABLE PORTLET-->
+<div class="portlet light bordered">
     <div class="portlet-title">
-        <div class="caption">
+        <div class="caption font-dark">
             <i class="icon-settings font-dark"></i>
-            <span class="caption-subject font-dark sbold uppercase"> 用户管理 </span>
+            <span class="caption-subject bold uppercase"> 用户管理 </span>
         </div>
-        <div class="actions">
-            <a href="javascript:;" class="btn btn-circle green-jungle btn-sm add">
-                <i class="fa fa-plus"></i> 新 增</a>
-            <a href="javascript:;" class="btn btn-circle blue btn-sm edit">
-                <i class="fa fa-edit"></i> 编 辑</a>
-            <a href="javascript:;" class="btn btn-circle red-sunglo btn-sm remove">
-                <i class="fa fa-trash-o"></i> 删 除</a>
-        </div>
+        <div class="tools" style=""></div>
     </div>
     <div class="portlet-body">
         <div class="table-container">
-            <table class="table table-striped table-bordered table-hover table-checkable" id="datatable_sysUser">
-                <thead>
+        <table class="table table-striped table-bordered table-hover table-checkable dt-responsive"  width="100%" id="datatable_sysUser">
+            <thead>
                 <tr role="row" class="heading">
-                    <th width="30">
-                        <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                            <input type="checkbox" class="group-checkable" data-set="#datatable_sysUser .checkboxes" />
-                            <span></span>
-                        </label>
-                    </th>
-                    <th> 用户名</th>
-                    <th> 性别</th>
-                    <th> 生日</th>
-                    <th> 邮箱</th>
-                    <th> 手机</th>
-                    <th> 住址</th>
-                    <th> 注册时间</th>
-                    <th> 状态</th>
-
-
-                    <th width="60"> 操作</th>
+                    <td/>
+                    <td/>
+                    <td/>
+                    <td/>
+                    <td/>
+                    <td/>
+                    <td/>
+                    <td/>
+                    <td/>
+                    <td/>
                 </tr>
                 <tr role="row" class="filter">
                     <td></td>
@@ -47,11 +42,11 @@
                     <td>
 
                     </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td class="hide"></td>
+                    <td class="hide"></td>
+                    <td class="hide"></td>
+                    <td class="hide"></td>
+                    <td class="hide"></td>
                     <td></td>
                     <td>
                         <div class="margin-bottom-5">
@@ -64,14 +59,13 @@
                         </button>
                     </td>
                 </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+            </thead>
+            <tbody></tbody>
+        </table>
         </div>
     </div>
 </div>
-<!-- End: life time stats -->
-
+<!-- END EXAMPLE TABLE PORTLET-->
 
 <!-- Begin:form modal -->
 <!-- stackable -->

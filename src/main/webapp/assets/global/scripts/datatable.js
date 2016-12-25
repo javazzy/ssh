@@ -64,8 +64,8 @@ var Datatable = function() {
                     //r – 请求中的提示信息
                     //< 和 > – 一个div的开始与结束
                     //<"class"> – class为div的class名称
-                    // dom: '<"datatable-header"><"datatable-scroll"t><"datatable-footer"ilp>', // datatable layout
-                    dom: "<'table-responsive't><'row'<'col-md-8 col-sm-12'pli><'col-md-4 col-sm-12'<'table-group-actions pull-right'>>r>", // datatable layout
+                    dom: "<'row' <'col-md-12'B>><'table-responsive't><'row'<'col-md-8 col-sm-12'pli><'col-md-4 col-sm-12'<'table-group-actions pull-right'>>r>", // datatable layout
+                    // dom: "<'table-responsive't><'row'<'col-md-8 col-sm-12'pli><'col-md-4 col-sm-12'<'table-group-actions pull-right'>>r>", // datatable layout
                     lengthMenu: [5,10,20,50,100], //更改显示记录数选项
                     language: { // 国际化配置
                         // metronic spesific
