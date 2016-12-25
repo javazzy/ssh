@@ -76,6 +76,7 @@ var Datatable = function() {
                         lengthMenu: "<span class='seperator'>|</span>每页 _MENU_ 条",
                         info: "<span class='seperator'>|</span>共 _TOTAL_ 条",
                         infoEmpty: "没有数据",
+                        infoFiltered: '(过滤总条数 _MAX_ 条)',
                         emptyTable: "表中无数据存在！",
                         zeroRecords: "对不起，查询不到相关数据！",
                         processing: "载入中",// 处理页面数据的时候的显示
@@ -88,7 +89,7 @@ var Datatable = function() {
                             pageOf: "/"
                         },
                         aria: {
-                            sortAscending:  ": activate to sort column ascending",
+                            sortAscending: ": activate to sort column ascending",
                             sortDescending: ": activate to sort column descending"
                         }
                     },
