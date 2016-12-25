@@ -16,11 +16,25 @@ var Datatable = function() {
         var selected = $('tbody > tr > td:nth-child(1) input[type="checkbox"]:checked', table).size();
         var text = tableOptions.dataTable.language.metronicGroupActions;
         if (selected > 0) {
-            $('.table-group-actions > span', tableWrapper).text(text.replace("_TOTAL_", selected));
+            $('.table-group-actions', tableWrapper).text(text.replace("_TOTAL_", selected));
         } else {
-            $('.table-group-actions > span', tableWrapper).text("");
+            $('.table-group-actions', tableWrapper).text("");
         }
     };
+
+    var activeRows = function() {
+        var flag = true;
+        $('tbody > tr > td:nth-child(1) input[type="checkbox"]',table).each(function(i,chk){
+            if(this.checked){
+                $(this).parents('tr').addClass("active");
+            } else {
+                flag = false;
+                $(this).parents('tr').removeClass("active");
+            }
+        });
+        $(this).parents('table').find('.group-checkable').prop("checked",flag);
+    };
+
 
     return {
 
@@ -35,7 +49,7 @@ var Datatable = function() {
 
             // default settings
             options = $.extend(true, {
-                src: "", // actual table  
+                src: "", // 渲染元素（jQuery对象）
                 filterApplyAction: "filter",
                 filterCancelAction: "filter_cancel",
                 resetGroupActionInputOnSuccess: true,
@@ -50,30 +64,36 @@ var Datatable = function() {
                     //r – 请求中的提示信息
                     //< 和 > – 一个div的开始与结束
                     //<"class"> – class为div的class名称
-                    "dom": '<"datatable-header"><"datatable-scroll"t><"datatable-footer"ilp>', // datatable layout
-                    "pageLength": 10, // default records per page
-                    "language": { // language settings
+                    // dom: '<"datatable-header"><"datatable-scroll"t><"datatable-footer"ilp>', // datatable layout
+                    dom: "<'table-responsive't><'row'<'col-md-8 col-sm-12'pli><'col-md-4 col-sm-12'<'table-group-actions pull-right'>>r>", // datatable layout
+                    lengthMenu: [5,10,20,50,100], //更改显示记录数选项
+                    language: { // 国际化配置
                         // metronic spesific
-                        "metronicGroupActions": "_TOTAL_ 条数据被选中:  ",
-                        "metronicAjaxRequestGeneralError": "无法完成请求。请检查你的网络连接！",
+                        metronicGroupActions: "_TOTAL_ 条数据被选中",
+                        metronicAjaxRequestGeneralError: "无法完成请求。请检查你的网络连接！",
 
                         // data tables spesific
-                        "lengthMenu": "<span class='seperator'>|</span>每页 _MENU_ 条",
-                        "info": "<span class='seperator'></span>共 _TOTAL_ 条",
-                        "infoEmpty": "没有数据",
-                        "emptyTable": "表中无数据存在！",
-                        "zeroRecords": "对不起，查询不到相关数据！",
-                        "paginate": {
-                            "previous": "上一页",
-                            "next": "下一页",
-                            "last": "末页",
-                            "first": "首页",
-                            "page": "<span class='seperator'>|</span>转到页",
-                            "pageOf": "/"
+                        lengthMenu: "<span class='seperator'>|</span>每页 _MENU_ 条",
+                        info: "<span class='seperator'>|</span>共 _TOTAL_ 条",
+                        infoEmpty: "没有数据",
+                        emptyTable: "表中无数据存在！",
+                        zeroRecords: "对不起，查询不到相关数据！",
+                        processing: "载入中",// 处理页面数据的时候的显示
+                        paginate: {
+                            previous: "上一页",
+                            next: "下一页",
+                            last: "末页",
+                            first: "首页",
+                            page: "转到页",
+                            pageOf: "/"
+                        },
+                        aria: {
+                            sortAscending:  ": activate to sort column ascending",
+                            sortDescending: ": activate to sort column descending"
                         }
                     },
 
-                    "orderCellsTop": true,
+                    orderCellsTop: true,
                     columnDefs: [{
                         targets: [0],
                         orderable: false,
@@ -84,16 +104,18 @@ var Datatable = function() {
                         targets: ['_all']
                     }],
 
-                    "pagingType": "bootstrap_extended", // pagination type(bootstrap, bootstrap_full_number or bootstrap_extended)
-                    "autoWidth": false, // disable fixed width and enable fluid table
-                    "processing": true, // enable/disable display message box on record load
-                    "serverSide": true, // enable/disable server side ajax loading
+                    serverSide : true,// 分页，取数据等等的都放到服务端去
+                    processing : true,// 载入数据的时候是否显示“载入中”
+                    pageLength : 5,// 默认每页显示条数
+                    ordering : true,// 排序操作在服务端进行，所以可以关了
+                    pagingType: "bootstrap_extended", // pagination type(bootstrap, bootstrap_full_number or bootstrap_extended)
+                    autoWidth: true, // disable fixed width and enable fluid table
 
-                    "ajax": { // define ajax settings
-                        "url": "", // ajax URL
-                        "type": "GET", // request type
-                        "timeout": 20000,
-                        "data": function(data) { // add request parameters before submit
+                    ajax: { // define ajax settings
+                        url: "", // ajax URL
+                        type: "GET", // request type
+                        timeout: 20000,
+                        data: function(data) { // add request parameters before submit
                             $.each(ajaxParams, function(key, value) {
                                 data[key] = value;
                             });
@@ -117,7 +139,7 @@ var Datatable = function() {
                                 boxed: true
                             });
                         },
-                        "dataSrc": function(res) { // Manipulate the data returned from the server
+                        dataSrc: function(res) { // Manipulate the data returned from the server
                             if (res.customActionMessage) {
                                 App.alert({
                                     type: (res.customActionStatus == 'OK' ? 'success' : 'danger'),
@@ -146,7 +168,7 @@ var Datatable = function() {
 
                             return res.data;
                         },
-                        "error": function() { // handle general connection errors
+                        error: function() { // handle general connection errors
                             if (tableOptions.onError) {
                                 tableOptions.onError.call(undefined, the);
                             }
@@ -163,7 +185,7 @@ var Datatable = function() {
                         }
                     },
 
-                    "drawCallback": function(oSettings) { // run some code on table redraw
+                    drawCallback: function(oSettings) { // run some code on table redraw
                         if (tableInitialized === false) { // check if table has been initialized
                             tableInitialized = true; // set table initialized
                             table.show(); // display table
@@ -174,6 +196,7 @@ var Datatable = function() {
                         if (tableOptions.onDataLoad) {
                             tableOptions.onDataLoad.call(undefined, the);
                         }
+
                     }
                 }
             }, options);
@@ -191,7 +214,7 @@ var Datatable = function() {
             $.fn.dataTableExt.oStdClasses.sFilterInput = "form-control input-xs input-sm input-inline";
             $.fn.dataTableExt.oStdClasses.sLengthSelect = "form-control input-xs input-sm input-inline";
 
-            // initialize a datatable
+            // 初始化表格
             dataTable = table.DataTable(options.dataTable);
 
             // revert back to default
@@ -199,7 +222,7 @@ var Datatable = function() {
             $.fn.dataTableExt.oStdClasses.sFilterInput = tmp.sFilterInput;
             $.fn.dataTableExt.oStdClasses.sLengthSelect = tmp.sLengthSelect;
 
-            // get table wrapper
+            // 获取表格所在域
             tableWrapper = table.parents('.dataTables_wrapper');
 
             // build table group actions panel
@@ -207,7 +230,7 @@ var Datatable = function() {
                 $('.table-group-actions', tableWrapper).html($('.table-actions-wrapper', tableContainer).html()); // place the panel inside the wrapper
                 $('.table-actions-wrapper', tableContainer).remove(); // remove the template container
             }
-            // handle group checkboxes check/uncheck
+            // 注册全量控制复选框改变事件
             $('.group-checkable', table).change(function() {
                 var set = table.find('tbody > tr > td:nth-child(1) input[type="checkbox"]');
                 var checked = $(this).prop("checked");
@@ -215,20 +238,30 @@ var Datatable = function() {
                     $(this).prop("checked", checked);
                 });
                 countSelectedRecords();
+                activeRows();
             });
 
-            // handle row's checkbox click
+            // 注册行单击事件
+            table.on('click', 'tbody > tr', function() {
+                var checkbox = $(this).find('td:nth-child(1) input[type="checkbox"]');
+                checkbox.prop("checked", !checkbox.prop("checked"));
+                countSelectedRecords();
+                activeRows();
+            });
+
+            // 注册内容行第一列复选框改变事件
             table.on('change', 'tbody > tr > td:nth-child(1) input[type="checkbox"]', function() {
                 countSelectedRecords();
+                activeRows();
             });
 
-            // handle filter submit button click
+            // 注册搜索按钮点击事件
             table.on('click', '.filter-submit', function(e) {
                 e.preventDefault();
                 the.submitFilter();
             });
 
-            // handle filter cancel button click
+            // 注册搜索重置按钮点击事件
             table.on('click', '.filter-cancel', function(e) {
                 e.preventDefault();
                 the.resetFilter();
