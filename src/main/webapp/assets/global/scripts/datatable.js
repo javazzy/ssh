@@ -79,7 +79,7 @@ var Datatable = function() {
                         infoFiltered: '(过滤总条数 _MAX_ 条)',
                         emptyTable: "表中无数据存在！",
                         zeroRecords: "对不起，查询不到相关数据！",
-                        processing: "载入中",// 处理页面数据的时候的显示
+                        processing: "载入中...",// 处理页面数据的时候的显示
                         paginate: {
                             previous: "上一页",
                             next: "下一页",
@@ -89,26 +89,51 @@ var Datatable = function() {
                             pageOf: "/"
                         },
                         aria: {
-                            sortAscending: ": activate to sort column ascending",
-                            sortDescending: ": activate to sort column descending"
+                            sortAscending: ": 单击正排序",
+                            sortDescending: ": 单击倒排序"
                         }
                     },
 
-                    orderCellsTop: true,
+                    serverSide : true,// 分页，取数据等等的都放到服务端去
+
+                    ordering:true,// 排序操作在服务端进行，所以可以关了
+
+                    responsive: {
+                        details: {
+                            display: $.fn.dataTable.Responsive.display.modal( {
+                                header: function ( row ) {
+                                    var data = row.data();
+                                    return '详细信息：'+data["username"];
+                                }
+                            } ),
+                            // renderer: $.fn.dataTable.Responsive.renderer.tableAll()
+                            renderer: function ( api, rowIdx, columns ) {
+
+                                var data = $.map( columns, function ( col, i ) {
+                                    if($(col.title).find("input.group-checkable").length){
+                                        return "";
+                                    }
+
+                                    return /*col.hidden ? */'<tr data-dt-row="'+col.rowIndex+'" data-dt-column="'+col.columnIndex+'">'+
+                                        '<td>'+col.title+':'+'</td> '+
+                                        '<td>'+col.data+'</td>'+
+                                        '</tr>'/*:''*/;
+                                } ).join('');
+
+                                return data ? '<table class=" dtr-details" width="100%"><tbody>'+data+'</tbody></table>' : false;
+                            }
+                        }
+                    },
+
                     columnDefs: [{
-                        targets: [0],
-                        orderable: false,
-                        searchable: false
-                    }, {
                         defaultContent: '',
                         orderable: true,
+                        searchable: false,
                         targets: ['_all']
                     }],
 
-                    serverSide : true,// 分页，取数据等等的都放到服务端去
                     processing : true,// 载入数据的时候是否显示“载入中”
                     pageLength : 5,// 默认每页显示条数
-                    ordering : true,// 排序操作在服务端进行，所以可以关了
                     pagingType: "bootstrap_extended", // pagination type(bootstrap, bootstrap_full_number or bootstrap_extended)
                     autoWidth: true, // disable fixed width and enable fluid table
 
@@ -132,13 +157,13 @@ var Datatable = function() {
                             delete data.columns;
                             data.order = orderby.join(",");
 
-                            App.blockUI({
-                                message: tableOptions.loadingMessage,
-                                target: tableContainer,
-                                overlayColor: 'none',
-                                cenrerY: true,
-                                boxed: true
-                            });
+                            // App.blockUI({
+                            //     message: tableOptions.loadingMessage,
+                            //     target: tableContainer,
+                            //     overlayColor: 'none',
+                            //     cenrerY: true,
+                            //     boxed: true
+                            // });
                         },
                         dataSrc: function(res) { // Manipulate the data returned from the server
                             if (res.customActionMessage) {

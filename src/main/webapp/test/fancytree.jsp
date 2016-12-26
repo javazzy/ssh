@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!-- END THEME GLOBAL STYLES -->
-<link href="../assets/global/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css" />
-<link href="../assets/global/plugins/fancytree/dist/themes/skin-bootstrap/ui.fancytree.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/global/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/global/plugins/fancytree/dist/themes/skin-bootstrap/ui.fancytree.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css" />
 
 <table class="table table-bordered tree-table">
     <thead>
@@ -24,10 +25,25 @@
     </tbody>
 </table>
 
-<script src="../assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<div class="panel-footer">
+    <button id="btnExpandAll" class="btn btn-xs btn-primary">Expand all</button>
+    <button id="btnCollapseAll" class="btn btn-xs btn-warning">Collapse all</button>
+</div>
+<p id="bootstrapTableStyles">
+    <b>Add table class:</b><br>
+    <label><input type="checkbox" data-class="table-bordered"> table-bordered</label>
+    <label><input type="checkbox" data-class="table-condensed" checked="checked"> table-condensed</label>
+    <label><input type="checkbox" data-class="table-striped" checked="checked"> table-striped</label>
+    <label><input type="checkbox" data-class="table-hover" checked="checked"> table-hover</label>
+    <label><input type="checkbox" data-class="table-responsive"> table-responsive</label>
+    <label><input type="checkbox" data-class="fancytree-colorize-selected"> fancytree-colorize-selected</label>
+</p>
 
-<script src="../assets/global/plugins/fancytree/dist/jquery.fancytree.min.js" type="text/javascript"></script>
-<script src="../assets/global/plugins/fancytree/dist/jquery.fancytree-all.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+
+<script src="assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/fancytree/dist/jquery.fancytree.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/fancytree/dist/jquery.fancytree-all.min.js" type="text/javascript"></script>
 <!-- END THEME LAYOUT SCRIPTS -->
 <script type="text/javascript">
     glyph_opts = {
@@ -48,8 +64,8 @@
             loading: "glyphicon glyphicon-refresh glyphicon-spin"
         }
     };
-    $(function(){
 
+    $(function(){
         $(".tree-table").fancytree({
             extensions: ["edit", "glyph", "wide","table"],// ,"dnd"
             checkbox: true,
@@ -117,16 +133,3 @@
         });
     });
 </script>
-<div class="panel-footer">
-    <button id="btnExpandAll" class="btn btn-xs btn-primary">Expand all</button>
-    <button id="btnCollapseAll" class="btn btn-xs btn-warning">Collapse all</button>
-</div>
-<p id="bootstrapTableStyles">
-    <b>Add table class:</b><br>
-    <label><input type="checkbox" data-class="table-bordered"> table-bordered</label>
-    <label><input type="checkbox" data-class="table-condensed" checked="checked"> table-condensed</label>
-    <label><input type="checkbox" data-class="table-striped" checked="checked"> table-striped</label>
-    <label><input type="checkbox" data-class="table-hover" checked="checked"> table-hover</label>
-    <label><input type="checkbox" data-class="table-responsive"> table-responsive</label>
-    <label><input type="checkbox" data-class="fancytree-colorize-selected"> fancytree-colorize-selected</label>
-</p>

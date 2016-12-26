@@ -1,5 +1,31 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+
+<link href="assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="assets/global/plugins/datatables/plugins/responsive/datatables.responsive.min.css" rel="stylesheet" type="text/css" />
+
+<link href="assets/global/plugins/datatables/plugins/responsive/foundation/foundation.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/global/plugins/datatables/plugins/responsive/foundation/dataTables.foundation.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/global/plugins/datatables/plugins/responsive/foundation/responsive.foundation.min.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+    table.dataTable thead .sorting{
+        background-image:url("")
+    }
+    table.dataTable thead .sorting_asc{
+         background-image:url("")
+    }
+    table.dataTable thead .sorting_desc{
+        background-image:url("")
+    }
+    table.dataTable thead .sorting_asc_disabled{
+        background-image:url("")
+    }
+    table.dataTable thead .sorting_desc_disabled{
+        background-image:url("")
+    }
+</style>
+
 <style type="text/css">
     .portlet>.portlet-title{
         margin-bottom: 0px;
@@ -20,45 +46,45 @@
     </div>
     <div class="portlet-body">
         <div class="table-container">
-        <table class="table table-striped table-bordered table-hover table-checkable dt-responsive"  width="100%" id="datatable_sysUser">
+        <table class="table table-striped table-bordered table-hover table-checkable display nowrap" cellspacing="0" width="100%" id="datatable_sysUser">
             <thead>
-                <tr role="row" class="heading">
-                    <td/>
-                    <td/>
-                    <td/>
-                    <td/>
-                    <td/>
-                    <td/>
-                    <td/>
-                    <td/>
-                    <td/>
-                    <td/>
-                </tr>
-                <tr role="row" class="filter">
-                    <td></td>
-                    <td>
-                        <input type="text" class="form-control form-filter input-sm" name="username">
-                    </td>
-                    <td>
+                <%--<tr role="row" class="heading">--%>
+                    <%--<td/>--%>
+                    <%--<td/>--%>
+                    <%--<td/>--%>
+                    <%--<td/>--%>
+                    <%--<td/>--%>
+                    <%--<td/>--%>
+                    <%--<td/>--%>
+                    <%--<td/>--%>
+                    <%--<td/>--%>
+                    <%--<td/>--%>
+                <%--</tr>--%>
+                <%--<tr role="row" class="filter">--%>
+                    <%--<td></td>--%>
+                    <%--<td>--%>
+                        <%--<input type="text" class="form-control form-filter input-sm" name="username">--%>
+                    <%--</td>--%>
+                    <%--<td>--%>
 
-                    </td>
-                    <td class="hide"></td>
-                    <td class="hide"></td>
-                    <td class="hide"></td>
-                    <td class="hide"></td>
-                    <td class="hide"></td>
-                    <td></td>
-                    <td>
-                        <div class="margin-bottom-5">
-                            <button class="btn btn-sm green btn-outline filter-submit margin-bottom">
-                                <i class="fa fa-search"></i> 搜索
-                            </button>
-                        </div>
-                        <button class="btn btn-sm red btn-outline filter-cancel">
-                            <i class="fa fa-times"></i> 清空
-                        </button>
-                    </td>
-                </tr>
+                    <%--</td>--%>
+                    <%--<td class="hide"></td>--%>
+                    <%--<td class="hide"></td>--%>
+                    <%--<td class="hide"></td>--%>
+                    <%--<td class="hide"></td>--%>
+                    <%--<td class="hide"></td>--%>
+                    <%--<td></td>--%>
+                    <%--<td>--%>
+                        <%--<div class="margin-bottom-5">--%>
+                            <%--<button class="btn btn-sm green btn-outline filter-submit margin-bottom">--%>
+                                <%--<i class="fa fa-search"></i> 搜索--%>
+                            <%--</button>--%>
+                        <%--</div>--%>
+                        <%--<button class="btn btn-sm red btn-outline filter-cancel">--%>
+                            <%--<i class="fa fa-times"></i> 清空--%>
+                        <%--</button>--%>
+                    <%--</td>--%>
+                <%--</tr>--%>
             </thead>
             <tbody></tbody>
         </table>
@@ -184,6 +210,17 @@
     </form>
 </div>
 <!-- Begin:form modal -->
+
+
+<script src="assets/global/scripts/datatable.js" type="text/javascript"></script>
+<script src="assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
+
+<script src="assets/global/plugins/datatables/plugins/responsive/datatables.responsive.min.js" type="text/javascript"></script>
+
+<script src="assets/global/plugins/datatables/plugins/responsive/foundation/foundation.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/datatables/plugins/responsive/foundation/dataTables.foundation.min.js" type="text/javascript"></script>
+<script src="assets/global/plugins/datatables/plugins/responsive/foundation/responsive.foundation.min.js" type="text/javascript"></script>
 
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
 <script src="sys/sysUser.js" type="text/javascript"></script>
