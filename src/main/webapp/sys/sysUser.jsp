@@ -1,40 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-
-<link href="assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
-<link href="assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="assets/global/plugins/datatables/plugins/responsive/datatables.responsive.min.css" rel="stylesheet" type="text/css" />
-
-<link href="assets/global/plugins/datatables/plugins/responsive/foundation/foundation.min.css" rel="stylesheet" type="text/css" />
-<link href="assets/global/plugins/datatables/plugins/responsive/foundation/dataTables.foundation.min.css" rel="stylesheet" type="text/css" />
-<link href="assets/global/plugins/datatables/plugins/responsive/foundation/responsive.foundation.min.css" rel="stylesheet" type="text/css" />
-<style type="text/css">
-    table.dataTable thead .sorting{
-        background-image:url("")
-    }
-    table.dataTable thead .sorting_asc{
-         background-image:url("")
-    }
-    table.dataTable thead .sorting_desc{
-        background-image:url("")
-    }
-    table.dataTable thead .sorting_asc_disabled{
-        background-image:url("")
-    }
-    table.dataTable thead .sorting_desc_disabled{
-        background-image:url("")
-    }
-</style>
-
-<style type="text/css">
-    .portlet>.portlet-title{
-        margin-bottom: 0px;
-    }
-    .dataTables_extended_wrapper .table.dataTable {
-        margin: 0px 0px 20px 0px!important;
-    }
-</style>
-
 <!-- BEGIN EXAMPLE TABLE PORTLET-->
 <div class="portlet light bordered">
     <div class="portlet-title">
@@ -210,17 +175,6 @@
     </form>
 </div>
 <!-- Begin:form modal -->
-
-
-<script src="assets/global/scripts/datatable.js" type="text/javascript"></script>
-<script src="assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
-<script src="assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
-
-<script src="assets/global/plugins/datatables/plugins/responsive/datatables.responsive.min.js" type="text/javascript"></script>
-
-<script src="assets/global/plugins/datatables/plugins/responsive/foundation/foundation.min.js" type="text/javascript"></script>
-<script src="assets/global/plugins/datatables/plugins/responsive/foundation/dataTables.foundation.min.js" type="text/javascript"></script>
-<script src="assets/global/plugins/datatables/plugins/responsive/foundation/responsive.foundation.min.js" type="text/javascript"></script>
 
 <!-- BEGIN PAGE LEVEL SCRIPTS -->
 <script src="sys/sysUser.js" type="text/javascript"></script>

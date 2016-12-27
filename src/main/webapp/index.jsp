@@ -38,6 +38,12 @@
     <link href="assets/global/plugins/select2/css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
 
+    <!-- Datatables 表格控件样式以及相关插件样式 -->
+    <link href="assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="assets/global/plugins/datatables/plugins/responsive/datatables.responsive.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/global/plugins/datatables/plugins/responsive/responsive.bootstrap.min.css" rel="stylesheet" type="text/css" />
+
     <!-- END PAGE LEVEL PLUGINS -->
     <!-- BEGIN THEME GLOBAL STYLES -->
     <link href="assets/global/css/components.min.css" rel="stylesheet" type="text/css" />
@@ -47,6 +53,9 @@
     <link href="assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />
     <link href="assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="assets/global/css/common.css" rel="stylesheet" type="text/css" />
+
     <!-- END THEME LAYOUT STYLES -->
     <link rel="shortcut icon" href="favicon.ico" />
 </head>
@@ -423,6 +432,14 @@
 
     <script src="assets/global/plugins/jquery.form.js" type="text/javascript"></script>
     <script src="assets/global/plugins/Base64.js" type="text/javascript"></script>
+
+    <!-- Datatables 表格控件以及相关插件 -->
+    <script src="assets/global/scripts/datatable.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/datatables/plugins/responsive/datatables.responsive.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/datatables/plugins/responsive/responsive.bootstrap.min.js" type="text/javascript"></script>
+
     <!-- END PAGE LEVEL PLUGINS -->
     <!-- BEGIN THEME GLOBAL SCRIPTS -->
     <script src="assets/global/scripts/app.min.js" type="text/javascript"></script>
