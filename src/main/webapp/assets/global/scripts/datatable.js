@@ -248,7 +248,6 @@ var Datatable = function() {
 
             // 注册行单击事件
             table.on('click', 'tbody > tr', function() {
-                console.log(event.target);
                 if(event.target.tagName == "SPAN"){
                     var checkbox = $(this).find('td:nth-child(1) input[type="checkbox"]')
                     checkbox.prop("checked", !checkbox.prop("checked"));
