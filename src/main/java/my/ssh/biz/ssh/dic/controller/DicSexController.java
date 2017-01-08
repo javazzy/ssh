@@ -27,16 +27,4 @@ public class DicSexController extends BaseController<DicSex> {
         return dicSexService;
     }
 
-    /**
-     * 批量新增
-     * @param list
-     * @return
-     */
-    @RequestMapping("/addAll")
-    @ResponseBody
-    @Override
-    public Result addAll(@RequestBody List<DicSex> list) {
-        return super.addAll(list);
-    }
-
 }

@@ -26,17 +26,4 @@ public class SysRoleController extends BaseController<SysRole> {
     public BaseService getService() {
         return sysRoleService;
     }
-
-    /**
-     * 批量新增
-     * @param list
-     * @return
-     */
-    @RequestMapping("/addAll")
-    @ResponseBody
-    @Override
-    public Result addAll(@RequestBody List<SysRole> list) {
-        return super.addAll(list);
-    }
-
 }

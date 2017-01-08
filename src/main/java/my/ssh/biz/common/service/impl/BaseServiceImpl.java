@@ -60,6 +60,11 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
     }
 
     @Override
+    public T load(Serializable id) throws Exception {
+        return getDao().load(id);
+    }
+
+    @Override
     public long count(T entity) throws Exception {
         return getDao().count(entity);
     }

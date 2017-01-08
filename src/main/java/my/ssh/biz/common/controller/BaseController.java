@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import my.ssh.biz.common.entity.Page;
 import my.ssh.biz.common.entity.Result;
 import my.ssh.biz.common.service.BaseService;
+import my.ssh.biz.ssh.dic.entity.DicSex;
 import my.ssh.util.ConvertUtils;
 import my.ssh.util.WebUtils;
 import org.apache.log4j.Logger;
@@ -63,7 +64,7 @@ public abstract class BaseController<T> {
      */
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public Object add(T entity) {
+    public final Object add(T entity) {
         try {
             if(logger.isDebugEnabled()){
                 logger.debug("method:add entry:"+JSON.toJSONString(entity));
@@ -77,7 +78,7 @@ public abstract class BaseController<T> {
     }
 
     /**
-     * 多条数据新增。（这个方法需要自类接受前台参数，然后调用此方法！）例：
+     * 批量新增。（这个方法需要自类接受前台参数，然后调用此方法！）例：
      * url:'api/sysUser/addAll'（数据为form表单数据，或ajax请求的data参数）
      * contentType : 'application/json;charset=utf-8', //设置请求头信息
      * data:[{name:"张三"},{name:"李四"}],// 如果是form表单，可直接使用 $("#form1").serializeJson(),注意，这个方法依赖于我从网上扒的form2json.js
@@ -85,7 +86,9 @@ public abstract class BaseController<T> {
      * @param list
      * @return
      */
-    public Result addAll(List<T> list) {
+    @RequestMapping("/addAll")
+    @ResponseBody
+    public final Result addAll(@RequestBody List<T> list) {
         try {
             if(logger.isDebugEnabled()){
                 logger.debug("method:addAll list:"+JSON.toJSONString(list));
@@ -101,6 +104,7 @@ public abstract class BaseController<T> {
         }
     }
 
+
     /**
      * 单条数据修改，忽略空值,例：
      * url:'api/sysUser'
@@ -112,42 +116,18 @@ public abstract class BaseController<T> {
      */
     @RequestMapping(method = RequestMethod.PUT)
     @ResponseBody
-    public Result updateDynamic(T entity, @RequestParam(defaultValue = "false") boolean all) {
+    public final Result update(T entity, @RequestParam(defaultValue = "false") boolean full) {
         try {
             if(logger.isDebugEnabled()){
-                logger.debug("method:updateDynamic entity:"+JSON.toJSONString(entity)+" all:"+all);
+                logger.debug("method:updateDynamic entity:"+JSON.toJSONString(entity)+" full:"+full);
             }
-            if (all) {
+            if (full) {
                 getService().update(entity);
             } else {
                 getService().updateDynamic(entity);
             }
             getService().putChche(entity);
             return success();
-        } catch (Exception e) {
-            catchException(e);
-            return error(e);
-        }
-    }
-
-    /**
-     * 单条数据新增或修改，例：
-     * url:'api/sysUser/saveOrUpdate'（数据为form表单数据，或ajax请求的data参数）
-     * type:'POST'
-     * data:{id:1,name:"张三"} //（或数据为form表单数据）
-     *
-     * @param entity
-     * @return
-     */
-    @RequestMapping(value = "saveOrUpdate", method = RequestMethod.POST)
-    @ResponseBody
-    public Object saveOrUpdate(T entity) {
-        try {
-            if(logger.isDebugEnabled()){
-                logger.debug("method:saveOrUpdate entity:"+JSON.toJSONString(entity));
-            }
-            getService().saveOrUpdate(entity);
-            return getService().putChche(entity);
         } catch (Exception e) {
             catchException(e);
             return error(e);
@@ -164,7 +144,7 @@ public abstract class BaseController<T> {
      */
     @RequestMapping(value = "/{keys}", method = RequestMethod.DELETE)
     @ResponseBody
-    public Object delete(@PathVariable String keys, T t) {
+    public final Object delete(@PathVariable String keys, T t) {
         try {
             if(logger.isDebugEnabled()){
                 logger.debug("method:delete keys:"+JSON.toJSONString(keys));
@@ -198,12 +178,13 @@ public abstract class BaseController<T> {
      */
     @RequestMapping(value = "/{key}", method = RequestMethod.GET)
     @ResponseBody
-    public T getByKey(@PathVariable String key, T t) {
+    public final T getByKey(@PathVariable String key, T t) {
         try {
             if(logger.isDebugEnabled()){
                 logger.debug("method:getByKey key:"+key);
             }
-            return getService().get(ConvertUtils.toPrimaryData(t.getClass(), key));
+            Serializable id = ConvertUtils.toPrimaryData(t.getClass(), key);
+            return getService().get(id);
         } catch (Exception e) {
             catchException(e);
             return null;
@@ -221,7 +202,7 @@ public abstract class BaseController<T> {
      */
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public T row(T entity) {
+    public final T row(T entity) {
         try {
             if(logger.isDebugEnabled()){
                 logger.debug("method:row entity:"+JSON.toJSONString(entity));
@@ -244,7 +225,7 @@ public abstract class BaseController<T> {
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
-    public List<T> list(T entity, Page<T> page, @RequestParam(defaultValue = "false") boolean all) {
+    public final List<T> list(T entity, Page<T> page, @RequestParam(defaultValue = "false") boolean all) {
         try {
             if(logger.isDebugEnabled()){
                 logger.debug("method:list entity:"+JSON.toJSONString(entity)+" page:"+JSON.toJSONString(page)+" all:"+all);
@@ -275,7 +256,7 @@ public abstract class BaseController<T> {
      */
     @RequestMapping(value = "/searchPage", method = RequestMethod.GET)
     @ResponseBody
-    public Page searchPage(T entity, Page page) {
+    public final Page searchPage(T entity, Page page) {
         try {
             if(logger.isDebugEnabled()){
                 logger.debug("method:searchPage entity:"+JSON.toJSONString(entity)+" page:"+JSON.toJSONString(page));
@@ -300,7 +281,7 @@ public abstract class BaseController<T> {
      */
     @RequestMapping(value = "/searchList", method = RequestMethod.GET)
     @ResponseBody
-    public List<T> searchList(T entity, Page page) {
+    public final List<T> searchList(T entity, Page page) {
         try {
             if(logger.isDebugEnabled()){
                 logger.debug("method:searchList entity:"+JSON.toJSONString(entity)+" page:"+JSON.toJSONString(page));
@@ -325,7 +306,7 @@ public abstract class BaseController<T> {
      */
     @RequestMapping(value = "/count", method = RequestMethod.GET)
     @ResponseBody
-    public Long count(T entity) {
+    public final Long count(T entity) {
         try {
             if(logger.isDebugEnabled()){
                 logger.debug("method:count entity:"+JSON.toJSONString(entity));
@@ -350,7 +331,7 @@ public abstract class BaseController<T> {
      */
     @RequestMapping(value = "/searchCount", method = RequestMethod.GET)
     @ResponseBody
-    public Long searchCount(T entity) {
+    public final Long searchCount(T entity) {
         try {
             if(logger.isDebugEnabled()){
                 logger.debug("method:searchCount entity:"+JSON.toJSONString(entity));
@@ -371,7 +352,7 @@ public abstract class BaseController<T> {
      */
     @RequestMapping(value = "/tree", method = RequestMethod.GET)
     @ResponseBody
-    public List<T> tree(T rootEntity) throws Exception {
+    public final List<T> tree(T rootEntity) throws Exception {
         try {
             if(logger.isDebugEnabled()){
                 logger.debug("method:tree entity:"+JSON.toJSONString(rootEntity));
@@ -427,7 +408,7 @@ public abstract class BaseController<T> {
      * @param parentNode
      * @throws Exception
      */
-    public void appendTreeNode(List<T> dataList, T parentNode) throws Exception {
+    public final void appendTreeNode(List<T> dataList, T parentNode) throws Exception {
         if (null == dataList) {
             return;
         }
@@ -453,26 +434,26 @@ public abstract class BaseController<T> {
 
     public abstract BaseService<T> getService();
 
-    public void catchException(Exception e) {
+    public final void catchException(Exception e) {
         if (null != e.getCause())
             logger.error(e.getCause().getMessage(), e.getCause());
         else
             logger.error(e.getMessage(), e);
     }
 
-    public Result success() {
+    public final Result success() {
         return new Result(true);
     }
 
-    public Result success(String msg) {
+    public final Result success(String msg) {
         return new Result(true, msg);
     }
 
-    public Result error(String msg) {
+    public final Result error(String msg) {
         return new Result(false, msg);
     }
 
-    public Result error(Exception e) {
+    public final Result error(Exception e) {
         return new Result(false, null != e.getCause() ? e.getCause().getMessage() : e.getMessage());
     }
 

@@ -62,32 +62,32 @@ public class SpringMvcConfig extends WebMvcConfigurationSupport {
         return resolver;
     }
 
-    /**
-     * 描述 : <HandlerMapping需要显示声明，否则不能注册资源访问处理器>. <br>
-     * <p>
-     * <这个比较奇怪,理论上应该是不需要的>
-     * </p>
-     *
-     * @return
-     */
-    @Bean
-    public HandlerMapping resourceHandlerMapping() {
-        logger.info("HandlerMapping");
-        return super.resourceHandlerMapping();
-    }
-
-    /**
-     * 描述 : <资源访问处理器>. <br>
-     * <p>
-     * <可以在jsp中使用/static/**的方式访问/WEB-INF/static/下的内容>
-     * </p>
-     *
-     * @param registry
-     */
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/assets/**").addResourceLocations("/assets/");
-    }
+//    /**
+//     * 描述 : <HandlerMapping需要显示声明，否则不能注册资源访问处理器>. <br>
+//     * <p>
+//     * <这个比较奇怪,理论上应该是不需要的>
+//     * </p>
+//     *
+//     * @return
+//     */
+//    @Bean
+//    public HandlerMapping resourceHandlerMapping() {
+//        logger.info("HandlerMapping");
+//        return super.resourceHandlerMapping();
+//    }
+//
+//    /**
+//     * 描述 : <资源访问处理器>. <br>
+//     * <p>
+//     * <可以在jsp中使用/static/**的方式访问/WEB-INF/static/下的内容>
+//     * </p>
+//     *
+//     * @param registry
+//     */
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//        registry.addResourceHandler("/assets/**").addResourceLocations("/assets/");
+//    }
 
     /**
      * 描述 : <RequestMappingHandlerMapping需要显示声明，否则不能注册自定义的拦截器>. <br>

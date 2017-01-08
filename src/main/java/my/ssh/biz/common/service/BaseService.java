@@ -22,6 +22,7 @@ public interface BaseService<T> {
     void deleteById(Serializable...id) throws Exception;
 
     T get(Serializable id) throws Exception;
+    T load(Serializable id) throws Exception;
     T getOne(T entiry);
     List<T> list(T entiry);
     List<T> pageList(T entiry, Page<T> page);

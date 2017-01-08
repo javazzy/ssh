@@ -26,17 +26,4 @@ public class SysUserController extends BaseController<SysUser> {
     public BaseService getService() {
         return sysUserService;
     }
-
-    /**
-     * 批量新增
-     * @param list
-     * @return
-     */
-    @RequestMapping(value = "/addAll", method = RequestMethod.POST)
-    @ResponseBody
-    @Override
-    public Result addAll(@RequestBody List<SysUser> list) {
-        return null;
-    }
-
 }

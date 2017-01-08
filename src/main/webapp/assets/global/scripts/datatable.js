@@ -237,7 +237,7 @@ var Datatable = function() {
 
             // 注册全量控制复选框改变事件
             $('.group-checkable', table).change(function() {
-                var set = table.find('tbody > tr > td:nth-child(1) input[type="checkbox"]');
+                var set = table.find('tbody > tr > td input[type="checkbox"]');
                 var checked = $(this).prop("checked");
                 $(set).each(function() {
                     $(this).prop("checked", checked);
@@ -249,14 +249,14 @@ var Datatable = function() {
             // 注册行单击事件
             table.on('click', 'tbody > tr', function() {
                 if(event.target.tagName == "SPAN"){
-                    var checkbox = $(this).find('td:nth-child(1) input[type="checkbox"]')
+                    var checkbox = $(this).find('td input[type="checkbox"]')
                     checkbox.prop("checked", !checkbox.prop("checked"));
                     return false;
                 }else{
                     $(this).siblings().removeClass("active");
-                    $(this).siblings().find('td:nth-child(1) input[type="checkbox"]').prop("checked", false);
+                    $(this).siblings().find('td input[type="checkbox"]').prop("checked", false);
 
-                    $(this).find('td:nth-child(1) input[type="checkbox"]').prop("checked", true);
+                    $(this).find('td input[type="checkbox"]').prop("checked", true);
 
                     countSelectedRecords();
                     checkboxChange();
@@ -264,7 +264,7 @@ var Datatable = function() {
             });
 
             // 注册内容行第一列复选框改变事件
-            table.on('change', 'tbody > tr > td:nth-child(1) input[type="checkbox"]', function() {
+            table.on('change', 'tbody > tr > td input[type="checkbox"]', function() {
                 countSelectedRecords();
                 checkboxChange();
             });
@@ -316,12 +316,12 @@ var Datatable = function() {
         },
 
         getSelectedRowsCount: function() {
-            return $('tbody > tr > td:nth-child(1) input[type="checkbox"]:checked', table).size();
+            return $('tbody > tr > td input[type="checkbox"]:checked', table).size();
         },
 
         getSelectedRows: function() {
             var rows = [];
-            $('tbody > tr > td:nth-child(1) input[type="checkbox"]:checked', table).each(function() {
+            $('tbody > tr > td input[type="checkbox"]:checked', table).each(function() {
                 rows.push($(this).val());
             });
 

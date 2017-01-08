@@ -37,16 +37,17 @@ var SysUser = function () {
                     { extend: 'colvis', className: 'btn dark btn-outline', text: '<i class="fa fa-columns"></i> 定制列'}
                 ],
                 columns: [
+                    {width:10},
                     {
                         data:"id",
                         title:'<label class="mt-checkbox mt-checkbox-single mt-checkbox-outline"><input type="checkbox" class="group-checkable" data-set="'+tableId+' .checkboxes" /><span></span></label>',
-                        width:30,
+                        width:10,
                         render: function (value, display, row) {
                             return '<label class="mt-checkbox mt-checkbox-single mt-checkbox-outline"><input name="id" type="checkbox" class="checkboxes" value="' + value + '"/><span></span></label>';
                         }
                     },
-
                     {data:"username",title:"用户名"},
+
                     {data:"dicSex.name",title: "性别"},
                     {data:"birthday",title: "生日"},
                     {data:"email",title: "邮箱"},
@@ -67,9 +68,6 @@ var SysUser = function () {
                         }else{
                             return Icons.on+" 正常";
                         }
-                    }},
-                    {title: "操作",render: function (value, display, row) {
-                        return '';
                     }}
                 ],
                 responsive: {
@@ -103,7 +101,11 @@ var SysUser = function () {
                 ],
                 columnDefs: [{
                     orderable: false,
-                    targets: [0,-1]
+                    className: 'control',
+                    targets: [0]
+                },{
+                    orderable: false,
+                    targets: [1]
                 },{
                     defaultContent: '',
                     orderable: true,

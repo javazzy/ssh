@@ -27,29 +27,29 @@ public abstract class BaseDaoImpl<T> extends HibernateDaoSupport implements Base
     }
 
     @Override
-    public Serializable save(T entity) {
+    public final Serializable save(T entity) {
         return this.getHibernateTemplate().save(entity);
     }
 
     @Override
-    public void update(T entity) {
+    public final void update(T entity) {
         this.getHibernateTemplate().update(entity);
     }
 
     @Override
-    public void updateDynamic(T entity) throws Exception {
+    public final void updateDynamic(T entity) throws Exception {
         T source = this.get(BeanUtils.getPrimaryKeyValue(entity));
         BeanUtils.copyPropertiesIgnoreNull(entity, source);
         this.update(source);
     }
 
     @Override
-    public void saveOrUpdate(T entity) {
+    public final void saveOrUpdate(T entity) {
         this.getHibernateTemplate().saveOrUpdate(entity);
     }
 
     @Override
-    public void deleteById(Serializable...ids) throws Exception {
+    public final void deleteById(Serializable...ids) throws Exception {
         DetachedCriteria dc = DetachedCriteria.forClass(getClassType());
         dc.add(Restrictions.in(ConvertUtils.getPrimaryFieldName(getClassType()), ids));
         List<T> list = (List<T>) this.getHibernateTemplate().findByCriteria(dc);
@@ -57,17 +57,17 @@ public abstract class BaseDaoImpl<T> extends HibernateDaoSupport implements Base
     }
 
     @Override
-    public T get(Serializable id) {
+    public final T get(Serializable id) {
         return this.getHibernateTemplate().get(getClassType(), id);
     }
 
     @Override
-    public T load(Serializable id) {
+    public final T load(Serializable id) {
         return this.getHibernateTemplate().load(getClassType(), id);
     }
 
     @Override
-    public T getOne(T entity) {
+    public final T getOne(T entity) {
         List<T> entityList = this.getHibernateTemplate().findByExample(entity, 0, 1);
 
         if (null != entityList && entityList.size() >= 1) {
@@ -77,12 +77,12 @@ public abstract class BaseDaoImpl<T> extends HibernateDaoSupport implements Base
     }
 
     @Override
-    public List<T> list(T entiry) {
+    public final List<T> list(T entiry) {
         return this.pageList(entiry, new Page());
     }
 
     @Override
-    public List<T> pageList(T entity, Page<T> page) {
+    public final List<T> pageList(T entity, Page<T> page) {
         DetachedCriteria dc = initDetachedCriteriaByPage(page);
 
         Example example = Example.create(entity);
@@ -97,7 +97,7 @@ public abstract class BaseDaoImpl<T> extends HibernateDaoSupport implements Base
     }
 
     @Override
-    public long count(T entity) {
+    public final long count(T entity) {
         DetachedCriteria dc = DetachedCriteria.forClass(entity.getClass());
         dc.add(Example.create(entity));
         dc.setProjection(Projections.projectionList().add(Projections.rowCount()));
@@ -105,7 +105,7 @@ public abstract class BaseDaoImpl<T> extends HibernateDaoSupport implements Base
     }
 
     @Override
-    public long searchCount(T entity) {
+    public final long searchCount(T entity) {
         DetachedCriteria dc = getDetachedCriteria(entity, null);
         if (null == dc) {
             dc = DetachedCriteria.forClass(entity.getClass());
@@ -115,18 +115,18 @@ public abstract class BaseDaoImpl<T> extends HibernateDaoSupport implements Base
     }
 
     @Override
-    public List<T> listAll() {
+    public final List<T> listAll() {
         return this.getHibernateTemplate().loadAll(getClassType());
     }
 
     @Override
-    public List<T> searchList(T entity, Page<T> page) {
+    public final List<T> searchList(T entity, Page<T> page) {
         return (List<T>) this.getHibernateTemplate().findByCriteria(this.getDetachedCriteria(entity, page));
 
     }
 
     @Override
-    public Page<T> searchPage(T entity, Page<T> page) {
+    public final Page<T> searchPage(T entity, Page<T> page) {
 
         page.setRecordsTotal(this.searchCount(null));
         page.setRecordsFiltered(this.searchCount(entity));
@@ -136,7 +136,7 @@ public abstract class BaseDaoImpl<T> extends HibernateDaoSupport implements Base
     }
 
     @Override
-    public DetachedCriteria initDetachedCriteriaByPage(Page<T> page) {
+    public final DetachedCriteria initDetachedCriteriaByPage(Page<T> page) {
         DetachedCriteria dc = DetachedCriteria.forClass(this.getClassType());
 
         if (null != page) {

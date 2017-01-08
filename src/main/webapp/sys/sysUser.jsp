@@ -127,15 +127,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-md-3 control-label">邮箱</label>
-                    <div class="col-md-7">
-                        <div class="input-icon right">
-                            <i class="fa"></i>
-                            <input type="text" class="form-control" name="email" email="true">
-                        </div>
-                    </div>
-                </div>
+                <%--<div class="form-group">--%>
+                    <%--<label class="col-md-3 control-label">邮箱</label>--%>
+                    <%--<div class="col-md-7">--%>
+                        <%--<div class="input-icon right">--%>
+                            <%--<i class="fa"></i>--%>
+                            <%--<input type="text" class="form-control" name="email" email="true">--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
                 <div class="form-group">
                     <label class="col-md-3 control-label">是否禁用</label>
                     <div class="col-md-7">

@@ -27,16 +27,4 @@ public class SysMenuController extends BaseController<SysMenu> {
         return sysMenuService;
     }
 
-    /**
-     * 批量新增
-     * @param list
-     * @return
-     */
-    @RequestMapping("/addAll")
-    @ResponseBody
-    @Override
-    public Result addAll(@RequestBody List<SysMenu> list) {
-        return super.addAll(list);
-    }
-
 }
