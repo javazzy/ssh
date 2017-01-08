@@ -264,9 +264,10 @@ var Datatable = function() {
             });
 
             // 注册内容行第一列复选框改变事件
-            table.on('change', 'tbody > tr > td input[type="checkbox"]', function() {
+            table.on('click', 'tbody > tr > td input[type="checkbox"]', function() {
                 countSelectedRecords();
                 checkboxChange();
+                return false;
             });
 
             // 注册搜索按钮点击事件

@@ -37,17 +37,15 @@ var SysUser = function () {
                     { extend: 'colvis', className: 'btn dark btn-outline', text: '<i class="fa fa-columns"></i> 定制列'}
                 ],
                 columns: [
-                    {width:10},
                     {
                         data:"id",
                         title:'<label class="mt-checkbox mt-checkbox-single mt-checkbox-outline"><input type="checkbox" class="group-checkable" data-set="'+tableId+' .checkboxes" /><span></span></label>',
-                        width:10,
+                        orderable:false,
                         render: function (value, display, row) {
                             return '<label class="mt-checkbox mt-checkbox-single mt-checkbox-outline"><input name="id" type="checkbox" class="checkboxes" value="' + value + '"/><span></span></label>';
                         }
                     },
                     {data:"username",title:"用户名"},
-
                     {data:"dicSex.name",title: "性别"},
                     {data:"birthday",title: "生日"},
                     {data:"email",title: "邮箱"},
@@ -68,45 +66,43 @@ var SysUser = function () {
                         }else{
                             return Icons.on+" 正常";
                         }
-                    }}
+                    }},
+                    {
+                        className: 'control',
+                        orderable: false
+                    }
                 ],
                 responsive: {
                     details: {
-                        display: $.fn.dataTable.Responsive.display.modal( {
-                            header: function ( row ) {
-                                var data = row.data();
-                                return '详细信息：'+data["username"];
-                            }
-                        } ),
-                        // renderer: $.fn.dataTable.Responsive.renderer.tableAll()
-                        renderer: function ( api, rowIdx, columns ) {
-
-                            var data = $.map( columns, function ( col, i ) {
-                                if($(col.title).find("input.group-checkable").length){
-                                    return "";
-                                }
-
-                                return /*col.hidden ? */'<tr data-dt-row="'+col.rowIndex+'" data-dt-column="'+col.columnIndex+'">'+
-                                    '<td>'+col.title+':'+'</td> '+
-                                    '<td>'+col.data+'</td>'+
-                                    '</tr>'/*:''*/;
-                            } ).join('');
-
-                            return data ? '<table class="table dtr-details" width="100%"><tbody>'+data+'</tbody></table>' : false;
-                        }
+                        type: 'column',
+                        // display: $.fn.dataTable.Responsive.display.modal( {
+                        //     header: function ( row ) {
+                        //         var data = row.data();
+                        //         return '详细信息：'+data["username"];
+                        //     }
+                        // } ),
+                        // // renderer: $.fn.dataTable.Responsive.renderer.tableAll()
+                        // renderer: function ( api, rowIdx, columns ) {
+                        //
+                        //     var data = $.map( columns, function ( col, i ) {
+                        //         if($(col.title).find("input.group-checkable").length){
+                        //             return "";
+                        //         }
+                        //
+                        //         return /*col.hidden ? */'<tr data-dt-row="'+col.rowIndex+'" data-dt-column="'+col.columnIndex+'">'+
+                        //             '<td>'+col.title+':'+'</td> '+
+                        //             '<td>'+col.data+'</td>'+
+                        //             '</tr>'/*:''*/;
+                        //     } ).join('');
+                        //
+                        //     return data ? '<table class="table dtr-details" width="100%"><tbody>'+data+'</tbody></table>' : false;
+                        // }
                     }
                 },
                 order: [
                     // [1, "asc"]
                 ],
                 columnDefs: [{
-                    orderable: false,
-                    className: 'control',
-                    targets: [0]
-                },{
-                    orderable: false,
-                    targets: [1]
-                },{
                     defaultContent: '',
                     orderable: true,
                     searchable: false,
