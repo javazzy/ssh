@@ -1,28 +1,19 @@
-table.dataTable thead .sorting{
-    background-image:url("")
-}
-table.dataTable thead .sorting_asc{
-    background-image:url("")
-}
-table.dataTable thead .sorting_desc{
-    background-image:url("")
-}
-table.dataTable thead .sorting_asc_disabled{
-    background-image:url("")
-}
-table.dataTable thead .sorting_desc_disabled{
-    background-image:url("")
-}
+
 .portlet>.portlet-title{
     margin-bottom: 0px;
 }
 .dataTables_extended_wrapper .table.dataTable {
     margin: 0px 0px 20px 0px!important;
 }
+
 .modal-dialog {
     width: 579px;
     margin: 0px auto;
 }
+
+/**
+处理表单单选样式问题
+ */
 .checkbox input[type=checkbox], .checkbox-inline input[type=checkbox], .radio input[type=radio], .radio-inline input[type=radio] {
     position: relative;
     margin-left: 0px;

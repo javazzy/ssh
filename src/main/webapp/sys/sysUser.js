@@ -75,28 +75,7 @@ var SysUser = function () {
                 responsive: {
                     details: {
                         type: 'column',
-                        // display: $.fn.dataTable.Responsive.display.modal( {
-                        //     header: function ( row ) {
-                        //         var data = row.data();
-                        //         return '详细信息：'+data["username"];
-                        //     }
-                        // } ),
-                        // // renderer: $.fn.dataTable.Responsive.renderer.tableAll()
-                        // renderer: function ( api, rowIdx, columns ) {
-                        //
-                        //     var data = $.map( columns, function ( col, i ) {
-                        //         if($(col.title).find("input.group-checkable").length){
-                        //             return "";
-                        //         }
-                        //
-                        //         return /*col.hidden ? */'<tr data-dt-row="'+col.rowIndex+'" data-dt-column="'+col.columnIndex+'">'+
-                        //             '<td>'+col.title+':'+'</td> '+
-                        //             '<td>'+col.data+'</td>'+
-                        //             '</tr>'/*:''*/;
-                        //     } ).join('');
-                        //
-                        //     return data ? '<table class="table dtr-details" width="100%"><tbody>'+data+'</tbody></table>' : false;
-                        // }
+                        target: -1
                     }
                 },
                 order: [

@@ -267,7 +267,6 @@ var Datatable = function() {
             table.on('click', 'tbody > tr > td input[type="checkbox"]', function() {
                 countSelectedRecords();
                 checkboxChange();
-                return false;
             });
 
             // 注册搜索按钮点击事件
