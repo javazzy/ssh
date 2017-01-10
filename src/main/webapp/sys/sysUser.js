@@ -77,16 +77,7 @@ var SysUser = function () {
                         type: 'column',
                         target: -1
                     }
-                },
-                order: [
-                    // [1, "asc"]
-                ],
-                columnDefs: [{
-                    defaultContent: '',
-                    orderable: true,
-                    searchable: false,
-                    targets: ['_all']
-                }],
+                }
             }
         });
 

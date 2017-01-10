@@ -11,48 +11,77 @@
     </div>
     <div class="portlet-body">
         <div class="table-container">
-        <table class="table table-striped table-bordered table-hover table-checkable display nowrap" cellspacing="0" width="100%" id="datatable_sysUser">
-            <thead>
-                <%--<tr role="row" class="heading">--%>
-                    <%--<td/>--%>
-                    <%--<td/>--%>
-                    <%--<td/>--%>
-                    <%--<td/>--%>
-                    <%--<td/>--%>
-                    <%--<td/>--%>
-                    <%--<td/>--%>
-                    <%--<td/>--%>
-                    <%--<td/>--%>
-                    <%--<td/>--%>
-                <%--</tr>--%>
-                <%--<tr role="row" class="filter">--%>
-                    <%--<td></td>--%>
-                    <%--<td>--%>
-                        <%--<input type="text" class="form-control form-filter input-sm" name="username">--%>
-                    <%--</td>--%>
-                    <%--<td>--%>
+            <div class="table-filter row">
+                <div class="form-group col-md-4">
+                    <label class="col-md-4 control-label">用户名：</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control form-filter input-sm" name="username">
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="col-md-4 control-label">性别：</label>
+                    <div class="col-md-8">
+                        <select name="sex" class="form-control form-filter input-sm">
+                            <option></option>
+                            <option>Option 2</option>
+                            <option>Option 3</option>
+                            <option>Option 4</option>
+                            <option>Option 5</option>
+                        </select>
+                        <input type="text" name="username" class="form-control form-filter input-sm">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-sm green btn-outline filter-submit margin-bottom">
+                        <i class="fa fa-search"></i> 搜索
+                    </button>
+                    <button class="btn btn-sm red btn-outline filter-cancel">
+                        <i class="fa fa-times"></i> 清空
+                    </button>
+                </div>
+                </div>
+            <table class="table table-striped table-bordered table-hover table-checkable display nowrap" cellspacing="0" width="100%" id="datatable_sysUser">
+                <thead>
+                    <%--<tr role="row" class="heading">--%>
+                        <%--<td/>--%>
+                        <%--<td/>--%>
+                        <%--<td/>--%>
+                        <%--<td/>--%>
+                        <%--<td/>--%>
+                        <%--<td/>--%>
+                        <%--<td/>--%>
+                        <%--<td/>--%>
+                        <%--<td/>--%>
+                        <%--<td/>--%>
+                    <%--</tr>--%>
+                    <%--<tr role="row" class="filter">--%>
+                        <%--<td></td>--%>
+                        <%--<td>--%>
+                            <%--<input type="text" class="form-control form-filter input-sm" name="username">--%>
+                        <%--</td>--%>
+                        <%--<td>--%>
 
-                    <%--</td>--%>
-                    <%--<td class="hide"></td>--%>
-                    <%--<td class="hide"></td>--%>
-                    <%--<td class="hide"></td>--%>
-                    <%--<td class="hide"></td>--%>
-                    <%--<td class="hide"></td>--%>
-                    <%--<td></td>--%>
-                    <%--<td>--%>
-                        <%--<div class="margin-bottom-5">--%>
-                            <%--<button class="btn btn-sm green btn-outline filter-submit margin-bottom">--%>
-                                <%--<i class="fa fa-search"></i> 搜索--%>
+                        <%--</td>--%>
+                        <%--<td class="hide"></td>--%>
+                        <%--<td class="hide"></td>--%>
+                        <%--<td class="hide"></td>--%>
+                        <%--<td class="hide"></td>--%>
+                        <%--<td class="hide"></td>--%>
+                        <%--<td></td>--%>
+                        <%--<td>--%>
+                            <%--<div class="margin-bottom-5">--%>
+                                <%--<button class="btn btn-sm green btn-outline filter-submit margin-bottom">--%>
+                                    <%--<i class="fa fa-search"></i> 搜索--%>
+                                <%--</button>--%>
+                            <%--</div>--%>
+                            <%--<button class="btn btn-sm red btn-outline filter-cancel">--%>
+                                <%--<i class="fa fa-times"></i> 清空--%>
                             <%--</button>--%>
-                        <%--</div>--%>
-                        <%--<button class="btn btn-sm red btn-outline filter-cancel">--%>
-                            <%--<i class="fa fa-times"></i> 清空--%>
-                        <%--</button>--%>
-                    <%--</td>--%>
-                <%--</tr>--%>
-            </thead>
-            <tbody></tbody>
-        </table>
+                        <%--</td>--%>
+                    <%--</tr>--%>
+                </thead>
+                <tbody></tbody>
+            </table>
         </div>
     </div>
 </div>
@@ -127,15 +156,15 @@
                         </div>
                     </div>
                 </div>
-                <%--<div class="form-group">--%>
-                    <%--<label class="col-md-3 control-label">邮箱</label>--%>
-                    <%--<div class="col-md-7">--%>
-                        <%--<div class="input-icon right">--%>
-                            <%--<i class="fa"></i>--%>
-                            <%--<input type="text" class="form-control" name="email" email="true">--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">邮箱</label>
+                    <div class="col-md-7">
+                        <div class="input-icon right">
+                            <i class="fa"></i>
+                            <input type="text" class="form-control" name="email" email="true">
+                        </div>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class="col-md-3 control-label">是否禁用</label>
                     <div class="col-md-7">

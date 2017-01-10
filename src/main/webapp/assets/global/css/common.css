@@ -1,6 +1,9 @@
 
-.portlet>.portlet-title{
-    margin-bottom: 0px;
+/*.portlet>.portlet-title{*/
+    /*margin-bottom: 0px;*/
+/*}*/
+.dataTables_extended_wrapper {
+     margin-top: 0px;
 }
 .dataTables_extended_wrapper .table.dataTable {
     margin: 0px 0px 20px 0px!important;

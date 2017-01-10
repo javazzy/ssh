@@ -93,7 +93,7 @@ var Datatable = function() {
                             sortDescending: ": 单击倒排序"
                         }
                     },
-
+                    bStateSave: true, // save datatable state(pagination, sort, etc) in cookie.
                     serverSide : true,// 分页，取数据等等的都放到服务端去
 
                     ordering:true,// 排序操作在服务端进行，所以可以关了
@@ -101,7 +101,7 @@ var Datatable = function() {
                     columnDefs: [{
                         defaultContent: '',
                         orderable: true,
-                        searchable: false,
+                        searchable: true,
                         targets: ['_all']
                     }],
 
@@ -270,13 +270,13 @@ var Datatable = function() {
             });
 
             // 注册搜索按钮点击事件
-            table.on('click', '.filter-submit', function(e) {
+            tableContainer.on('click', '.filter-submit', function(e) {
                 e.preventDefault();
                 the.submitFilter();
             });
 
             // 注册搜索重置按钮点击事件
-            table.on('click', '.filter-cancel', function(e) {
+            tableContainer.on('click', '.filter-cancel', function(e) {
                 e.preventDefault();
                 the.resetFilter();
             });
@@ -286,17 +286,17 @@ var Datatable = function() {
             the.setAjaxParam("action", tableOptions.filterApplyAction);
 
             // get all typeable inputs
-            $('textarea.form-filter, select.form-filter, input.form-filter:not([type="radio"],[type="checkbox"])', table).each(function() {
+            $('textarea.form-filter, select.form-filter, input.form-filter:not([type="radio"],[type="checkbox"])', tableContainer).each(function() {
                 the.setAjaxParam($(this).attr("name"), $(this).val());
             });
 
             // get all checkboxes
-            $('input.form-filter[type="checkbox"]:checked', table).each(function() {
+            $('input.form-filter[type="checkbox"]:checked', tableContainer).each(function() {
                 the.addAjaxParam($(this).attr("name"), $(this).val());
             });
 
             // get all radio buttons
-            $('input.form-filter[type="radio"]:checked', table).each(function() {
+            $('input.form-filter[type="radio"]:checked', tableContainer).each(function() {
                 the.setAjaxParam($(this).attr("name"), $(this).val());
             });
 
@@ -304,10 +304,10 @@ var Datatable = function() {
         },
 
         resetFilter: function() {
-            $('textarea.form-filter, select.form-filter, input.form-filter', table).each(function() {
+            $('textarea.form-filter, select.form-filter, input.form-filter', tableContainer).each(function() {
                 $(this).val("");
             });
-            $('input.form-filter[type="checkbox"]', table).each(function() {
+            $('input.form-filter[type="checkbox"]', tableContainer).each(function() {
                 $(this).attr("checked", false);
             });
             the.clearAjaxParams();
