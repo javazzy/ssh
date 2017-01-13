@@ -417,7 +417,6 @@
     <script src="assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js" type="text/javascript"></script>
     <script src="assets/global/plugins/bootstrap-toastr/toastr.min.js" type="text/javascript"></script>
 
-
     <script src="assets/global/plugins/select2/js/select2.full.min.js" type="text/javascript"></script>
 
     <script src="assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
@@ -455,12 +454,12 @@
     <script src="assets/global/scripts/alerts.js" type="text/javascript"></script>
 
     <script type="text/javascript">
+        var basepath = "${pageContext.request.contextPath}/";
         (function($, undefined) {
             $(function () {
                 $("li.active>a").click();
             });
         })(window.jQuery);
-        var basepath = "${pageContext.request.contextPath}/";
     </script>
 </body>
 
