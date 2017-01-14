@@ -12,6 +12,7 @@ import org.springframework.core.io.support.ResourcePropertySource;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisClusterConfiguration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisSentinelConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
@@ -27,21 +28,16 @@ import java.io.IOException;
 @Configuration
 @EnableCaching
 @EnableRedisHttpSession
-//@PropertySource({"classpath:redis.properties"})
 public class RedisCacheConfig extends CachingConfigurerSupport {
 
+    private final String SPRING_REDIS_CONFIG_PROPERTIES = "redis.properties";
     @Resource
     private PropertySource propertySource;
-    @Resource
-    private RedisClusterConfiguration redisClusterConfiguration;
-    @Resource
-    private JedisPoolConfig jedisPoolConfig;
     @Resource
     private JedisConnectionFactory jedisConnectionFactory;
     @Resource
     private RedisTemplate redisTemplate;
 
-    @Bean
     public JedisPoolConfig jedisPoolConfig(){
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
         //最大空闲连接数, 默认8个
@@ -104,10 +100,13 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
 
     @Bean
     public ResourcePropertySource propertySource() throws IOException {
-        return new ResourcePropertySource(new ClassPathResource("redis.properties"));
+        return new ResourcePropertySource(new ClassPathResource(SPRING_REDIS_CONFIG_PROPERTIES));
     }
 
-    @Bean
+    public RedisSentinelConfiguration redisSentinelConfiguration(){
+        return new RedisSentinelConfiguration(propertySource);
+    }
+
     public RedisClusterConfiguration redisClusterConfiguration(){
         return new RedisClusterConfiguration(propertySource);
     }
@@ -117,22 +116,23 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
         JedisConnectionFactory redisConnectionFactory;
         boolean redisClusterEnabled = Boolean.parseBoolean(propertySource.getProperty("redis.cluster.enabled").toString());
 
-
         if(redisClusterEnabled) {
-            redisConnectionFactory = new JedisConnectionFactory(redisClusterConfiguration,jedisPoolConfig);
+            redisConnectionFactory = new JedisConnectionFactory(redisClusterConfiguration(),jedisPoolConfig());
         }else{
-            String[] redisNode = propertySource.getProperty("redis.node").toString().split(":");
-            JedisShardInfo jedisShardInfo = new JedisShardInfo(redisNode[0],Integer.parseInt(redisNode[1]));
-            redisConnectionFactory = new JedisConnectionFactory(jedisShardInfo);
+            redisConnectionFactory = new JedisConnectionFactory(redisSentinelConfiguration(),jedisPoolConfig());
         }
 
         return redisConnectionFactory;
     }
 
+    /**
+     * 配置redis管理的session失效时间
+     * @return
+     */
     @Bean
     public RedisHttpSessionConfiguration redisHttpSessionConfiguration(){
         RedisHttpSessionConfiguration redisHttpSessionConfiguration = new RedisHttpSessionConfiguration();
-        redisHttpSessionConfiguration.setMaxInactiveIntervalInSeconds(1800);
+        redisHttpSessionConfiguration.setMaxInactiveIntervalInSeconds(1800);//30分钟（60*30）
         return redisHttpSessionConfiguration;
     }
 
