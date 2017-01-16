@@ -66,7 +66,7 @@ var Datatable = function() {
                     //<"class"> – class为div的class名称
                     dom: "<'row' <'col-md-12'B>><'table-responsive't><'row'<'col-md-8 col-sm-12'pli><'col-md-4 col-sm-12'<'table-group-actions pull-right'>>r>", // datatable layout
                     // dom: "<'table-responsive't><'row'<'col-md-8 col-sm-12'pli><'col-md-4 col-sm-12'<'table-group-actions pull-right'>>r>", // datatable layout
-                    lengthMenu: [5,10,20,50,100], //更改显示记录数选项
+                    lengthMenu: [[5,10,20,50,100,-1],[5,10,20,50,100,"不限"]], //更改显示记录数选项
                     language: { // 国际化配置
                         // metronic spesific
                         metronicGroupActions: "_TOTAL_ 条数据被选中",
