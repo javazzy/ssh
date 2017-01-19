@@ -1,41 +1,48 @@
 package my.ssh.initializer.config;
 
+import my.ssh.util.PropertiesUtils;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.PropertySource;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.support.ResourcePropertySource;
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
+import org.springframework.core.env.PropertiesPropertySource;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisClusterConfiguration;
 import org.springframework.data.redis.connection.RedisSentinelConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration;
 import redis.clients.jedis.JedisPoolConfig;
+import redis.clients.jedis.JedisShardInfo;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.Properties;
 
 @Configuration
+@PropertySource(value = "classpath:/config.properties", ignoreResourceNotFound = true)
 @EnableCaching
 @EnableRedisHttpSession
 public class RedisCacheConfig extends CachingConfigurerSupport {
 
-    private final String SPRING_REDIS_CONFIG_PROPERTIES = "redis.properties";
+    private final String REDIS_PROP_FILE_KEY = "prop.redis";
+    private final String DEFAULT_REDIS_PROP_FILE = "/redis.properties";
+
     @Resource
-    private PropertySource propertySource;
+    private Environment env;
+    @Resource
+    private org.springframework.core.env.PropertySource propertySource;
     @Resource
     private JedisConnectionFactory jedisConnectionFactory;
     @Resource
     private RedisTemplate redisTemplate;
 
-    public JedisPoolConfig jedisPoolConfig(){
+    public JedisPoolConfig jedisPoolConfig() throws IOException {
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
         //最大空闲连接数, 默认8个
         if (propertySource.containsProperty("spring.redis.pool.maxIdle"))
@@ -96,29 +103,47 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
     }
 
     @Bean
-    public ResourcePropertySource propertySource() throws IOException {
-        return new ResourcePropertySource(new ClassPathResource(SPRING_REDIS_CONFIG_PROPERTIES));
+    public org.springframework.core.env.PropertySource propertySource() throws IOException {
+        Properties redisProp = PropertiesUtils.loadProperties(env.getProperty(REDIS_PROP_FILE_KEY), DEFAULT_REDIS_PROP_FILE);
+        return new PropertiesPropertySource(REDIS_PROP_FILE_KEY, redisProp);
     }
 
-    public RedisSentinelConfiguration redisSentinelConfiguration(){
+    public JedisShardInfo jedisShardInfo() throws IOException {
+        Object nodeObj = propertySource.getProperty("spring.redis.shard.node");
+        String host = "localhost";
+        int port = 6379;
+        if(null != nodeObj) {
+            String[] nodeInfos = nodeObj.toString().split(":");
+            host = nodeInfos[0];
+            if(nodeInfos.length>1)
+                port = Integer.parseInt(nodeInfos[1]);
+        }
+        return new JedisShardInfo(host,port);
+    }
+
+    public RedisSentinelConfiguration redisSentinelConfiguration() throws IOException {
         return new RedisSentinelConfiguration(propertySource);
     }
 
-    public RedisClusterConfiguration redisClusterConfiguration(){
+    public RedisClusterConfiguration redisClusterConfiguration() throws IOException {
         return new RedisClusterConfiguration(propertySource);
     }
 
     @Bean
-    public JedisConnectionFactory redisConnectionFactory() {
-        JedisConnectionFactory redisConnectionFactory;
-        boolean redisClusterEnabled = Boolean.parseBoolean(propertySource.getProperty("spring.redis.cluster.enabled").toString());
-
-        if(redisClusterEnabled) {
-            redisConnectionFactory = new JedisConnectionFactory(redisClusterConfiguration(),jedisPoolConfig());
-        }else{
-            redisConnectionFactory = new JedisConnectionFactory(redisSentinelConfiguration(),jedisPoolConfig());
+    public JedisConnectionFactory redisConnectionFactory() throws IOException {
+        JedisConnectionFactory redisConnectionFactory = null;
+        String redisServiceType = propertySource.getProperty("spring.redis.service.type").toString();
+        switch (redisServiceType) {
+            case "shard":
+                redisConnectionFactory = new JedisConnectionFactory(jedisShardInfo());
+                break;
+            case "sentinel":
+                redisConnectionFactory = new JedisConnectionFactory(redisClusterConfiguration(),jedisPoolConfig());
+                break;
+            case "cluster":
+                redisConnectionFactory = new JedisConnectionFactory(redisSentinelConfiguration(),jedisPoolConfig());
+                break;
         }
-
         return redisConnectionFactory;
     }
 
@@ -137,11 +162,6 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
     public RedisTemplate<String, String> redisTemplate() {
         RedisTemplate<String, String> redisTemplate = new RedisTemplate<String, String>();
         redisTemplate.setConnectionFactory(jedisConnectionFactory);
-        //<!--如果不配置Serializer，那么存储的时候缺省使用String，如果用User类型存储，那么会提示错误User can't cast to String！！  -->
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
-        redisTemplate.setValueSerializer(new JdkSerializationRedisSerializer());
-        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-        redisTemplate.setHashValueSerializer(new JdkSerializationRedisSerializer());
         return redisTemplate;
     }
 
