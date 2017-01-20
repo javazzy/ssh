@@ -20,7 +20,7 @@ var Datatable = function() {
         } else {
             $('.table-group-actions', tableWrapper).text("");
         }
-    };
+    }
 
     var checkboxChange = function() {
         var flag = true;
@@ -33,7 +33,7 @@ var Datatable = function() {
             }
         });
         $(this).parents('table').find('.group-checkable').prop("checked",flag);
-    };
+    }
 
 
     return {
@@ -93,7 +93,7 @@ var Datatable = function() {
                             sortDescending: ": 单击倒排序"
                         }
                     },
-                    bStateSave: true, // save datatable state(pagination, sort, etc) in cookie.
+                    bStateSave: false, // 保存表格状态(分页, 排序, 其他)到cookie中.
                     serverSide : true,// 分页，取数据等等的都放到服务端去
 
                     ordering:true,// 排序操作在服务端进行，所以可以关了
@@ -109,6 +109,7 @@ var Datatable = function() {
                     pageLength : 5,// 默认每页显示条数
                     pagingType: "bootstrap_extended", // pagination type(bootstrap, bootstrap_full_number or bootstrap_extended)
                     autoWidth: true, // disable fixed width and enable fluid table
+                    order:[],
 
                     ajax: { // define ajax settings
                         url: "", // ajax URL
@@ -116,7 +117,8 @@ var Datatable = function() {
                         timeout: 20000,
                         data: function(data) { // add request parameters before submit
                             $.each(ajaxParams, function(key, value) {
-                                data[key] = value;
+                                if(value)
+                                    data[key] = value;
                             });
 
                             var orderby = [];
@@ -237,7 +239,8 @@ var Datatable = function() {
 
             // 注册全量控制复选框改变事件
             $('.group-checkable', table).change(function() {
-                var set = table.find('tbody > tr > td input[type="checkbox"]');
+                event.preventDefault();
+                var set = table.find('tbody > tr > td:nth-child(1) input[type="checkbox"]');
                 var checked = $(this).prop("checked");
                 $(set).each(function() {
                     $(this).prop("checked", checked);
@@ -247,27 +250,27 @@ var Datatable = function() {
             });
 
             // 注册行单击事件
-            table.on('click', 'tbody > tr', function() {
+            table.on('click','tbody>tr', function() {
+                event.preventDefault();
                 if(event.target.tagName == "SPAN"){
                     var checkbox = $(this).find('td input[type="checkbox"]')
                     checkbox.prop("checked", !checkbox.prop("checked"));
-                    return false;
                 }else{
                     $(this).siblings().removeClass("active");
                     $(this).siblings().find('td input[type="checkbox"]').prop("checked", false);
 
                     $(this).find('td input[type="checkbox"]').prop("checked", true);
-
-                    countSelectedRecords();
-                    checkboxChange();
                 }
-            });
-
-            // 注册内容行第一列复选框改变事件
-            table.on('click', 'tbody > tr > td input[type="checkbox"]', function() {
                 countSelectedRecords();
                 checkboxChange();
             });
+
+            // 注册第一列复选框改变事件
+            // table.on('change', 'tbody>tr>td input.checkboxes', function() {
+            //     event.preventDefault();
+            //     countSelectedRecords();
+            //     checkboxChange();
+            // });
 
             // 注册搜索按钮点击事件
             tableContainer.on('click', '.filter-submit', function(e) {

@@ -21,14 +21,11 @@
                 <div class="form-group col-md-4">
                     <label class="col-md-4 control-label">性别：</label>
                     <div class="col-md-8">
-                        <select name="sex" class="form-control form-filter input-sm">
-                            <option></option>
-                            <option>Option 2</option>
-                            <option>Option 3</option>
-                            <option>Option 4</option>
-                            <option>Option 5</option>
+                        <select name="dicSex.id" class="form-control form-filter input-sm">
+                            <option value="">全部</option>
+                            <option value="1">男</option>
+                            <option value="2">女</option>
                         </select>
-                        <input type="text" name="username" class="form-control form-filter input-sm">
                     </div>
                 </div>
                 <div class="col-md-4">
