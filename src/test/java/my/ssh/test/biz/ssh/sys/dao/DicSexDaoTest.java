@@ -1,4 +1,4 @@
-package my.ssh.biz.ssh.sys.dao;
+package my.ssh.test.biz.ssh.sys.dao;
 
 import static org.junit.Assert.*;
 

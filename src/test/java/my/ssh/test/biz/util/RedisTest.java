@@ -1,4 +1,4 @@
-package my.ssh.test.util;
+package my.ssh.test.biz.util;
 
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.junit.Test;

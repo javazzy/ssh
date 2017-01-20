@@ -1,4 +1,4 @@
-package my.ssh.biz.common;
+package my.ssh.test.biz.common;
 
 import my.ssh.initializer.config.SpringContextConfig;
 import my.ssh.initializer.config.SpringMvcConfig;

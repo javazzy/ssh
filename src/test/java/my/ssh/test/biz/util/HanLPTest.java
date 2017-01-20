@@ -1,4 +1,4 @@
-package my.ssh.test.util;
+package my.ssh.test.biz.util;
 
 import com.hankcs.lucene.HanLPAnalyzer;
 import org.apache.lucene.analysis.Analyzer;

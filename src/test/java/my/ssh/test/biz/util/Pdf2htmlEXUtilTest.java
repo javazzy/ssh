@@ -1,4 +1,4 @@
-package my.ssh.test.util;
+package my.ssh.test.biz.util;
 
 import my.ssh.util.PDFUtils;
 import org.junit.Test;
