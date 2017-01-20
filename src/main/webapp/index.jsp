@@ -56,6 +56,21 @@
 
     <link href="assets/global/css/common.css" rel="stylesheet" type="text/css" />
 
+    <!-- BEGIN CORE PLUGINS -->
+    <script src="assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+    <!-- END CORE PLUGINS -->
+    <!-- BEGIN THEME GLOBAL SCRIPTS -->
+    <script src="assets/global/scripts/app.min.js" type="text/javascript"></script>
+    <!-- END THEME GLOBAL SCRIPTS -->
+    <!-- BEGIN THEME LAYOUT SCRIPTS -->
+    <script src="assets/layouts/layout/scripts/layout.min.js" type="text/javascript"></script>
+    <script src="assets/layouts/layout/scripts/demo.min.js" type="text/javascript"></script>
+    <!-- END THEME LAYOUT SCRIPTS -->
     <!-- END THEME LAYOUT STYLES -->
     <link rel="shortcut icon" href="favicon.ico" />
 </head>
@@ -69,58 +84,22 @@
         <div class="clearfix"> </div>
         <!-- END HEADER & CONTENT DIVIDER -->
 
-        <jsp:include page="container.jsp"/>
+        <!-- BEGIN CONTAINER -->
+        <div class="page-container">
+            <jsp:include page="menu.jsp"/>
+            <jsp:include page="content.jsp"/>
+            <jsp:include page="quick-sidebar.jsp"/>
+        </div>
+        <!-- END CONTAINER -->
 
         <jsp:include page="footer.jsp"/>
     </div>
-    <!-- BEGIN QUICK NAV -->
-    <%--<nav class="quick-nav">--%>
-        <%--<a class="quick-nav-trigger" href="#0">--%>
-            <%--<span aria-hidden="true"></span>--%>
-        <%--</a>--%>
-        <%--<ul>--%>
-            <%--<li>--%>
-                <%--<a href="https://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes" target="_blank" class="active">--%>
-                    <%--<span>Purchase Metronic</span>--%>
-                    <%--<i class="icon-basket"></i>--%>
-                <%--</a>--%>
-            <%--</li>--%>
-            <%--<li>--%>
-                <%--<a href="https://themeforest.net/item/metronic-responsive-admin-dashboard-template/reviews/4021469?ref=keenthemes" target="_blank">--%>
-                    <%--<span>Customer Reviews</span>--%>
-                    <%--<i class="icon-users"></i>--%>
-                <%--</a>--%>
-            <%--</li>--%>
-            <%--<li>--%>
-                <%--<a href="http://keenthemes.com/showcast/" target="_blank">--%>
-                    <%--<span>Showcase</span>--%>
-                    <%--<i class="icon-user"></i>--%>
-                <%--</a>--%>
-            <%--</li>--%>
-            <%--<li>--%>
-                <%--<a href="http://keenthemes.com/metronic-theme/changelog/" target="_blank">--%>
-                    <%--<span>Changelog</span>--%>
-                    <%--<i class="icon-graph"></i>--%>
-                <%--</a>--%>
-            <%--</li>--%>
-        <%--</ul>--%>
-        <%--<span aria-hidden="true" class="quick-nav-bg"></span>--%>
-    <%--</nav>--%>
-    <%--<div class="quick-nav-overlay"></div>--%>
-    <!-- END QUICK NAV -->
+    <%--<jsp:include page="quick-nav.jsp"/>--%>
     <!--[if lt IE 9]>
     <script src="assets/global/plugins/respond.min.js"></script>
     <script src="assets/global/plugins/excanvas.min.js"></script>
     <script src="assets/global/plugins/ie8.fix.min.js"></script>
     <![endif]-->
-    <!-- BEGIN CORE PLUGINS -->
-    <script src="assets/global/plugins/jquery.min.js" type="text/javascript"></script>
-    <script src="assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
-    <script src="assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-    <script src="assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
-    <script src="assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
-    <!-- END CORE PLUGINS -->
     <!-- BEGIN PAGE LEVEL PLUGINS -->
     <%--<script src="assets/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>--%>
     <script src="assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js" type="text/javascript"></script>
@@ -147,17 +126,8 @@
     <script src="assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
     <script src="assets/global/plugins/datatables/plugins/responsive/datatables.responsive.min.js" type="text/javascript"></script>
     <script src="assets/global/plugins/datatables/plugins/responsive/responsive.bootstrap.min.js" type="text/javascript"></script>
-
     <!-- END PAGE LEVEL PLUGINS -->
-    <!-- BEGIN THEME GLOBAL SCRIPTS -->
-    <script src="assets/global/scripts/app.min.js" type="text/javascript"></script>
-    <!-- END THEME GLOBAL SCRIPTS -->
-    <!-- BEGIN THEME LAYOUT SCRIPTS -->
-    <script src="assets/layouts/layout/scripts/layout.min.js" type="text/javascript"></script>
-    <script src="assets/layouts/layout/scripts/demo.min.js" type="text/javascript"></script>
-    <script src="assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
-    <script src="assets/layouts/global/scripts/quick-nav.min.js" type="text/javascript"></script>
-    <!-- END THEME LAYOUT SCRIPTS -->
+
     <%--<script src="assets/global/plugins/commonSetting.js" type="text/javascript"></script>--%>
     <script src="assets/global/scripts/icons.js" type="text/javascript"></script>
     <script src="assets/global/scripts/commonSetting.js" type="text/javascript"></script>
@@ -165,11 +135,6 @@
 
     <script type="text/javascript">
         var basepath = "${pageContext.request.contextPath}/";
-        (function($, undefined) {
-            $(function () {
-                $("li.active>a").click();
-            });
-        })(window.jQuery);
     </script>
 </body>
 
