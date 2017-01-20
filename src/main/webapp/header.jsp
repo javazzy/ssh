@@ -12,6 +12,9 @@
             </div>
         </div>
         <!-- END LOGO -->
+
+        <jsp:include page="mega-menu.jsp"/>
+
         <!-- BEGIN RESPONSIVE MENU TOGGLER -->
         <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
             <span></span>
