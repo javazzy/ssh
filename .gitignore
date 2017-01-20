@@ -25,3 +25,4 @@ ssh.iws
 #log4j.properties
 
 dump.rdb
+/files/redis/windows/Redis-3.2.100/dump.rdb
