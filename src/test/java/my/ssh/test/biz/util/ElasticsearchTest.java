@@ -1,6 +1,8 @@
 package my.ssh.test.biz.util;
 
+import com.alibaba.fastjson.JSON;
 import org.elasticsearch.action.ListenableActionFuture;
+import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
@@ -21,6 +23,8 @@ import org.junit.Test;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by root on 2017/1/20 0020.
@@ -39,23 +43,31 @@ public class ElasticsearchTest {
 
     @Test
     public void put(){
-//        Student student = new Student(103161066, 20, "riching", "beijing");
-        String jsonValue = "{name:'zzy'}";
-        IndexRequestBuilder indexRequestBuilder = client.prepareIndex("student_index", "student_info").setSource(jsonValue);
+        Map<String,String> map = new HashMap<>();
+        map.put("id","1");
+        map.put("name","郑丽");
+        map.put("sex","女");
+        IndexRequestBuilder indexRequestBuilder = client.prepareIndex("student_index", "student_info").setSource(JSON.toJSONString(map));
         ListenableActionFuture<IndexResponse> listenableActionFuture =  indexRequestBuilder.execute();
         IndexResponse response = listenableActionFuture.actionGet();
         System.out.println(response.getId());
     }
 
     @Test
+    public void delete(){
+        DeleteResponse response = client.prepareDelete("student_index","student_info","1").execute().actionGet();
+        System.out.println(response.status());
+    }
+
+    @Test
     public void search() {
-        QueryBuilder matchQuery = QueryBuilders.matchQuery("title", "编程");
+        QueryBuilder matchQuery = QueryBuilders.matchQuery("id", "1");
         HighlightBuilder hiBuilder=new HighlightBuilder();
         hiBuilder.preTags("<h2>");
         hiBuilder.postTags("</h2>");
-        hiBuilder.field("title");
+        hiBuilder.field("name");
         // 搜索数据
-        SearchResponse response = client.prepareSearch("blog")
+        SearchResponse response = client.prepareSearch("student_index")
                 .setQuery(matchQuery)
                 .highlighter(hiBuilder)
                 .execute().actionGet();
@@ -70,7 +82,7 @@ public class ElasticsearchTest {
             System.out.println(hit.getHighlightFields());
 
             System.out.println("遍历高亮集合，打印高亮片段:");
-            Text[] text = hit.getHighlightFields().get("title").getFragments();
+            Text[] text = hit.getHighlightFields().get("name").getFragments();
             for (Text str : text) {
                 System.out.println(str.string());
             }
