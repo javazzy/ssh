@@ -39,6 +39,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring()
                 // Spring Security should completely ignore URLs starting with /resources/
                 .antMatchers("/resources/**")
+                .antMatchers("/upload/**")
                 .antMatchers("/assets/**")
                 .antMatchers("/css/**")
                 .antMatchers("/image/**")
@@ -68,6 +69,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         // 设置拦截规则
         http
                 .authorizeRequests()
+                .antMatchers("/upload/**").permitAll()
                 .antMatchers("/view/**").permitAll()
                 .antMatchers("/demo/**").permitAll()
                 .antMatchers("/ws/**").permitAll()

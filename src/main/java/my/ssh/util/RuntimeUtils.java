@@ -1,13 +1,12 @@
 package my.ssh.util;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -18,118 +17,108 @@ public class RuntimeUtils {
     private static final Logger logger = Logger.getLogger(RuntimeUtils.class);
 
     /**
-     * 从数据库导出项目数据
+     * 执行系统命令
      *
      * @return
      */
-    public static void exec(String cmds) {
-        exec(cmds, null);
+    public static void exec(String cmds) throws Exception {
+        exec(cmds, null, null, null);
     }
-
     /**
-     * 从数据库导出项目数据
+     * 执行系统命令
      *
      * @return
      */
-    public static int exec(String cmds, final Message msg) {
+    public static int exec(String cmds, final Message msg) throws Exception {
+        return exec(cmds,msg,null,null);
+    }
+    /**
+     * 执行系统命令
+     *
+     * @return
+     */
+    public static int exec(String cmds, final Message msg, String[] envp) throws Exception {
+        return exec(cmds,msg,envp,null);
+    }
+    /**
+     * 执行系统命令
+     *
+     * @return
+     */
+    public static int exec(String cmds, final Message msg, String[] envp, File dir) throws Exception {
 
-        final BlockingQueue<String> queue = new LinkedBlockingQueue<>();
+        final LinkedBlockingQueue<Character> queue = new LinkedBlockingQueue<>();
+        final StringBuilder out = new StringBuilder();
         final List isEndList = new ArrayList(1);
 
-        Process process = null;
-        try {
-            logger.info("执行系统命令:"+cmds);
-            process = Runtime.getRuntime().exec(cmds);
-        } catch (IOException e) {
-            logger.error(e.getMessage(), e);
-        }
-        boolean shouldClose = false;
+//        logger.info("执行系统命令:"+cmds);
+        System.out.println(cmds);
+        Process process = Runtime.getRuntime().exec(cmds,envp,dir);
 
-        try {
-            if(null != msg && msg.isAsync()){
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            while (isEndList.size() == 0 || !queue.isEmpty()) {
-                                msg.write(queue.take());
+        if(null != msg){
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        while (isEndList.size() == 0 || !queue.isEmpty()) {
+                            out.append(queue.take());
+                            if(out.indexOf("\n")>-1 || out.indexOf("\r")>-1) {
+                                if(StringUtils.trim(out.toString()).length()>0)
+                                    msg.write(StringUtils.trim(out.toString()));
+                                out.replace(0,out.length(),"");
                             }
-                            msg.end();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
                         }
+                    } catch (InterruptedException e) {
+                        logger.warn(e.getMessage(),e);
                     }
-                }).start();
-            }
-
-            InputStreamReader isr = new InputStreamReader(process.getInputStream());
-            final BufferedReader br = new BufferedReader(isr);
-
-            while (true) {
-                String line = br.readLine();
-                if(null != msg) {
-                    if (null != line) {
-                        if(msg.isAsync()) {
-                            queue.put(line);
-                        }else{
-                            msg.write(line);
-                        }
-                    } else {
-                        if(msg.isAsync()) {
-                            isEndList.add(1);
-                            queue.put("");
-                        }
-                    }
-                }else{
-                    if(null != line) System.out.print(line);
                 }
-
-                if (null == line) break;
-            }
-
-        } catch (IOException ioe) {
-            shouldClose = true;
-        } catch (InterruptedException e) {
-            shouldClose = true;
+            }).start();
         }
-        if (shouldClose)
-            process.destroy();
+
+        int exitValue = -1; // returned to caller when p is finished
+        InputStream in = null;
+        InputStream err = null;
         try {
-            return process.waitFor();
-        } catch (InterruptedException e) {
-            logger.error(e.getMessage(), e);
+            in = process.getInputStream();
+            err = process.getErrorStream();
+            boolean finished = false; // Set to true when p is finished
+            while (!finished) {
+                try {
+                    while (in.available() > 0) {
+                        // Print the output of our system call
+                        Character c = new Character((char) in.read());
+                        queue.add(c);
+                    }
+                    while (err.available() > 0) {
+                        // Print the output of our system call
+                        Character c = new Character((char) err.read());
+                        queue.add(c);
+                    }
+                    // Ask the process for its exitValue. If the process
+                    // is not finished, an IllegalThreadStateException
+                    // is thrown. If it is finished, we fall through and
+                    // the variable finished is set to true.
+                    exitValue = process.exitValue();
+                    finished = true;
+                    isEndList.add("");
+                    queue.add('\n');
+                }catch (Exception e){
+//                    Thread.sleep(50);
+                }
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if(null != in) in.close();
+            if(null != err) err.close();
+            process.destroy();
         }
-        return 1;
+
+        return exitValue;
     }
 
     public interface Message {
         void write(String msg);
-        void end();
-        boolean isAsync();
-    }
-
-    public static class DefaultMessage implements Message{
-
-        boolean isAsync = false;
-        public DefaultMessage(){}
-        public DefaultMessage(boolean isAsync){
-            this.isAsync = isAsync;
-        }
-
-        @Override
-        public void write(String msg) {
-
-        }
-
-        @Override
-        public void end() {
-
-        }
-
-        @Override
-        public boolean isAsync() {
-            return isAsync;
-        }
     }
 
 }

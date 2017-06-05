@@ -24,7 +24,7 @@ ${pojo.generateBasicAnnotation(property)}
     property.value.typeName='boolean'||property.value.typeName='bool'||property.value.typeName='java.lang.Boolean'>boolean<#elseif
     property.value.typeName='double'||property.value.typeName='java.lang.Double'>double(${column.precision},${column.scale})<#elseif
     property.value.typeName='float'||property.value.typeName='java.lang.Float'>float(${column.precision},${column.scale})<#elseif
-    property.value.typeName='binary'||property.value.typeName='blob'>blob</#if> comment '${column.comment}' <#if column.nullable>null<#else>not null</#if>")
+    property.value.typeName='binary'||property.value.typeName='blob'>blob</#if> comment '${column.comment}' <#if !column.naturalIdentifier&&column.nullable>null<#else>not null</#if>")
     </#foreach>
 </#if>
 </#if>

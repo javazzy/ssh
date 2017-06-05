@@ -53,6 +53,12 @@
                 </a>
                 <ul class="sub-menu">
                     <li class="nav-item">
+                        <a href="test/player.jsp" class="nav-link ajaxify">
+                            <i class="icon-bar-chart"></i>
+                            <span class="title">视频播放器</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="test/webqq.jsp" class="nav-link ajaxify">
                             <i class="icon-bar-chart"></i>
                             <span class="title">WebSocket</span>
